@@ -114,7 +114,7 @@ services:
       - 5045:5045
       - 5046:5046
     environment:
-      LS_JAVA_OPTS: -Xms{LOGSTASH_MEMORY:-512m} -Xmx{LOGSTASH_MEMORY:-512m}
+      LS_JAVA_OPTS: -Xms${LOGSTASH_MEMORY:-512m} -Xmx${LOGSTASH_MEMORY:-512m}
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
     networks:
       - monitoring
@@ -136,7 +136,7 @@ services:
     environment:
       - ELASTIC_TOKEN
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-    command: ["/usr/share/kibana/start-kibana.sh"]
+    command: ["chmod +x /usr/share/kibana/start-kibana.sh && /usr/share/kibana/start-kibana.sh"]
     networks:
       - monitoring
     depends_on:
