@@ -54,7 +54,9 @@
     1. Edit ./grafana/grafana.ini file
     2. configure "smtp" section with your mailserver credentials
     3. configure "server" section change "domain" from 0.0.0.0 to your monitoring server ip
-    4. chown -R 472:0 ./grafana/provisioning
+    4. chown -R 472:472 ./grafana/provisioning
+    5. chown -R 472:472 ./grafana/grafana.*
+    6. chmod -R 755 ./grafana/provisioning
 
 9) Edit prometheus configs
     

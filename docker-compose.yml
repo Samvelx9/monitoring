@@ -185,7 +185,14 @@ services:
     image: registry.synisys.com/infrastructure/elasticsearch-exporter:v1.5.0
     container_name: elasticsearch_exporter_monitoring
     command:
-     - '--es.uri=http://elasticsearch:9200 --es.all --es.cluster_settings --es.indices --es.data_stream --es.indices_settings --es.indices_mappings --es.shards'
+     - '--es.uri=http://elasticsearch:9200'
+     - '--es.all'
+     - '--es.cluster_settings'
+     - '--es.indices'
+     - '--es.data_stream'
+     - '--es.indices_settings'
+     - '--es.indices_mappings'
+     - '--es.shards'
     ports:
     - "9114:9114"
     networks:
@@ -197,7 +204,14 @@ services:
     image: registry.synisys.com/infrastructure/elasticsearch-exporter:v1.5.0
     container_name: elasticsearch_exporter_application
     command:
-     - '--es.uri=http://${KUBEMASTER_IP}:${ELASTICSEARCH_NODEPORT} --es.all --es.cluster_settings --es.indices --es.data_stream --es.indices_settings --es.indices_mappings --es.shards'
+     - '--es.uri=http://${KUBEMASTER_IP}:${ELASTICSEARCH_NODEPORT}'
+     - '--es.all'
+     - '--es.cluster_settings'
+     - '--es.indices'
+     - '--es.data_stream'
+     - '--es.indices_settings'
+     - '--es.indices_mappings'
+     - '--es.shards'
     ports:
     - "9115:9114"
     networks:
