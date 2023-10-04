@@ -1,0 +1,8 @@
+NGINXACCESS %{TIMESTAMP:timestamp} %{ZONE:timezone} %{IPORHOST:remote_addr}%{SPACE}\-%{SPACE}%{USER:remote_user}%{SPACE}%{IPORHOST:request_host}%{SPACE}"(?:%{WORD:method} %{NOTSPACE:request_uri}%{SPACE}(?:HTTP/%{NUMBER:httpversion})?|-)"%{SPACE}%{WORD:scheme}%{SPACE}%{NUMBER:status_code}%{SPACE}%{NUMBER:bytes_sent}%{SPACE}%{NUMBER:body_bytes_sent}%{SPACE}%{NUMBER:request_time}%{SPACE}(%{NUMBER:upstream_response_time}|-)%{SPACE}"(?:%{NOTSPACE:http_referrer}|-)"%{SPACE}"(?:%{NOTSPACE:source_service_name}|-)"%{SPACE}"(?:%{NOTSPACE:nginx.traceid}|-)"%{SPACE}"(?:%{NOTSPACE:nginx.spanid}|-)"%{SPACE}"(?:%{NOTSPACE:nginx.parentspanid}|-)"%{SPACE}"(?:%{NOTSPACE:nginx.request_id}|-)"%{SPACE}(?:%{NOTSPACE:cookie.suid}|-)
+TIMESTAMP [0-9]{2}\/[a-zA-Z]{3}\/[0-9]{4}\:[0-9]{2}\:[0-9]{2}\:[0-9]{2}
+ZONE \+[0-9]{4}
+IDM8APPNAME (?!zeusadapter)[^\/]*
+URLWORD [^/]+
+NGINXURISOURCE ^(/%{URLWORD:nginx.service.name}/%{WORD:nginx.service.version}/%{IDM8APPNAME:nginx.app.name}/.*)|(/%{URLWORD:nginx.idm75.context}/api/zeusadapter/%{URLWORD:nginx.idm75.adapter}/%{IDM8APPNAME:nginx.app.name}/.*)$
+NGINXERROR ^(?<timestamp>%{YEAR}[./-]%{MONTHNUM}[./-]%{MONTHDAY}[- ]%{TIME})%{SPACE}\[%{LOGLEVEL:severity}\]%{SPACE}%{POSINT:pid}#%{NUMBER}: %{GREEDYDATA:errormessage}(?:, client: (?<client>%{IP}|%{HOSTNAME}))(?:, server: %{IPORHOSTORUNDERSCORE:server})(?:, request: %{QS:request})?(?:, upstream: "%{URI:upstream}")?(?:, host: %{QS:host})?(?:, referrer: "%{URI:referrer}")?$
+IPORHOSTORUNDERSCORE (?:%{HOSTNAME}|%{IP}|_)

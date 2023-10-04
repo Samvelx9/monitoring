@@ -1,0 +1,63 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'docker-host-alpha'
+
+# A scrape configuration containing exactly one endpoint to scrape.
+scrape_configs:
+  - job_name: 'Servers'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          service: "monitoring"
+
+  - job_name: 'cadvisor'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['cadvisor:8080']
+        labels:
+          environment: "monitoring"
+
+  - job_name: 'prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          environment: "monitoring"
+ 
+  - job_name: 'federate'
+    scrape_interval: 15s
+    scrape_timeout: 14s
+    honor_labels: true
+    metrics_path: '/federate'
+    params:
+      'match[]':
+        - '{job=~".+"}'
+        - '{__name__=~"job:.*"}'
+    static_configs:
+      - targets:
+        - '$KUBEMASTERIP:30900'
+
+  - job_name: 'elasticsearch_exporter'
+    static_configs:
+    - targets: ['elasticsearch_exporter_monitoring:9114']
+      labels:
+        environment: "monitoring"
+    - targets: ['elasticsearch_exporter_application:9115']
+      labels:
+        environment: "application"
+
+#  - job_name: 'nginx'
+#    scrape_interval: 10s
+#    static_configs:
+#      - targets: ['nginxexporter:9113']
+
+#  - job_name: 'aspnetcore'
+#    scrape_interval: 10s
+#    static_configs:
+#      - targets: ['eventlog-proxy:5000', 'eventlog:5000']

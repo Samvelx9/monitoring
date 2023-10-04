@@ -1,0 +1,2 @@
+TIMESTAMP %{TIMESTAMP_ISO8601}%{SPACE}[+-]%{HOUR}
+POSTGRESACCESS %{TIMESTAMP:postgres_timestamp}%{SPACE}user=%{NOTSPACE:postgres_username},db=%{NOTSPACE:postgres_db},app=%{NOTSPACE:postgres_environment}:%{NOTSPACE:postgres_servicename}:%{NOTSPACE:postgres_app},client=%{NOTSPACE:postgres_client}LOG:%{SPACE}%{SPACE}duration:%{SPACE}%{NUMBER:postgres_duration}%{SPACE}ms%{SPACE}%{SPACE}%{GREEDYDATA:postgres_query}

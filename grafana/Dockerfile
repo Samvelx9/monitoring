@@ -1,0 +1,1 @@
+FROM registry.synisys.com/infrastructure/grafana:8.3.3

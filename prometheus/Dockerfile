@@ -1,0 +1,1 @@
+FROM registry.synisys.com/infrastructure/prometheus:v2.43.0

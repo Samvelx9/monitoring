@@ -1,0 +1,12 @@
+MATCHALL .+
+APPNAME [^ ]+
+APPTHREADNAME [^ ]+
+APPTRACEWORD [\w\d$-}{]+
+APPSOURCEWORD [a-zA-Z0-9-]+
+APPCLASSNAME [^ ]+
+APPHOSTNAME [^ ]+
+APPLOGTIMESTAMP [0-9]+-[0-9]+-[0-9]+ \d+:\d+:\d+,\d+
+IGNORENEWLINES (\n\t+|\s+)?
+APPLOGLEVEL (FATAL|ERROR|WARN|INFO|DEBUG|TRACE|ALL)
+APPBEATSSOURCE /%{APPSOURCEWORD:app.log.dir}/%{APPSOURCEWORD:app.environment}/%{APPSOURCEWORD:app.service.name}/%{APPSOURCEWORD:app.service.version}/.+
+APPLOG %{APPLOGTIMESTAMP:app.logtime}%{SPACE}%{APPHOSTNAME:app.hostname}%{SPACE}%{APPNAME:app.name}%{SPACE}%{APPTRACEWORD:app.traceid}%{SPACE}%{APPTRACEWORD:app.spanid}(%{SPACE}|%{IGNORENEWLINES:ignore.newlines})%{APPLOGLEVEL:app.loglevel}%{SPACE}%{APPTHREADNAME:app.threadname}%{SPACE}%{APPCLASSNAME:app.classname}%{SPACE}%{APPCLASSNAME:app.methodname}%{SPACE}%{MATCHALL:app.logmessage}
