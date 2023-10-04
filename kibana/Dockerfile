@@ -9,6 +9,8 @@ FROM docker.elastic.co/kibana/kibana:${ELASTIC_VERSION}
 # Install the jq package using apt
 USER root
 RUN apt-get update && apt-get install -y jq && apt-get clean
+COPY ./start-kibana.sh /usr/share/kibana/start-kibana.sh
+RUN chmod +x /usr/share/kibana/start-kibana.sh && chown kibana:kibana /usr/share/kibana/start-kibana.sh
 
 # Start Kibana
 USER kibana

@@ -130,13 +130,12 @@ services:
     container_name: kibana
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
-      - ./kibana/start-kibana.sh:/usr/share/kibana/start-kibana.sh
     ports:
       - 5601:5601
     environment:
       - ELASTIC_TOKEN
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
-    command: ["chmod +x /usr/share/kibana/start-kibana.sh && /usr/share/kibana/start-kibana.sh"]
+    command: ["/usr/share/kibana/start-kibana.sh"]
     networks:
       - monitoring
     depends_on:
