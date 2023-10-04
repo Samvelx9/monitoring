@@ -48,7 +48,7 @@ scrape_configs:
     - targets: ['elasticsearch_exporter_monitoring:9114']
       labels:
         environment: "monitoring"
-    - targets: ['elasticsearch_exporter_application:9115']
+    - targets: ['elasticsearch_exporter_application:9114']
       labels:
         environment: "application"
 
