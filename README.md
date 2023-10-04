@@ -27,7 +27,7 @@
 
 ########################################################## Prometheus and Grafana on Docker ##########################################################
 
-4) Edit .env file and set desired/required values for each field in the "PROMETHEUS ADN GRAFANA" section.
+4) Edit .env file and set desired/required values for each field in the "PROMETHEUS AND GRAFANA" section.
 
     Following options have default values which will be used if you leave these fields empty:
     PROMETHEUS_RETENTION='200h'
