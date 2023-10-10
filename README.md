@@ -1,4 +1,12 @@
-########################################################## Elastic stack (ELK) on Docker ##########################################################
+#################################################################### PREREQUIREMENTS ####################################################################
+
+Before starting install process please asure: 
+    1) You have all provided files downloaded on your MONITORING VM 
+    2) You have internet access on MONITORING VM, or on other VM so you can download files and images to that VM and pass them  to MONITORING VM
+    3) You have docker installed on MONITORING VM
+    4) You have docker-compose installed on MONITORING VM
+
+########################################################## Elastic stack (ELK) setup on Docker ##########################################################
 
 1) Edit ".env" file and set desired values for each field in the "ELK" section. 
 
@@ -25,7 +33,7 @@
 
 
 
-########################################################## Prometheus and Grafana on Docker ##########################################################
+########################################################## Prometheus and Grafana setup on Docker ##########################################################
 
 4) Edit .env file and set desired/required values for each field in the "PROMETHEUS AND GRAFANA" section.
 
