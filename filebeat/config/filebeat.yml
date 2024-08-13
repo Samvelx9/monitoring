@@ -5,9 +5,9 @@ filebeat.inputs:
   multiline.pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
   multiline.negate: true
   multiline.match: after
+  close_inactive: 5m
+  ignore_older: 20m
 max_procs: 2
 output.logstash:
   hosts: ["logstash:5044"]
-
-
-
+filebeat.registry.flush: 1s
