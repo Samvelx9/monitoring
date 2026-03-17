@@ -112,7 +112,6 @@ Before starting install process please asure:
 
 10) change grafana passwords
 
-    1. login to grafana using admin user: username="admin" password="D9I9rIspos2kiDe6"
+    1. login to grafana using admin user: username="administrator" password="Admin123456!"
     2. change password
-    3. repeat also for editor user: username="edit" password="D1fuCh86itisPApI" 
-               and for readonly user: username="read" password="yEFrOtrLC0Ust5vu"
+    3. crete new users if needed
