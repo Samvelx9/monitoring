@@ -12,6 +12,7 @@ Before starting install process please asure:
     woodliu268/cadvisor:v0.43.0
     grafana/grafana:12.3.3
     prom/prometheus:v3.9.1
+    postgres:18.2
     docker.elastic.co/elasticsearch/elasticsearch:8.9.1
     docker.elastic.co/beats/filebeat:8.9.1
     docker.elastic.co/logstash/logstash:8.9.1

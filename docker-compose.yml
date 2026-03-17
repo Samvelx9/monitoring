@@ -194,7 +194,7 @@ services:
         max-file: "3"
 
   postgres:
-    image: "registry.synisys.com/infrastructure/postgres:18.2"
+    image: "postgres:18.2"
     container_name: postgres
     volumes:
       - /data/postgres:/var/lib/postgresql
