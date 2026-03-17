@@ -8,7 +8,7 @@ contactPoints:
           settings:
             message: '{{ template "message" .}}'
             title: '{{ template "title" .}}'
-            url: ${SLACK_URL}
+            url: <%= @teams_connector %>
           disableResolveMessage: false
     - orgId: 1
       name: projectemail
@@ -29,5 +29,6 @@ contactPoints:
           settings:
             message: '{{ template "message" .}}'
             title: '{{ template "title" .}}'
-            url: ${SLACK_URL}
+            url: <%= @teams_connector %>
           disableResolveMessage: false
+

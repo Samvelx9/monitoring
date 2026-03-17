@@ -19,6 +19,7 @@ Before starting install process please asure:
 
     6) Create logs directory at "/applogs" path and mount logs into it
 
+    7) Edit grafana/provisioning/alerting/contactpoints.yml file and replace '<%= @teams_connector %>' with existing teams connector and '<%= @env_name %>-alerting.synisys.com' with existing email to receive alerting notifications
     7) Perform further steps mentioned in the instruction or just run monitoring_setup.sh script (bash monitoring_setup.sh)
 
 ########################################################## Elastic stack (ELK) setup on Docker ##########################################################
