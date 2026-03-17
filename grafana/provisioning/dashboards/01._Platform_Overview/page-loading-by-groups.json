@@ -1,0 +1,469 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 39,
+  "iteration": 1747765784631,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 13,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 25,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 0,
+            "y": 1
+          },
+          "id": 12,
+          "maxPerRow": 4,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "repeat": "networkSpeed",
+          "repeatDirection": "v",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "exemplar": true,
+              "expr": "histogram_quantile(1, sum(rate(ejustice_ecase_loading_duration_in_seconds_bucket{kubernetes_namespace=\"$environment\", app=\"$app\", kubernetes_name=\"$ui_service\", groups=\"$groups\", networkSpeed=\"$networkSpeed\"}[$__rate_interval])) by (le))",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Max",
+              "range": true,
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "exemplar": true,
+              "expr": "histogram_quantile(0.95, sum(rate(ejustice_ecase_loading_duration_in_seconds_bucket{kubernetes_namespace=\"$environment\", app=\"$app\", kubernetes_name=\"$ui_service\", groups=\"$groups\", networkSpeed=\"$networkSpeed\"}[$__rate_interval])) by (le))",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "P95",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "exemplar": true,
+              "expr": "histogram_quantile(0.75, sum(rate(ejustice_ecase_loading_duration_in_seconds_bucket{kubernetes_namespace=\"$environment\", app=\"$app\", kubernetes_name=\"$ui_service\", groups=\"$groups\", networkSpeed=\"$networkSpeed\"}[$__rate_interval])) by (le))",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "P75",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "Duration via ($networkSpeed) Network",
+          "type": "timeseries"
+        },
+        {
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-GrYlRd"
+              },
+              "custom": {
+                "align": "auto",
+                "displayMode": "auto",
+                "filterable": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Loading Duration"
+                },
+                "properties": [
+                  {
+                    "id": "custom.width",
+                    "value": 150
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 18,
+            "x": 6,
+            "y": 1
+          },
+          "id": 28,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Loading Duration"
+              }
+            ]
+          },
+          "pluginVersion": "8.3.3",
+          "repeat": "networkSpeed",
+          "repeatDirection": "v",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "disableTextWrap": false,
+              "editorMode": "code",
+              "exemplar": true,
+              "expr": "topk(10, histogram_quantile(0.99, sum by(le, location) (rate(ejustice_ecase_loading_duration_in_seconds_bucket{kubernetes_namespace=\"$environment\", app=\"$app\", kubernetes_name=\"$ui_service\", groups=\"$groups\", networkSpeed=\"$networkSpeed\"}[$__rate_interval]))))",
+              "fullMetaSearch": false,
+              "hide": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "interval": "",
+              "legendFormat": "{{location}}",
+              "range": false,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Duration via ($networkSpeed) Network",
+          "transformations": [
+            {
+              "id": "seriesToRows",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": true
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Metric": "Page",
+                  "Value": "Loading Duration"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "repeat": "groups",
+      "repeatDirection": "h",
+      "title": "Head Organization: $groups",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "production",
+          "value": "production"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(ejustice_ecase_active_users, kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "",
+        "multi": false,
+        "name": "environment",
+        "options": [],
+        "query": {
+          "query": "label_values(ejustice_ecase_active_users, kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "rwa-iecms",
+          "value": "rwa-iecms"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(ejustice_ecase_active_users{kubernetes_namespace=\"$environment\"}, app)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "app",
+        "options": [],
+        "query": {
+          "query": "label_values(ejustice_ecase_active_users{kubernetes_namespace=\"$environment\"}, app)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "rwaiecmsui-v1",
+          "value": "rwaiecmsui-v1"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(ejustice_ecase_active_users{kubernetes_namespace=\"$environment\"}, kubernetes_name)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "ui_service",
+        "options": [],
+        "query": {
+          "query": "label_values(ejustice_ecase_active_users{kubernetes_namespace=\"$environment\"}, kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": false,
+          "text": "-2,26",
+          "value": "-2,26"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(ejustice_ecase_loading_duration_in_seconds_bucket{kubernetes_namespace=\"$environment\", app=\"$app\"},groups)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "groups",
+        "options": [],
+        "query": {
+          "query": "label_values(ejustice_ecase_loading_duration_in_seconds_bucket{kubernetes_namespace=\"$environment\", app=\"$app\"},groups)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "normal",
+          "value": "normal"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "networkSpeed",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "very-slow",
+            "value": "very-slow"
+          },
+          {
+            "selected": false,
+            "text": "slow",
+            "value": "slow"
+          },
+          {
+            "selected": false,
+            "text": "normal",
+            "value": "normal"
+          },
+          {
+            "selected": false,
+            "text": "fast",
+            "value": "fast"
+          },
+          {
+            "selected": false,
+            "text": "very-fast",
+            "value": "very-fast"
+          },
+          {
+            "selected": false,
+            "text": "n/a",
+            "value": "n/a"
+          },
+          {
+            "selected": false,
+            "text": "undefined",
+            "value": "undefined"
+          }
+        ],
+        "query": "very-slow,slow,normal,fast,very-fast,n/a,undefined\n\n",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Page Loading by Groups",
+  "uid": "06577e2f-47b7-4b31-835c-c57fddf209eb",
+  "version": 1,
+  "weekStart": ""
+}

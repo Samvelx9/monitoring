@@ -1,1 +1,1 @@
-FROM registry.synisys.com/infrastructure/prometheus:v2.43.0
+FROM registry.synisys.com/infrastructure/prometheus:v3.9.1

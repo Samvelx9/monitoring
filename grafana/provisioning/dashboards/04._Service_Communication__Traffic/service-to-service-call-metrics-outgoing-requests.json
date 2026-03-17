@@ -1,0 +1,718 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": false,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 53,
+  "iteration": 1747481112051,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 13,
+      "panels": [],
+      "title": "Overview",
+      "type": "row"
+    },
+    {
+      "cards": {},
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateOranges",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "timeseries",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "heatmap": {},
+      "hideZeroBuckets": false,
+      "highlightCards": true,
+      "id": 8,
+      "legend": {
+        "show": false
+      },
+      "options": {
+        "calculate": true,
+        "calculation": {
+          "xBuckets": {
+            "mode": "size"
+          },
+          "yBuckets": {
+            "mode": "size",
+            "scale": {
+              "type": "linear"
+            }
+          }
+        },
+        "cellGap": 1,
+        "cellValues": {},
+        "color": {
+          "exponent": 0.1,
+          "fill": "#6f716f",
+          "mode": "scheme",
+          "reverse": false,
+          "scale": "exponential",
+          "scheme": "RdYlGn",
+          "steps": 128
+        },
+        "exemplars": {
+          "color": "rgba(255,0,255,0.7)"
+        },
+        "filterValues": {
+          "le": 1e-09
+        },
+        "legend": {
+          "show": true
+        },
+        "rowsFrame": {
+          "layout": "auto"
+        },
+        "tooltip": {
+          "show": true,
+          "yHistogram": false
+        },
+        "yAxis": {
+          "axisPlacement": "left",
+          "reverse": false,
+          "unit": "s"
+        }
+      },
+      "pluginVersion": "10.1.2",
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "histogram_quantile(0.99, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", app=~\"$app\", kubernetes_name=\"$source_service\", target_service=~\"$target_service\"}[$__rate_interval])) by (le, target_service)) > 0",
+          "format": "heatmap",
+          "instant": false,
+          "legendFormat": "{{target_service}} p95",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Service-to-Service Execution Latency (Heatmap)",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "short",
+        "logBase": 1,
+        "show": true
+      },
+      "yBucketBound": "auto"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 1
+      },
+      "id": 39,
+      "options": {
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Value",
+          "sortDesc": false,
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(service_to_service_execution_result_total{kubernetes_namespace=\"$namespace\", app=~\"$app\", kubernetes_name=\"$source_service\", status=\"OK\"}[$__range])) by (target_service)",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{target_service}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Success Responses by Target Service",
+      "transformations": [],
+      "type": "piechart"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 154,
+      "options": {
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Value",
+          "sortDesc": false,
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(service_to_service_execution_result_total{kubernetes_namespace=\"$namespace\", app=~\"$app\", kubernetes_name=~\"$source_service\", status=\"KO\"}[$__range])) by (target_service)",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{target_service}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Server Errors by Target Service",
+      "transformations": [],
+      "type": "piechart"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 4,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "log": 2,
+                  "type": "log"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 9
+          },
+          "id": 2,
+          "maxPerRow": 3,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true,
+              "sortBy": "Max",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "repeat": "target_service",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "expr": "histogram_quantile(0.95, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", app=~\"$app\", kubernetes_name=\"$source_service\", target_service=\"$target_service\"}[$__rate_interval])) by (le)) > 0",
+              "instant": false,
+              "legendFormat": "p95",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "expr": "histogram_quantile(1, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", app=~\"$app\", kubernetes_name=\"$source_service\", target_service=\"$target_service\"}[$__rate_interval])) by (le)) > 0",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "max",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "$source_service -> $target_service",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Latency",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 14,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "OK"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "KO"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 8,
+            "x": 0,
+            "y": 3
+          },
+          "id": 15,
+          "maxPerRow": 3,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "sum"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "repeat": "target_service",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(rate(service_to_service_execution_result_total{kubernetes_namespace=\"$namespace\", app=~\"$app\", status=~\"$status\", target_service=\"$target_service\", kubernetes_name=\"$source_service\"}[$__rate_interval])) by (status)",
+              "instant": false,
+              "interval": "",
+              "legendFormat": "{{status}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "$source_service -> $target_service",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Request Count",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "production",
+          "value": "production"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(service_to_service_execution_seconds_count,kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(service_to_service_execution_seconds_count,kubernetes_namespace)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "rwa-iecms",
+          "value": "rwa-iecms"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(service_to_service_execution_seconds_count{kubernetes_namespace=\"$namespace\"},app)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "app",
+        "options": [],
+        "query": {
+          "query": "label_values(service_to_service_execution_seconds_count{kubernetes_namespace=\"$namespace\"},app)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "entityservice-v1",
+          "value": "entityservice-v1"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(service_to_service_execution_seconds_count{kubernetes_namespace=\"$namespace\"},kubernetes_name)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "source_service",
+        "options": [],
+        "query": {
+          "query": "label_values(service_to_service_execution_seconds_count{kubernetes_namespace=\"$namespace\"},kubernetes_name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(service_to_service_execution_seconds_count{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$source_service\"},target_service)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "target_service",
+        "options": [],
+        "query": {
+          "query": "label_values(service_to_service_execution_seconds_count{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$source_service\"},target_service)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(service_to_service_execution_result_total{kubernetes_namespace=\"$namespace\"},status)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "status",
+        "options": [],
+        "query": {
+          "query": "label_values(service_to_service_execution_result_total{kubernetes_namespace=\"$namespace\"},status)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1d/d",
+    "to": "now-1d/d"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Service-to-Service Call Metrics (Outgoing Requests)",
+  "uid": "63053d47-39e9-4e09-940d-d4a6f3ec57e3",
+  "version": 1,
+  "weekStart": ""
+}

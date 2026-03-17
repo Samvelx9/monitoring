@@ -15,3 +15,4 @@ datasources:
       esVersion: '8.9.1'
       logMessageField: 'message'
       logLevelField: 'app.loglevel'
+

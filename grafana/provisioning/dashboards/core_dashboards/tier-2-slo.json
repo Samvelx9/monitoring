@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,13 +24,16 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 403,
-  "iteration": 1687160820172,
+  "id": 113,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -36,10 +42,23 @@
       },
       "id": 41,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "SLO over $availability_span",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -102,7 +121,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -110,7 +129,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "avg_over_time(\r\n    avg(\r\n(sum_over_time(((\r\n  (\r\n    (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\", status!~\"5..\"}[2m])) by (kubernetes_name))\r\n    /\r\n    (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[2m])) by (kubernetes_name))\r\n  ) > bool 0.995)\r\n  +\r\n  (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[2m])) by (kubernetes_name) == bool 0)\r\n)[$availability_span:])\r\n/\r\ncount_over_time(sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[2m])) by (kubernetes_name)[$availability_span:])\r\n)\r\n    )\r\n[$availability_span:])\r\n\r\n",
+          "expr": "avg_over_time(\r\n    avg(\r\n(sum_over_time(((\r\n  (\r\n    (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\", status!~\"5..\"}[$__rate_interval])) by (kubernetes_name))\r\n    /\r\n    (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name))\r\n  ) > bool 0.995)\r\n  +\r\n  (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name) == bool 0)\r\n)[$availability_span:])\r\n/\r\ncount_over_time(sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name)[$availability_span:])\r\n)\r\n    )\r\n[$availability_span:])\r\n\r\n",
           "hide": false,
           "interval": "$availability_span",
           "legendFormat": "$namespace",
@@ -121,6 +140,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -189,7 +212,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -208,6 +231,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -269,18 +296,20 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "000000001"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "avg(\r\nsum_over_time((histogram_quantile(0.99, sum(rate(service_request_seconds_bucket{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[2m]) )  by (le,kubernetes_name))  <= bool 1) [$availability_span:] )            \r\n/\r\nsum_over_time((sum(rate(service_request_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\",  method!=\"OPTION\", app=~\"$app_ids\"}[2m])) by (kubernetes_name) > bool 0) [$availability_span:])\r\n)",
+          "expr": "avg(\r\navg(sum_over_time((histogram_quantile(0.99, sum(rate(service_request_seconds_bucket{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval]) )  by (le,kubernetes_name))  <= bool 1) [$availability_span:] ) )           \r\n/\r\navg(sum_over_time((sum(rate(service_request_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\",  method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name) > bool 0) [$availability_span:]))\r\n)",
           "hide": false,
           "interval": "$availability_span",
           "legendFormat": "",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -288,6 +317,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -349,18 +382,20 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "000000001"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "avg(\r\nsum_over_time((histogram_quantile(0.95, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[2m]) )  by (le,kubernetes_name))  <= bool 0.5) [$availability_span:] )            \r\n/\r\nsum_over_time((sum(rate(service_request_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\",  method!=\"OPTION\", app=~\"$app_ids\"}[2m])) by (kubernetes_name) > bool 0) [$availability_span:])\r\n)",
+          "expr": "avg(\r\navg(sum_over_time((histogram_quantile(0.95, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval]) )  by (le,kubernetes_name))  <= bool 0.5) [$availability_span:] ))            \r\n/\r\navg(sum_over_time((sum(rate(service_request_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\",  method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name) > bool 0) [$availability_span:]))\r\n)",
           "hide": false,
           "interval": "$availability_span",
           "legendFormat": "",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -368,6 +403,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -378,9 +417,10 @@
           "mappings": [
             {
               "options": {
-                "match": "null",
+                "match": "null+nan",
                 "result": {
-                  "text": "N/A"
+                  "index": 0,
+                  "text": "0"
                 }
               },
               "type": "special"
@@ -430,7 +470,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -526,7 +566,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -564,6 +604,10 @@
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -573,6 +617,10 @@
       "id": 25,
       "panels": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "mappings": [],
@@ -638,6 +686,10 @@
           "type": "stat"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -706,7 +758,7 @@
                 "uid": "000000001"
               },
               "exemplar": true,
-              "expr": "avg(\r\n    sum(rate(nginx_http_response_time{domain=\"$elastic_env\", lt=\"1\"} [2m] ))  \r\n    / \r\n    sum(rate(nginx_http_requests_count_ui{domain=\"$elastic_env\",status=\"all\"} [2m] ))\r\n)",
+              "expr": "avg(\r\n    sum(rate(nginx_http_response_time{domain=\"$elastic_env\", lt=\"1\"} [$__rate_interval] ))  \r\n    / \r\n    sum(rate(nginx_http_requests_count_ui{domain=\"$elastic_env\",status=\"all\"} [$__rate_interval] ))\r\n)",
               "hide": false,
               "interval": "$availability_span",
               "legendFormat": "$elastic_env Latency",
@@ -717,6 +769,10 @@
           "type": "stat"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -785,7 +841,7 @@
                 "uid": "000000001"
               },
               "exemplar": true,
-              "expr": "avg(\r\n    sum(rate(nginx_http_response_time{domain=\"$elastic_env\", lt=\"0.5\"} [2m] ))  \r\n    / \r\n    sum(rate(nginx_http_requests_count_ui{domain=\"$elastic_env\",status=\"all\"} [2m] ))\r\n)",
+              "expr": "avg(\r\n    sum(rate(nginx_http_response_time{domain=\"$elastic_env\", lt=\"0.5\"} [$__rate_interval] ))  \r\n    / \r\n    sum(rate(nginx_http_requests_count_ui{domain=\"$elastic_env\",status=\"all\"} [$__rate_interval] ))\r\n)",
               "hide": false,
               "interval": "$availability_span",
               "legendFormat": "$elastic_env Latency",
@@ -796,11 +852,24 @@
           "type": "stat"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Nginx SLO over $availability_span  (all service calls from UI)",
       "type": "row"
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -810,6 +879,10 @@
       "id": 45,
       "panels": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "mappings": [],
@@ -875,6 +948,10 @@
           "type": "stat"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -943,7 +1020,7 @@
                 "uid": "000000001"
               },
               "exemplar": true,
-              "expr": "avg(\r\n    sum(rate(nginx_http_response_time{domain=\"$elastic_env\", lt=\"1\"} [2m] ))  \r\n    / \r\n    sum(rate(nginx_http_requests_count_total{domain=\"$elastic_env\",status=\"all\"} [2m] ))\r\n)",
+              "expr": "avg(\r\n    sum(rate(nginx_http_response_time{domain=\"$elastic_env\", lt=\"1\"} [$__rate_interval] ))  \r\n    / \r\n    sum(rate(nginx_http_requests_count_total{domain=\"$elastic_env\",status=\"all\"} [$__rate_interval] ))\r\n)",
               "hide": false,
               "interval": "$availability_span",
               "legendFormat": "$elastic_env Latency",
@@ -954,6 +1031,10 @@
           "type": "stat"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1022,7 +1103,7 @@
                 "uid": "000000001"
               },
               "exemplar": true,
-              "expr": "avg(\r\n    sum(rate(nginx_http_response_time{domain=\"$elastic_env\", lt=\"0.5\"} [2m] ))  \r\n    / \r\n    sum(rate(nginx_http_requests_count_total{domain=\"$elastic_env\",status=\"all\"} [2m] ))\r\n)",
+              "expr": "avg(\r\n    sum(rate(nginx_http_response_time{domain=\"$elastic_env\", lt=\"0.5\"} [$__rate_interval] ))  \r\n    / \r\n    sum(rate(nginx_http_requests_count_total{domain=\"$elastic_env\",status=\"all\"} [$__rate_interval] ))\r\n)",
               "hide": false,
               "interval": "$availability_span",
               "legendFormat": "$elastic_env Latency",
@@ -1033,11 +1114,24 @@
           "type": "stat"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "SLOs over $availability_span (all calls from UI)",
       "type": "row"
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1046,16 +1140,31 @@
       },
       "id": 23,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Availability Detailed",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1067,6 +1176,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1120,6 +1230,7 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
+          "showLegend": true,
           "sortBy": "Min",
           "sortDesc": false
         },
@@ -1136,7 +1247,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "(sum_over_time(((\n  (\n    (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\", status!~\"5..\"}[2m])) by (kubernetes_name))\n    /\n    (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[2m])) by (kubernetes_name))\n  ) > bool 0.995)\n  +\n  (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[2m])) by (kubernetes_name) == bool 0)\n)[$availability_span:])\n/\ncount_over_time(sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[2m])) by (kubernetes_name)[$availability_span:])\n)",
+          "expr": "(sum_over_time(((\n  (\n    (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\", status!~\"5..\"}[$__rate_interval])) by (kubernetes_name))\n    /\n    (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name))\n  ) > bool 0.995)\n  +\n  (sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name) == bool 0)\n)[$availability_span:])\n/\ncount_over_time(sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name)[$availability_span:])\n)",
           "format": "time_series",
           "hide": false,
           "interval": "$availability_span",
@@ -1149,12 +1260,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1166,6 +1283,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1218,7 +1336,8 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1246,12 +1365,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1263,6 +1388,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1313,7 +1439,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1328,7 +1455,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "\t\n\n(sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\", app=~\"$app_ids\", status!~\"5..\"}[2m])) by (kubernetes_name) )\n/\n(sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\", app=~\"$app_ids\"}[2m])) by (kubernetes_name) )\n",
+          "expr": "\t\n\n(sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\", app=~\"$app_ids\", status!~\"5..\"}[$__rate_interval])) by (kubernetes_name) )\n/\n(sum(rate(service_response_status_total{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name) )\n",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -1341,12 +1468,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1358,6 +1491,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1408,7 +1542,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1447,6 +1582,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1458,6 +1595,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1505,7 +1643,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1515,6 +1654,10 @@
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "sum(sum(up{job=\"kubernetes-service-endpoints\",kubernetes_namespace=\"$namespace\",kubernetes_name=~\"$service\" } != 0) by (kubernetes_name) - 1) by (kubernetes_name)",
           "format": "time_series",
           "instant": false,
@@ -1538,6 +1681,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1549,6 +1694,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1595,7 +1741,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1618,6 +1765,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "metrics": [
             {
               "$$hashKey": "object:68",
@@ -1645,6 +1796,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1656,6 +1809,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1702,7 +1856,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1725,6 +1880,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "metrics": [
             {
               "$$hashKey": "object:325",
@@ -1743,6 +1902,10 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1751,16 +1914,31 @@
       },
       "id": 37,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Latency",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1772,6 +1950,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1837,7 +2016,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1852,7 +2032,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "\nsum_over_time((histogram_quantile(0.99, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[2m]) )  by (le,kubernetes_name))  <= bool 1) [$availability_span:] )            \n/\nsum_over_time((sum(rate(service_request_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\",  method!=\"OPTION\", app=~\"$app_ids\"}[2m])) by (kubernetes_name) > bool 0) [$availability_span:])",
+          "expr": "\nsum_over_time((histogram_quantile(0.99, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval]) )  by (le,kubernetes_name))  <= bool 1) [$availability_span:] )            \n/\nsum_over_time((sum(rate(service_request_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\",  method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name) > bool 0) [$availability_span:])",
           "format": "time_series",
           "interval": "$availability_span",
           "intervalFactor": 1,
@@ -1864,12 +2044,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1881,6 +2067,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1946,7 +2133,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -1961,7 +2149,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "sum_over_time((histogram_quantile(0.95, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[2m]) )  by (le,kubernetes_name))  <= bool 0.5) [$availability_span:] )            \n/\nsum_over_time((sum(rate(service_request_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\",  method!=\"OPTION\", app=~\"$app_ids\"}[2m])) by (kubernetes_name) > bool 0) [$availability_span:])",
+          "expr": "sum_over_time((histogram_quantile(0.95, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval]) )  by (le,kubernetes_name))  <= bool 0.5) [$availability_span:] )            \n/\nsum_over_time((sum(rate(service_request_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\",  method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval])) by (kubernetes_name) > bool 0) [$availability_span:])",
           "format": "time_series",
           "hide": false,
           "interval": "$availability_span",
@@ -1974,12 +2162,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1991,6 +2185,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2054,7 +2249,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -2069,7 +2265,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "histogram_quantile(0.99, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[2m])) by (le,kubernetes_name)) ",
+          "expr": "histogram_quantile(0.99, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval])) by (le,kubernetes_name)) ",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2082,12 +2278,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2099,6 +2301,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2162,7 +2365,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "multi",
@@ -2177,7 +2381,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "histogram_quantile(0.95, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[2m])) by (le,kubernetes_name)) ",
+          "expr": "histogram_quantile(0.95, sum(rate(service_request_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", method!=\"OPTION\", app=~\"$app_ids\"}[$__rate_interval])) by (le,kubernetes_name)) ",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2189,15 +2393,15 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 34,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "development",
           "value": "development"
         },
@@ -2227,7 +2431,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2247,7 +2451,7 @@
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "/entitysearchservice-v1|orgchartservice-v1|permissionservice-v1|wfservice-v1|deservice-v1|medeservice-v1|validationservice-v1|datasetservice-v1|lockservice-v1|classifierservice-v1|formmanagementservice-v1|currencyrateservice-v1|gisservice-v1|exportservice-v1|documentservice-v1|auditservice-v1|currencyrateservice-v1|mailservice-v1|reportingservice-v1|notificationservice-v1/",
+        "regex": "/entitysearchservice-v.+|orgchartservice-v.+|permissionservice-v.+|wfservice-v.+|deservice-v.+|medeservice-v.+|validationservice-v.+|datasetservice-v.+|lockservice-v.+|classifierservice-v.+|formmanagementservice-v.+|currencyrateservice-v.+|gisservice-v.+|exportservice-v.+|documentservice-v.+|auditservice-v.+|currencyrateservice-v.+|mailservice-v.+|reportingservice-v.+|notificationservice-v.+/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -2309,14 +2513,14 @@
           }
         ],
         "query": "1h,2h,6h,12h,1d,2d,7d,30d",
-        "queryValue": "15m",
+        "queryValue": "1h",
         "skipUrlSync": false,
         "type": "custom"
       },
       {
         "allValue": "ALL",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "ALL"
           ],
@@ -2350,7 +2554,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "auditservice",
           "value": "auditservice"
         },
@@ -2380,9 +2584,14 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": "k8s-dev.synisys.com",
-          "value": "k8s-dev.synisys.com"
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
         },
         "definition": "label_values(nginx_http_requests_count_ui,domain)",
         "hide": 0,
@@ -2434,7 +2643,7 @@
   },
   "timezone": "",
   "title": "Tier-2 SLO",
-  "uid": "1YdFm50Wksadasad",
-  "version": 8,
+  "uid": "0b9387e0-df66-462d-945a-f3445c5eb172",
+  "version": 1,
   "weekStart": ""
 }

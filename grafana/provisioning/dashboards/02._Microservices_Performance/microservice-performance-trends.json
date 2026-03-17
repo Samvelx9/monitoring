@@ -1,0 +1,1031 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "This dashboard provides key performance metrics for the selected microservice, including RPS, latency, query rate, and query duration. It enables comparison of current values with historical data from 1 to 7 days ago, helping to identify performance regressions, improvements, or anomalies over time. ",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": 45,
+  "iteration": 1747123673784,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 87,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "200"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "500"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "404"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "401"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 1
+          },
+          "id": 96,
+          "links": [],
+          "maxPerRow": 6,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "repeat": "shift",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "10m",
+                    "min_doc_count": 0,
+                    "trimEdges": 0
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "dsType": "elasticsearch",
+              "expr": "type:nginx-access  AND  request_host:\"$namespace.synisys.com\" AND nginx.service.name:\"$kibana_service\"",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type.keyword:nginx-access AND request_host.keyword:\"$nginx_host\" AND nginx.service.name.keyword:\"$kibana_service\"",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "timeShift": "$shift",
+          "title": "Requests Per 10 Minute",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Requests",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 93,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "never",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "200"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "500"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "404"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "401"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "p95.0 request_time"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "__systemRef": "hideSeriesFrom",
+                "matcher": {
+                  "id": "byNames",
+                  "options": {
+                    "mode": "exclude",
+                    "names": [
+                      "p99.0 request_time"
+                    ],
+                    "prefix": "All except:",
+                    "readOnly": true
+                  }
+                },
+                "properties": [
+                  {
+                    "id": "custom.hideFrom",
+                    "value": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": true
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "p99.0 request_time"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 2
+          },
+          "id": 85,
+          "links": [],
+          "maxPerRow": 6,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "repeat": "shift",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "20m",
+                    "min_doc_count": 0,
+                    "trimEdges": 0
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "dsType": "elasticsearch",
+              "expr": "type:nginx-access  AND  request_host:\"$namespace.synisys.com\" AND nginx.service.name:\"$kibana_service\"",
+              "format": "time_series",
+              "hide": false,
+              "intervalFactor": 2,
+              "metrics": [
+                {
+                  "field": "request_time",
+                  "id": "1",
+                  "meta": {},
+                  "settings": {
+                    "percents": [
+                      "99"
+                    ]
+                  },
+                  "type": "percentiles"
+                }
+              ],
+              "query": "type.keyword:nginx-access AND request_host.keyword:\"$nginx_host\" AND nginx.service.name.keyword:\"$kibana_service\"",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "timeShift": "$shift",
+          "title": "Response time",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Response Time",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 94,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 3
+          },
+          "id": 89,
+          "maxPerRow": 6,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "repeat": "shift",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "exemplar": true,
+              "expr": "pg_query_execution_count{db_name=\"$db_name\", user_name=\"$user_name\", instance=\"$db_server\"}",
+              "hide": false,
+              "interval": "10m",
+              "legendFormat": "qps",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "timeShift": "$shift",
+          "title": "SQL Query Execution Rate",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Query Executions",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 3
+      },
+      "id": 95,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "log": 2,
+                  "type": "symlog"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ms"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "production_deservice_rwa_iecms"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Value"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "blue",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 6,
+            "x": 0,
+            "y": 4
+          },
+          "id": 90,
+          "maxPerRow": 6,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "repeat": "shift",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "exemplar": true,
+              "expr": "max(pg_query_execution_time_max{db_name=~\"$db_name\", instance=~\"$db_server\", user_name=~\"$user_name\"}) by (user_name)",
+              "interval": "10m",
+              "intervalFactor": 1,
+              "legendFormat": "Duration",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "timeShift": "$shift",
+          "title": "Execution Time Max",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Query Latency",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "dev10",
+          "value": "dev10"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info,kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info,kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "entityservice-v1",
+          "value": "entityservice-v1"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info{kubernetes_namespace=\"$namespace\"},kubernetes_name)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{kubernetes_namespace=\"$namespace\"},kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "argocd.synisys.com",
+          "value": "argocd.synisys.com"
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "000000006"
+        },
+        "definition": "{\"find\": \"terms\", \"field\": \"request_host.keyword\"}",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "nginx_host",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"request_host.keyword\"}",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "entityservice",
+          "value": "entityservice"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info{kubernetes_name=\"$service\"}, kubernetes_name)",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "kibana_service",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{kubernetes_name=\"$service\"}, kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "/(.+)-v[0-9]+$/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "v1",
+          "value": "v1"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info{kubernetes_name=\"$service\"}, kubernetes_name)",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "kibana_service_version",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{kubernetes_name=\"$service\"}, kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "/-(v[0-9]+)$/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "postgresql-dev4.synisys.com:9187",
+          "value": "postgresql-dev4.synisys.com:9187"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(pg_up,instance)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "db_server",
+        "options": [],
+        "query": {
+          "query": "label_values(pg_up,instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "dba",
+          "value": "dba"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(pg_query_execution_count{instance=~\"$db_server\"},db_name)  ",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "db_name",
+        "options": [],
+        "query": {
+          "query": "label_values(pg_query_execution_count{instance=~\"$db_server\"},db_name)  ",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "admin",
+          "value": "admin"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(pg_query_execution_count{instance=~\"$db_server\", db_name=~\"$db_name\"}, user_name)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": true,
+        "name": "user_name",
+        "options": [],
+        "query": {
+          "query": "label_values(pg_query_execution_count{instance=~\"$db_server\", db_name=~\"$db_name\"}, user_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "0d",
+            "3d",
+            "4d",
+            "5d"
+          ],
+          "value": [
+            "0d",
+            "3d",
+            "4d",
+            "5d"
+          ]
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": true,
+        "name": "shift",
+        "options": [
+          {
+            "selected": true,
+            "text": "0d",
+            "value": "0d"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "2d",
+            "value": "2d"
+          },
+          {
+            "selected": true,
+            "text": "3d",
+            "value": "3d"
+          },
+          {
+            "selected": true,
+            "text": "4d",
+            "value": "4d"
+          },
+          {
+            "selected": true,
+            "text": "5d",
+            "value": "5d"
+          },
+          {
+            "selected": false,
+            "text": "6d",
+            "value": "6d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          }
+        ],
+        "query": "0d,1d,2d,3d,4d,5d,6d,7d",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Microservice Performance Trends",
+  "uid": "70daa36e-17e2-4799-a7b5-77cd1869808b",
+  "version": 1,
+  "weekStart": ""
+}

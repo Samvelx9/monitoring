@@ -1,0 +1,110 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 10s
+      folder: alerting
+      interval: 10s
+      rules:
+        - uid: no-rabbitmq-consumers
+          title: 'No RabbitMQ consumer '
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                datasource:
+                    type: prometheus
+                    uid: "000000001"
+                exemplar: true
+                expr: |-
+                    rabbitmq_queue_consumers{job="kubernetes-service-endpoints",
+                      queue!~".*retry",
+                      queue!~"reporting-service-sync-.*",
+                      queue!~".*-exchange-tracker",
+                      queue!~"^SIS.+",
+                      queue!~"^sis.+",
+                      queue!~"^Sis.+",
+                      queue!~"^DESKTOP.+",
+                      queue!~"messaging-upgraded-services",
+                      queue!~"reporting-service-sync.source-exchange-created",
+                      queue!~"health-status-result-test",
+                      queue!~"^reporting-service-sync.+",
+                      queue!~".+-v1.+",
+                      queue!~".+-v2.+",
+                      queue!~"^macadmins.+",
+                      queue!~"^localhost.+",
+                      queue!~"^[0-9].+",
+                      queue!~"health-status-result",
+                      queue!~"^kube-master-dev.+",
+                      queue!~".*docker.*"
+                      } < 1
+                interval: 15s
+                intervalMs: 30000
+                legendFormat: '{{queue}}  <{{kubernetes_namespace}}>'
+                maxDataPoints: 43200
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: vldByyKnz
+          panelId: 60
+          noDataState: OK
+          execErrState: OK
+          for: 10m
+          annotations:
+            __dashboardUid__: vldByyKnz
+            __panelId__: "60"
+            summary: '{{ index $labels "queue" }} <{{ index $labels "kubernetes_namespace" }}> has no consumer'
+          labels:
+            severity: warning
+          isPaused: false

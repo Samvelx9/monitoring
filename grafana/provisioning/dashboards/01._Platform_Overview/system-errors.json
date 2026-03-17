@@ -1,0 +1,1628 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "CPU, memory, latency, error rates per service",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": 41,
+  "iteration": 1747122811683,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "000000006"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 39,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "dsType": "elasticsearch",
+          "expr": "",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "metrics": [
+            {
+              "field": "select field",
+              "hide": false,
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "count"
+            }
+          ],
+          "query": "type:nginx-access AND request_host:\"$nginx_host\" AND status_code:4??",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "# of 4xx requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "000000006"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 0
+      },
+      "id": 197,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "dsType": "elasticsearch",
+          "expr": "",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "metrics": [
+            {
+              "field": "select field",
+              "hide": false,
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "count"
+            }
+          ],
+          "query": "type:nginx-access AND request_host:\"$nginx_host\" AND status_code:5??",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "# of 5xx requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "000000006"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 18,
+        "y": 0
+      },
+      "id": 42,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "dsType": "elasticsearch",
+          "expr": "",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "metrics": [
+            {
+              "field": "select field",
+              "hide": false,
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "count"
+            }
+          ],
+          "query": "type:log AND app.environment:\"$namespace\" AND app.loglevel:\"WARN\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "# of WARN Logs",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "000000006"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 21,
+        "y": 0
+      },
+      "id": 44,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "dsType": "elasticsearch",
+          "expr": "",
+          "format": "time_series",
+          "intervalFactor": 2,
+          "metrics": [
+            {
+              "field": "select field",
+              "hide": false,
+              "id": "1",
+              "meta": {},
+              "settings": {},
+              "type": "count"
+            }
+          ],
+          "query": "type:log AND app.environment:\"$namespace\" AND app.loglevel:\"ERROR\"",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "# of ERROR Logs",
+      "type": "stat"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "id": 151,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "mappings": [],
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "500"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "404"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "200 OPTIONS"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "401 GET"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 5
+          },
+          "id": 52,
+          "links": [],
+          "options": {
+            "displayLabels": [
+              "value",
+              "percent"
+            ],
+            "legend": {
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "values": [
+                "value"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "count"
+              ],
+              "fields": "/.*/",
+              "values": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "field": "status_code.keyword",
+                  "id": "4",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "1",
+                    "size": "10"
+                  },
+                  "type": "terms"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "dsType": "elasticsearch",
+              "expr": "type:nginx-access  AND  request_host:\"$namespace.synisys.com\" AND nginx.service.name:\"$kibana_service\"",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "metrics": [
+                {
+                  "hide": false,
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type:nginx-access AND request_host:\"$nginx_host\" AND status_code:5??",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "Server Erros (Status Code Distribution)",
+          "transformations": [
+            {
+              "id": "rowsToFields",
+              "options": {
+                "mappings": [
+                  {
+                    "fieldName": "status_code.keyword",
+                    "handlerKey": "field.name"
+                  },
+                  {
+                    "fieldName": "Count",
+                    "handlerKey": "field.value"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "piechart"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                }
+              },
+              "mappings": [],
+              "unit": "short"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "500"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "404"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "200 OPTIONS"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "401 GET"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 5
+          },
+          "id": 198,
+          "links": [],
+          "options": {
+            "displayLabels": [
+              "value",
+              "percent"
+            ],
+            "legend": {
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "values": [
+                "value"
+              ]
+            },
+            "pieType": "pie",
+            "reduceOptions": {
+              "calcs": [
+                "count"
+              ],
+              "fields": "/.*/",
+              "values": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "8.3.3",
+          "targets": [
+            {
+              "bucketAggs": [
+                {
+                  "field": "status_code.keyword",
+                  "id": "4",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "1",
+                    "size": "10"
+                  },
+                  "type": "terms"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "dsType": "elasticsearch",
+              "expr": "type:nginx-access  AND  request_host:\"$namespace.synisys.com\" AND nginx.service.name:\"$kibana_service\"",
+              "format": "time_series",
+              "intervalFactor": 2,
+              "metrics": [
+                {
+                  "hide": false,
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type:nginx-access AND request_host:\"$nginx_host\" AND status_code:4??",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "Client Errors (Status Code Distribution)",
+          "transformations": [
+            {
+              "id": "rowsToFields",
+              "options": {
+                "mappings": [
+                  {
+                    "fieldName": "status_code.keyword",
+                    "handlerKey": "field.name"
+                  },
+                  {
+                    "fieldName": "Count",
+                    "handlerKey": "field.value"
+                  }
+                ]
+              }
+            }
+          ],
+          "type": "piechart"
+        }
+      ],
+      "title": "Status Code Distribution",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 334,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 6
+          },
+          "id": 246,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "sortBy": "Total",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "nginx.service.name.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type:nginx-access AND request_host:\"$nginx_host\" AND status_code:5??",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "Server Errors (Target Service Distribution)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 6
+          },
+          "id": 48,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "sortBy": "Total",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "nginx.service.name.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type:nginx-access AND request_host:\"$nginx_host\" AND status_code:4??",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "Client Errors (Target Service Distribution)",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Target Service Distribution",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 335,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 15
+          },
+          "id": 201,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "sortBy": "Total",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "source_service_name.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type:nginx-access AND request_host:\"$nginx_host\" AND status_code:5??",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "Server Errors (Source Service Distribution)",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(Value)",
+                "renamePattern": "Browser"
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 15
+          },
+          "id": 202,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "right",
+              "showLegend": true,
+              "sortBy": "Total",
+              "sortDesc": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "alias": "",
+              "bucketAggs": [
+                {
+                  "field": "source_service_name.keyword",
+                  "id": "3",
+                  "settings": {
+                    "min_doc_count": "1",
+                    "order": "desc",
+                    "orderBy": "_count",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type:nginx-access AND request_host:\"$nginx_host\" AND status_code:4?? AND NOT status_code:401 AND NOT status_code:403",
+              "refId": "A",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "Client Errors (Source Service Distribution)",
+          "transformations": [
+            {
+              "id": "renameByRegex",
+              "options": {
+                "regex": "(Value)",
+                "renamePattern": "Browser"
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "title": "Source Service Distribution",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 103,
+      "panels": [
+        {
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "red",
+                "mode": "fixed"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "area"
+                }
+              },
+              "mappings": [],
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 1
+                  },
+                  {
+                    "color": "red",
+                    "value": 2
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 0,
+            "y": 8
+          },
+          "id": 129,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "max",
+                "lastNotNull"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "10.1.2",
+          "repeat": "service",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "alias": "Total",
+              "bucketAggs": [
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type.keyword:nginx-access AND request_host.keyword:\"$nginx_host\" AND status_code.keyword:[100 TO 599] AND nginx.service.name:$service",
+              "refId": "A",
+              "timeField": "@timestamp"
+            },
+            {
+              "alias": "Error",
+              "bucketAggs": [
+                {
+                  "field": "@timestamp",
+                  "id": "2",
+                  "settings": {
+                    "interval": "auto"
+                  },
+                  "type": "date_histogram"
+                }
+              ],
+              "datasource": {
+                "type": "elasticsearch",
+                "uid": "000000006"
+              },
+              "hide": false,
+              "metrics": [
+                {
+                  "id": "1",
+                  "type": "count"
+                }
+              ],
+              "query": "type.keyword:nginx-access AND request_host.keyword:\"$nginx_host\" AND status_code.keyword:[499 TO 599] AND nginx.service.name:$service",
+              "refId": "B",
+              "timeField": "@timestamp"
+            }
+          ],
+          "title": "Error Rate ($service-service)",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "binary": {
+                  "left": "Error",
+                  "operator": "/",
+                  "reducer": "sum",
+                  "right": "Total"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "binary": {
+                  "left": "Error / Total",
+                  "operator": "*",
+                  "reducer": "sum",
+                  "right": "100"
+                },
+                "mode": "binary",
+                "reduce": {
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Error": true,
+                  "Error / Total": true,
+                  "Total": true
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Error / Total * 100": "Error Rate (%)"
+                }
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Error Rate (%)",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "production",
+          "value": "production"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info,kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info,kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "0.0.0.0",
+          "value": "0.0.0.0"
+        },
+        "datasource": {
+          "type": "elasticsearch",
+          "uid": "000000006"
+        },
+        "definition": "{\"find\": \"terms\", \"field\": \"request_host.keyword\"}",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "nginx_host",
+        "options": [],
+        "query": "{\"find\": \"terms\", \"field\": \"request_host.keyword\"}",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info,kubernetes_name)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info,kubernetes_name)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "/(.+)-v[0-9]+$/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "System Errors",
+  "uid": "8d3b56ac-c781-4971-a534-6e5e4873d105",
+  "version": 1,
+  "weekStart": ""
+}

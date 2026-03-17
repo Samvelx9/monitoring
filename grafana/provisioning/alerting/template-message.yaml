@@ -1,0 +1,21 @@
+# config file version
+apiVersion: 1
+
+# List of templates to import or update
+templates:
+  # <int> organization ID, default = 1
+  - orgId: 1
+    # <string, required> name of the template, must be unique
+    name: message
+    # <string, required> content of the template
+    template: |
+      {{ define "message" }}
+        {{ if gt (len .Alerts.Firing) 0 }}
+        Firing
+          {{ range .Alerts.Firing -}} {{ template "alert" .}} {{ end }}
+        {{ end }}
+        {{ if gt (len .Alerts.Resolved) 0 }}
+        Resolved
+          {{ range .Alerts.Resolved -}} {{ template "alert" .}} {{ end }}
+        {{ end }}
+      {{ end }}

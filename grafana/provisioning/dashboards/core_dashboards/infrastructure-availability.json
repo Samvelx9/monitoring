@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,8 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 410,
-  "iteration": 1679399031116,
+  "id": 99,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -38,10 +40,23 @@
         "y": 0
       },
       "id": 25,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "SLOs over $availability_span",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -103,7 +118,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -126,6 +141,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -187,7 +206,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -210,6 +229,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -271,15 +294,16 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "000000001"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "avg_over_time(up{job=\"elasticsearch_exporter\"} [$availability_span:] )",
+          "expr": "avg_over_time(up{job=\"elasticsearch_exporter\",namespace=~\"$namespace\"} [$availability_span:] )",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -294,6 +318,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -355,15 +383,16 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "000000001"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "avg_over_time((sum(up{job=\"redis-exporter\", environment=~\"$namespace\"} ) / count(up{job=\"redis-exporter\", environment=~\"$namespace\"})) [$availability_span:] )",
+          "expr": "avg_over_time((sum(redis_up{kubernetes_namespace=~\"$namespace\"} ) / count(redis_up{kubernetes_namespace=~\"$namespace\"})) [$availability_span:] )",
           "hide": false,
           "instant": true,
           "interval": "",
@@ -441,9 +470,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "avg_over_time((sum(up{job=\"consul-exporter\"} ) / count(up{job=\"consul-exporter\"})) [$availability_span:] )",
           "interval": "",
           "legendFormat": "",
@@ -455,6 +488,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -516,15 +553,16 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "000000001"
           },
+          "editorMode": "code",
           "exemplar": false,
-          "expr": "avg_over_time((sum(up{job=\"rabbitmq-exporter\", environment=~\"$namespace\"} ) / count(up{job=\"rabbitmq-exporter\", environment=~\"$namespace\"})) [$availability_span:] )",
+          "expr": "avg_over_time((sum(rabbitmq_up{kubernetes_namespace=~\"$namespace\"} ) / count(rabbitmq_up{kubernetes_namespace=~\"$namespace\"})) [$availability_span:] )",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -536,6 +574,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "decimals": 1,
@@ -601,7 +643,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -689,9 +731,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "avg_over_time((sum(up{job=\"nginx-prometheus-exporter\"} ) / count(up{job=\"nginx-prometheus-exporter\"})) [$availability_span:] )",
           "interval": "",
           "legendFormat": "",
@@ -717,16 +763,31 @@
       "id": 31,
       "panels": [],
       "repeat": "namespace",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "infrastructure",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -738,6 +799,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -785,10 +847,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -821,6 +885,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -832,6 +898,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -879,18 +946,26 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "avg_over_time((sum(up{job=\"rabbitmq-exporter\", environment=~\"$namespace\"} ) / count(up{job=\"rabbitmq-exporter\", environment=~\"$namespace\"})) [$availability_span:] )",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "avg_over_time((sum by (kubernetes_namespace)(rabbitmq_up{kubernetes_namespace=~\"$namespace\"} ) / count by (kubernetes_namespace)(rabbitmq_up{kubernetes_namespace=~\"$namespace\"})) [$availability_span:] )",
           "interval": "",
-          "legendFormat": "rabbit up over $availability_span",
+          "legendFormat": "{{kubernetes_namespace}} rabbit up over $availability_span",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -899,12 +974,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -916,6 +997,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -962,10 +1044,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -998,6 +1082,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1009,6 +1095,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1055,18 +1142,26 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "up{job=\"rabbitmq-exporter\", environment=~\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "rabbitmq_up{kubernetes_namespace=~\"$namespace\"}",
           "interval": "",
-          "legendFormat": "{{environment}}",
+          "legendFormat": "{{kubernetes_namespace}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1085,6 +1180,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1096,6 +1193,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1143,15 +1241,21 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "avg_over_time((sum(up{job=\"consul-exporter\"} ) / count(up{job=\"consul-exporter\"})) [$availability_span:] )",
           "interval": "",
           "legendFormat": "consul up over $availability_span",
@@ -1163,12 +1267,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1180,6 +1290,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1227,10 +1338,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -1240,10 +1353,12 @@
             "type": "prometheus",
             "uid": "000000001"
           },
-          "expr": "avg_over_time((sum(up{job=\"redis-exporter\", environment=~\"$namespace\"} ) / count(up{job=\"redis-exporter\", environment=~\"$namespace\"})) [$availability_span:] )",
+          "editorMode": "code",
+          "expr": "avg_over_time((sum(redis_up{kubernetes_namespace=~\"$namespace\"} ) / count(redis_up{kubernetes_namespace=~\"$namespace\"})) [$availability_span:] )",
           "hide": false,
           "interval": "",
           "legendFormat": "redis up over $availability_span",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1262,6 +1377,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1273,6 +1390,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1319,18 +1437,26 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "min(up{job=\"consul-exporter\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "consul_up",
           "interval": "",
-          "legendFormat": "min(consul up)",
+          "legendFormat": "consul up",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1349,6 +1475,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1360,6 +1488,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1406,18 +1535,26 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "min(up{job=\"redis-exporter\", environment=~\"$namespace\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "redis_up{kubernetes_namespace=~\"$namespace\"}",
           "interval": "",
           "legendFormat": "min(redis up)",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1436,6 +1573,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1447,6 +1586,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1494,18 +1634,26 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "avg_over_time((sum(up{job=\"elasticsearch_exporter\"} ) / count(up{job=\"elasticsearch_exporter\"})) [$availability_span:] )",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "avg_over_time((sum(up{job=~\"elasticsearch_exporter\",namespace=~\"$namespace\"} ) / count(up{job=~\"elasticsearch_exporter\",namespace=~\"$namespace\"})) [$availability_span:] )",
           "interval": "",
           "legendFormat": "elastic up over $availability_span",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -1524,6 +1672,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1535,6 +1685,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1582,15 +1733,21 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "avg_over_time((sum(up{job=\"nginx-prometheus-exporter\"} ) / count(up{job=\"nginx-prometheus-exporter\"})) [$availability_span:] )",
           "interval": "",
           "legendFormat": "nginx up over $availability_span",
@@ -1612,6 +1769,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1623,6 +1782,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1669,18 +1829,26 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "min(up{job=\"elasticsearch_exporter\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "min(up{job=\"elasticsearch_exporter\",namespace=~\"$namespace\"})",
           "interval": "",
           "legendFormat": "min(elastic up)",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -1699,6 +1867,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1710,6 +1880,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1756,15 +1927,21 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "min(up{job=\"nginx-prometheus-exporter\"})",
           "interval": "",
           "legendFormat": "min(nginx up)",
@@ -1786,6 +1963,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1797,6 +1976,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1844,15 +2024,21 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "avg_over_time((sum(up{job=\"prometheus\"} ) / count(up{job=\"prometheus\"})) [$availability_span:] )",
           "interval": "",
           "legendFormat": "prometheus up over $availability_span",
@@ -1864,12 +2050,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1881,6 +2073,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1928,10 +2121,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -1963,6 +2158,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1974,6 +2171,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2020,15 +2218,21 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "min(up{job=\"prometheus\"})",
           "legendFormat": "min(prometheus up)",
           "refId": "A"
@@ -2039,12 +2243,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2056,6 +2266,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2102,10 +2313,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -2128,16 +2341,16 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 34,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "dev3",
-          "value": "dev3"
+          "selected": true,
+          "text": "development",
+          "value": "development"
         },
         "datasource": {
           "type": "prometheus",
@@ -2165,7 +2378,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "1h",
           "value": "1h"
         },
@@ -2249,7 +2462,7 @@
   },
   "timezone": "",
   "title": "Infrastructure Availability",
-  "uid": "1YdFm50W12",
-  "version": 2,
+  "uid": "34e26576-c199-4701-aedb-64eb7f1f7b0b",
+  "version": 1,
   "weekStart": ""
 }

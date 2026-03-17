@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -22,8 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 238,
-  "iteration": 1679398485069,
+  "id": 97,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -32,6 +34,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -67,7 +73,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -77,6 +83,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "hikaricp_active_connections{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}",
           "format": "time_series",
           "hide": false,
@@ -87,6 +97,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "hikaricp_idle_connections{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}",
           "format": "time_series",
           "hide": false,
@@ -96,6 +110,10 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "hikaricp_pending_threads{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}",
           "format": "time_series",
           "hide": false,
@@ -105,7 +123,11 @@
           "refId": "C"
         },
         {
-          "expr": "idelta(hikaricp_connection_timeout_total{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}[2m])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(hikaricp_connection_timeout_total{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}[$__rate_interval])",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -115,6 +137,10 @@
           "refId": "D"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "hikaricp_max_connections{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}",
           "legendFormat": "max",
           "refId": "E"
@@ -158,6 +184,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -193,7 +223,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -203,6 +233,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "sum(hikaricp_active_connections{kubernetes_namespace=\"$namespace\", pool=\"$application\"})",
           "format": "time_series",
           "hide": false,
@@ -213,6 +247,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "sum(hikaricp_idle_connections{kubernetes_namespace=\"$namespace\", pool=\"$application\"})",
           "format": "time_series",
           "hide": false,
@@ -222,6 +260,10 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "sum(hikaricp_pending_threads{kubernetes_namespace=\"$namespace\",  pool=\"$application\"})",
           "format": "time_series",
           "hide": false,
@@ -265,6 +307,10 @@
       }
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "",
       "gridPos": {
         "h": 3,
@@ -275,10 +321,24 @@
       "id": 20,
       "links": [],
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "<div style=\"text-align: center;\"><i><strong style=\"color: #CCCCCC; font-size: 40px;\">Connections Creation</strong></i></div>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
@@ -337,14 +397,14 @@
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "last"
           ],
-          "fields": "/^hikaricp_connection_creation_millis{instance=\"10.244.8.56:8086\", job=\"kubernetes-service-endpoints\", kubernetes_name=\"lockservice-v1\", kubernetes_namespace=\"staging\", kubernetes_node=\"k8s-node10-dev\", pool=\"armdtr\", quantile=\"0.5\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -359,8 +419,13 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_creation_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.5\"}",
+          "editorMode": "code",
+          "expr": "avg(hikaricp_connection_creation_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.5\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -377,6 +442,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -385,6 +451,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -442,7 +512,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -462,8 +532,9 @@
             "uid": "000000001"
           },
           "dsType": "elasticsearch",
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "hikaricp_connection_creation_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.95\"}",
+          "expr": "avg(hikaricp_connection_creation_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.95\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -483,6 +554,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -491,6 +563,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -541,14 +617,14 @@
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "last"
           ],
-          "fields": "/^hikaricp_connection_creation_millis{instance=\"10.244.8.56:8086\", job=\"kubernetes-service-endpoints\", kubernetes_name=\"lockservice-v1\", kubernetes_namespace=\"staging\", kubernetes_node=\"k8s-node10-dev\", pool=\"armdtr\", quantile=\"0.99\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -568,8 +644,9 @@
             "uid": "000000001"
           },
           "dsType": "elasticsearch",
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "hikaricp_connection_creation_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.99\"}",
+          "expr": "avg(hikaricp_connection_creation_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.99\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -588,6 +665,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -639,7 +717,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -661,7 +739,11 @@
               "type": "date_histogram"
             }
           ],
-          "expr": "idelta(hikaricp_connection_creation_millis_sum{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}[2m])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(hikaricp_connection_creation_millis_sum{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -709,6 +791,10 @@
       }
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "",
       "gridPos": {
         "h": 3,
@@ -719,10 +805,24 @@
       "id": 21,
       "links": [],
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "<div style=\"text-align: center;\"><i><strong style=\"color: #CCCCCC; font-size: 40px;\">Connections Acquired</strong></i></div>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
@@ -783,12 +883,12 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^hikaricp_connection_acquired_nanos{instance=\"10.244.8.56:8086\", job=\"kubernetes-service-endpoints\", kubernetes_name=\"lockservice-v1\", kubernetes_namespace=\"staging\", kubernetes_node=\"k8s-node10-dev\", pool=\"armdtr\", quantile=\"0.5\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -803,10 +903,17 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_acquired_nanos{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.5\"}",
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg(hikaricp_connection_acquired_nanos{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.5\"})",
           "format": "time_series",
-          "intervalFactor": 2,
+          "instant": false,
+          "intervalFactor": 1,
           "metrics": [
             {
               "field": "request_time",
@@ -821,6 +928,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -885,12 +993,12 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^hikaricp_connection_acquired_nanos{instance=\"10.244.8.56:8086\", job=\"kubernetes-service-endpoints\", kubernetes_name=\"lockservice-v1\", kubernetes_namespace=\"staging\", kubernetes_node=\"k8s-node10-dev\", pool=\"armdtr\", quantile=\"0.95\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -905,8 +1013,13 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_acquired_nanos{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.95\"}",
+          "editorMode": "code",
+          "expr": "avg(hikaricp_connection_acquired_nanos{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.95\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -923,6 +1036,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -987,12 +1101,12 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^hikaricp_connection_acquired_nanos{instance=\"10.244.8.56:8086\", job=\"kubernetes-service-endpoints\", kubernetes_name=\"lockservice-v1\", kubernetes_namespace=\"staging\", kubernetes_node=\"k8s-node10-dev\", pool=\"armdtr\", quantile=\"0.99\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -1007,8 +1121,13 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_acquired_nanos{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.99\"}",
+          "editorMode": "code",
+          "expr": "avg(hikaricp_connection_acquired_nanos{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.99\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -1025,6 +1144,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -1076,7 +1196,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1086,11 +1206,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "idelta(hikaricp_connection_acquired_nanos_sum{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}[2m])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "rate(hikaricp_connection_acquired_nanos_sum{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "acquired",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -1128,6 +1254,10 @@
       }
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "",
       "gridPos": {
         "h": 3,
@@ -1138,10 +1268,24 @@
       "id": 22,
       "links": [],
       "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
         "content": "<div style=\"text-align: center;\"><i><strong style=\"color: #CCCCCC; font-size: 40px;\">Connections Usage</strong></i></div>",
         "mode": "html"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
@@ -1202,12 +1346,12 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^hikaricp_connection_usage_millis{instance=\"10.244.7.170:8090\", job=\"kubernetes-service-endpoints\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"development\", kubernetes_node=\"k8s-node9-dev\", pool=\"indicata\", quantile=\"0.5\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -1222,8 +1366,13 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_usage_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.5\"}",
+          "editorMode": "code",
+          "expr": "avg(hikaricp_connection_usage_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.5\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -1240,6 +1389,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -1304,12 +1454,12 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^hikaricp_connection_usage_millis{instance=\"10.244.7.170:8090\", job=\"kubernetes-service-endpoints\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"development\", kubernetes_node=\"k8s-node9-dev\", pool=\"indicata\", quantile=\"0.95\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -1324,8 +1474,13 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_usage_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.95\"}",
+          "editorMode": "code",
+          "expr": "avg(hikaricp_connection_usage_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.95\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -1342,6 +1497,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -1406,12 +1562,12 @@
           "calcs": [
             "mean"
           ],
-          "fields": "/^hikaricp_connection_usage_millis{instance=\"10.244.7.170:8090\", job=\"kubernetes-service-endpoints\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"development\", kubernetes_node=\"k8s-node9-dev\", pool=\"indicata\", quantile=\"0.99\"}$/",
+          "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "bucketAggs": [
@@ -1426,8 +1582,13 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_usage_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.99\"}",
+          "editorMode": "code",
+          "expr": "avg(hikaricp_connection_usage_millis{kubernetes_name=\"$service\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.99\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -1444,6 +1605,7 @@
             }
           ],
           "query": "type:\"nginx-access\" AND request_host:\"k8s-dev.synisys.com\" AND request_uri:\"reportingservice/v1\" AND NOT method:\"OPTIONS\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -1495,7 +1657,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1505,7 +1667,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "idelta(hikaricp_connection_usage_millis_sum{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}[2m])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(hikaricp_connection_usage_millis_sum{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", pool=\"$application\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1547,8 +1713,8 @@
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 34,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1672,7 +1838,7 @@
   },
   "timezone": "",
   "title": "Hikari Pool Connections",
-  "uid": "ckCcMlAika",
-  "version": 8,
+  "uid": "0aea9e79-1e11-4d1b-90ca-2bc8c807554c",
+  "version": 1,
   "weekStart": ""
 }

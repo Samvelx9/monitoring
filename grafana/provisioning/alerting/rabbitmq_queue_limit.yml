@@ -1,0 +1,96 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 10s
+      folder: alerting
+      interval: 10s
+      rules:
+        - uid: rammitmq-queue-limit
+          title: 'RabbitMQ Queue limit '
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                datasource:
+                    type: prometheus
+                    uid: "000000001"
+                exemplar: true
+                expr: |-
+                    rabbitmq_queue_messages_ready{job="kubernetes-service-endpoints",
+                      queue!~".*sms.*retry.*|.*mail.*retry.*",
+                      queue!~"messaging-upgraded-services",
+                      queue!~"^reporting-service-sync.+",
+                      queue!~"health-status-result-test"
+                      } > 500
+                instant: false
+                interval: ""
+                intervalMs: 30000
+                legendFormat: '{{queue}} <{{kubernetes_namespace}}>'
+                maxDataPoints: 43200
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1000
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: vldByyKnz
+          panelId: 32
+          noDataState: OK
+          execErrState: OK
+          for: 5m
+          annotations:
+            __dashboardUid__: vldByyKnz
+            __panelId__: "32"
+            summary: '{{ index $labels "queue" }} <{{ index $labels "kubernetes_namespace" }}> Queue is {{ index $values "B" }}'
+          labels:
+            severity: warning
+          isPaused: false

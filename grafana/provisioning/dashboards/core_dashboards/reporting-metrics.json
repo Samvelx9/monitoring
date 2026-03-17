@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,12 +24,16 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 406,
-  "iteration": 1684929127401,
+  "id": 108,
+  "iteration": 1730373141155,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "Indicates if there is an error in data sync process",
       "fieldConfig": {
         "defaults": {
@@ -82,7 +89,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "sync_error{instance=\"$instance\",kubernetes_namespace=\"$namespace\", appId=\"$application\"}",
+          "expr": "sync_error{instance=~\"$instance\",kubernetes_namespace=~\"$namespace\", appId=~\"$application\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "error",
@@ -168,10 +175,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -189,7 +198,11 @@
               "type": "date_histogram"
             }
           ],
-          "expr": "jvm_memory_pool_bytes_used{instance=\"$instance\",kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\",pool=\"Code Cache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jvm_memory_pool_bytes_used{instance=~\"$instance\",kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"Code Cache\"}",
           "format": "time_series",
           "hide": false,
           "interval": "15s",
@@ -219,7 +232,11 @@
               "type": "date_histogram"
             }
           ],
-          "expr": "jvm_memory_pool_bytes_used{instance=\"$instance\",kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\",pool=\"Compressed Class Space\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jvm_memory_pool_bytes_used{instance=~\"$instance\",kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"Compressed Class Space\"}",
           "format": "time_series",
           "hide": false,
           "interval": "15s",
@@ -249,7 +266,11 @@
               "type": "date_histogram"
             }
           ],
-          "expr": "jvm_memory_pool_bytes_used{instance=\"$instance\",kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\",pool=\"Metaspace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jvm_memory_pool_bytes_used{instance=~\"$instance\",kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"Metaspace\"}",
           "format": "time_series",
           "hide": false,
           "interval": "15s",
@@ -276,6 +297,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "links": [],
@@ -325,7 +350,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "jvm_memory_pool_bytes_used{instance=~\"$instance\",kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=\"PS Old Gen\"}",
+          "expr": "jvm_memory_pool_bytes_used{instance=~\"$instance\",kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"PS Old Gen\"}",
           "format": "time_series",
           "hide": false,
           "interval": "5s",
@@ -339,7 +364,7 @@
             "type": "prometheus",
             "uid": "000000001"
           },
-          "expr": "jvm_memory_pool_bytes_used{instance=\"$instance\",kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\",pool=\"PS Survivor Space\"}",
+          "expr": "jvm_memory_pool_bytes_used{instance=~\"$instance\",kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"PS Survivor Space\"}",
           "format": "time_series",
           "hide": false,
           "interval": "5s",
@@ -353,7 +378,7 @@
             "type": "prometheus",
             "uid": "000000001"
           },
-          "expr": "jvm_memory_pool_bytes_used{instance=\"$instance\",kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\",pool=\"PS Eden Space\"}",
+          "expr": "jvm_memory_pool_bytes_used{instance=~\"$instance\",kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"PS Eden Space\"}",
           "format": "time_series",
           "interval": "5s",
           "intervalFactor": 2,
@@ -379,11 +404,13 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:92",
           "format": "decbytes",
           "logBase": 1,
           "show": true
         },
         {
+          "$$hashKey": "object:93",
           "format": "short",
           "logBase": 1,
           "show": true
@@ -462,10 +489,12 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -475,12 +504,14 @@
             "type": "prometheus",
             "uid": "000000001"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum (idelta (container_cpu_usage_seconds_total{pod=~\"$instance_name\", image!=\"\",namespace=~\"$namespace\",container=\"reportingservice-v1\",kubernetes_io_hostname=~\"k8s.+|.+k8s-.*|aks.+\"}[2m])/30) by (pod)",
+          "expr": "sum (idelta (container_cpu_usage_seconds_total{pod=~\"$instance_name\", image!~\"\",namespace=~\"$namespace\",container=~\"reportingservice-v1\",kubernetes_io_hostname=~\".+\"}[2m])/30) by (pod)",
           "format": "time_series",
           "interval": "90s",
           "intervalFactor": 2,
           "legendFormat": "cpu usage",
+          "range": true,
           "refId": "A",
           "step": 10
         }
@@ -489,10 +520,105 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
       },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "id": 103,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "cache_netty_memory_bytes_max{area=\"nonheap\",kubernetes_namespace=~\"$namespace\"}",
+          "interval": "",
+          "legendFormat": "{{kubernetes_namespace}} {{kubernetes_name}} {{area}} max",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "cache_netty_memory_bytes_used{area=\"nonheap\",kubernetes_namespace=~\"$namespace\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{kubernetes_namespace}} {{kubernetes_name}} {{area}} used",
+          "refId": "B"
+        }
+      ],
+      "title": "Redis client Non-Heap Memory usage (Netty)",
+      "type": "timeseries"
+    },
+    {
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -550,7 +676,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 36
       },
       "id": 82,
       "links": [],
@@ -562,20 +688,27 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "idelta(jvm_gc_collection_seconds_sum{instance=\"$instance\",kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\"}[2m])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "idelta(jvm_gc_collection_seconds_sum{instance=~\"$instance\",kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\"}[2m])",
           "format": "time_series",
           "hide": false,
-          "interval": "90s",
-          "intervalFactor": 2,
+          "interval": "",
+          "intervalFactor": 1,
           "legendFormat": "{{gc}}",
           "refId": "D",
           "step": 10
@@ -646,7 +779,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 43
       },
       "id": 43,
       "links": [],
@@ -659,16 +792,22 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "jvm_memory_bytes_max{area=\"heap\", instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jvm_memory_bytes_max{area=~\"heap\", instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "interval": "5s",
           "intervalFactor": 2,
@@ -677,7 +816,11 @@
           "step": 10
         },
         {
-          "expr": "jvm_memory_bytes_used{area=\"heap\", instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jvm_memory_bytes_used{area=~\"heap\", instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "interval": "5s",
           "intervalFactor": 2,
@@ -690,6 +833,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -747,7 +894,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 50
       },
       "id": 41,
       "links": [],
@@ -758,10 +905,12 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -772,7 +921,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "container_memory_usage_bytes{namespace=\"$namespace\", container=\"reportingservice-v1\"}",
+          "expr": "container_memory_usage_bytes{namespace=~\"$namespace\", container=~\"reportingservice-v1\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -785,7 +934,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "container_memory_swap{namespace=\"$namespace\", container=\"reportingservice-v1\"}",
+          "expr": "container_memory_swap{namespace=~\"$namespace\", container=~\"reportingservice-v1\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -860,24 +1009,30 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 50
+        "y": 57
       },
       "id": 25,
       "links": [],
       "options": {
         "legend": {
           "calcs": [],
-          "displayMode": "hidden",
-          "placement": "bottom"
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "up{kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "up{kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{instance}}",
@@ -948,7 +1103,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 55
+        "y": 62
       },
       "id": 48,
       "links": [],
@@ -960,16 +1115,22 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "jvm_threads_current{instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jvm_threads_current{instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "interval": "5s",
           "intervalFactor": 2,
@@ -1043,7 +1204,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 62
+        "y": 69
       },
       "id": 90,
       "links": [],
@@ -1055,16 +1216,22 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "jvm_threads_state{instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jvm_threads_state{instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "interval": "5s",
           "intervalFactor": 2,
@@ -1139,7 +1306,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 69
+        "y": 76
       },
       "id": 94,
       "links": [],
@@ -1151,16 +1318,22 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "jetty_thread_pool_size{instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jetty_thread_pool_size{instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "interval": "5s",
           "intervalFactor": 2,
@@ -1169,28 +1342,44 @@
           "step": 10
         },
         {
-          "expr": "jetty_thread_pool_busy{instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jetty_thread_pool_busy{instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "busy",
           "refId": "B"
         },
         {
-          "expr": "jetty_thread_pool_idle{instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jetty_thread_pool_idle{instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "idle",
           "refId": "C"
         },
         {
-          "expr": "jetty_thread_pool_queued{instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jetty_thread_pool_queued{instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "queued",
           "refId": "D"
         },
         {
-          "expr": "jetty_thread_pool_max_size{instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jetty_thread_pool_max_size{instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "hide": true,
           "intervalFactor": 1,
@@ -1198,7 +1387,11 @@
           "refId": "E"
         },
         {
-          "expr": "jetty_thread_pool_min_size{instance=\"$instance\", kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "jetty_thread_pool_min_size{instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "hide": true,
           "intervalFactor": 1,
@@ -1271,7 +1464,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 76
+        "y": 83
       },
       "id": 58,
       "links": [],
@@ -1283,37 +1476,55 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "reporting_executor_active{kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_executor_active{kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "active",
           "refId": "B"
         },
         {
-          "expr": "reporting_executor_queued{kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_executor_queued{kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "queued",
           "refId": "C"
         },
         {
-          "expr": "reporting_executor_pool_size{kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_executor_pool_size{kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "size",
           "refId": "D"
         },
         {
-          "expr": "reporting_executor_pool_min_size{kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_executor_pool_min_size{kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "hide": true,
           "intervalFactor": 1,
@@ -1321,7 +1532,11 @@
           "refId": "A"
         },
         {
-          "expr": "reporting_executor_pool_max_size{kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_executor_pool_max_size{kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "hide": true,
           "intervalFactor": 1,
@@ -1329,7 +1544,11 @@
           "refId": "E"
         },
         {
-          "expr": "reporting_executor_pool_largest_size{kubernetes_namespace=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_executor_pool_largest_size{kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "largest size",
@@ -1401,7 +1620,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 86
+        "y": 93
       },
       "id": 99,
       "options": {
@@ -1410,41 +1629,63 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "reporting_async_publisher_executor_active{kubernetes_namespace=\"$namespace\", instance=\"$instance\", kubernetes_name=\"reportingservice-v1\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_async_publisher_executor_active{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\"}",
           "interval": "",
           "legendFormat": "active",
           "refId": "A"
         },
         {
-          "expr": "reporting_async_publisher_executor_completed{kubernetes_namespace=\"$namespace\", instance=\"$instance\", kubernetes_name=\"reportingservice-v1\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_async_publisher_executor_completed{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\"}",
           "hide": true,
           "interval": "",
           "legendFormat": "completed",
           "refId": "B"
         },
         {
-          "expr": "reporting_async_publisher_executor_queued{kubernetes_namespace=\"$namespace\", instance=\"$instance\", kubernetes_name=\"reportingservice-v1\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_async_publisher_executor_queued{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\"}",
           "interval": "",
           "legendFormat": "queued",
           "refId": "C"
         },
         {
-          "expr": "reporting_async_publisher_executor_pool_size{kubernetes_namespace=\"$namespace\", instance=\"$instance\", kubernetes_name=\"reportingservice-v1\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_async_publisher_executor_pool_size{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\"}",
           "interval": "",
           "legendFormat": "size",
           "refId": "D"
         },
         {
-          "expr": "reporting_async_publisher_executor_pool_largest_size{kubernetes_namespace=\"$namespace\", instance=\"$instance\", kubernetes_name=\"reportingservice-v1\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "reporting_async_publisher_executor_pool_largest_size{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", kubernetes_name=~\"reportingservice-v1\"}",
           "interval": "",
           "legendFormat": "largest_size",
           "refId": "E"
@@ -1514,7 +1755,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 93
+        "y": 100
       },
       "id": 80,
       "links": [],
@@ -1527,23 +1768,33 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "idelta(reporting_executor_completed{kubernetes_namespace=\"$namespace\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(reporting_executor_completed{kubernetes_namespace=~\"$namespace\"}[90s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "completed",
           "refId": "A"
         },
         {
-          "expr": "idelta(reporting_executor_task_count{kubernetes_namespace=\"$namespace\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(reporting_executor_task_count{kubernetes_namespace=~\"$namespace\"}[90s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "scheduled",
@@ -1660,7 +1911,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 99
+        "y": 106
       },
       "id": 97,
       "links": [],
@@ -1670,20 +1921,28 @@
             "sum"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "idelta(service_response_status_total{kubernetes_name=\"reportingservice-v1\", kubernetes_namespace=\"$namespace\", app=\"ALL\"}[1m])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "idelta(service_response_status_total{kubernetes_name=~\"reportingservice-v1\", kubernetes_namespace=~\"$namespace\", app=~\"ALL\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "15s",
           "intervalFactor": 1,
           "legendFormat": "{{status}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -1691,12 +1950,16 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "Provides the info for services about hikari connection pool",
       "gridPos": {
         "h": 3,
         "w": 24,
         "x": 0,
-        "y": 104
+        "y": 111
       },
       "id": 65,
       "links": [
@@ -1707,10 +1970,24 @@
         }
       ],
       "options": {
-        "content": "<div style=\"text-align: center;\"><i><strong style=\"color: #CCCCCC; font-size: 40px;\">Hikari Connections Pool</strong></i></div>",
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=~\"text-align: center;\"><i><strong style=~\"color: #CCCCCC; font-size: 40px;\">Hikari Connections Pool</strong></i></div>",
         "mode": "html"
       },
       "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
@@ -1776,7 +2053,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 107
+        "y": 114
       },
       "id": 13,
       "links": [],
@@ -1786,16 +2063,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "hikaricp_active_connections{kubernetes_namespace=\"$namespace\", kubernetes_name=\"reportingservice-v1\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "hikaricp_active_connections{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"reportingservice-v1\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1869,7 +2152,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 112
+        "y": 119
       },
       "id": 91,
       "links": [],
@@ -1879,16 +2162,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "hikaricp_idle_connections{kubernetes_namespace=\"$namespace\", kubernetes_name=\"reportingservice-v1\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "hikaricp_idle_connections{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"reportingservice-v1\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pool}}",
@@ -1960,7 +2249,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 117
+        "y": 124
       },
       "id": 92,
       "links": [],
@@ -1970,16 +2259,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "hikaricp_pending_threads{kubernetes_namespace=\"$namespace\", kubernetes_name=\"reportingservice-v1\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "hikaricp_pending_threads{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"reportingservice-v1\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pool}}",
@@ -2051,7 +2346,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 122
+        "y": 129
       },
       "id": 93,
       "links": [],
@@ -2061,16 +2356,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "idelta(hikaricp_connection_timeout_total{kubernetes_namespace=\"$namespace\", kubernetes_name=\"reportingservice-v1\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(hikaricp_connection_timeout_total{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"reportingservice-v1\"}[90s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{pool}}",
@@ -2142,7 +2443,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 127
+        "y": 134
       },
       "id": 89,
       "links": [],
@@ -2154,16 +2455,22 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "sum(hikaricp_active_connections{kubernetes_namespace=\"$namespace\", kubernetes_name=\"reportingservice-v1\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(hikaricp_active_connections{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"reportingservice-v1\"})",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -2172,7 +2479,11 @@
           "refId": "A"
         },
         {
-          "expr": "sum(hikaricp_idle_connections{kubernetes_namespace=\"$namespace\", kubernetes_name=\"reportingservice-v1\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(hikaricp_idle_connections{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"reportingservice-v1\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "idle",
@@ -2226,7 +2537,7 @@
         "h": 4,
         "w": 8,
         "x": 0,
-        "y": 136
+        "y": 143
       },
       "id": 68,
       "links": [],
@@ -2260,8 +2571,12 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_usage_millis{kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.5\"}",
+          "expr": "hikaricp_connection_usage_millis{kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"$application\", quantile=~\"0.5\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -2328,7 +2643,7 @@
         "h": 4,
         "w": 8,
         "x": 8,
-        "y": 136
+        "y": 143
       },
       "id": 67,
       "links": [],
@@ -2362,8 +2677,12 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_usage_millis{kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.95\"}",
+          "expr": "hikaricp_connection_usage_millis{kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"$application\", quantile=~\"0.95\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -2430,7 +2749,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 136
+        "y": 143
       },
       "id": 69,
       "links": [],
@@ -2464,8 +2783,12 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "dsType": "elasticsearch",
-          "expr": "hikaricp_connection_usage_millis{kubernetes_name=\"reportingservice-v1\",kubernetes_namespace=\"$namespace\",pool=\"$application\", quantile=\"0.99\"}",
+          "expr": "hikaricp_connection_usage_millis{kubernetes_name=~\"reportingservice-v1\",kubernetes_namespace=~\"$namespace\",pool=~\"$application\", quantile=~\"0.99\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "metrics": [
@@ -2491,8 +2814,8 @@
     },
     {
       "datasource": {
-        "type": "elasticsearch",
-        "uid": "000000011"
+        "type": "prometheus",
+        "uid": "000000001"
       },
       "fieldConfig": {
         "defaults": {
@@ -2550,7 +2873,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 140
+        "y": 147
       },
       "id": 45,
       "links": [],
@@ -2563,53 +2886,31 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "bucketAggs": [
-            {
-              "field": "@timestamp",
-              "id": "2",
-              "settings": {
-                "interval": "auto",
-                "min_doc_count": 0,
-                "trimEdges": 0
-              },
-              "type": "date_histogram"
-            }
-          ],
-          "dsType": "elasticsearch",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "metrics": [
-            {
-              "field": "postgres_duration",
-              "id": "1",
-              "meta": {},
-              "settings": {},
-              "type": "max"
-            }
-          ],
-          "query": "type:\"postgres-log\" AND host:\"sis2s091\" AND postgres_environment:\"$namespace\" AND postgres_servicename:\"reporting-service\"  AND postgres_app:\"$application\"",
-          "refId": "A",
-          "timeField": "@timestamp"
+          "range": true,
+          "refId": "A"
         }
       ],
       "title": "Query Execution Time",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "elasticsearch",
-        "uid": "000000011"
-      },
+      "datasource": {},
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2666,7 +2967,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 147
+        "y": 154
       },
       "id": 46,
       "links": [],
@@ -2678,10 +2979,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -2699,10 +3002,16 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000011"
+          },
           "dsType": "elasticsearch",
+          "editorMode": "code",
           "expr": "",
           "format": "time_series",
           "intervalFactor": 2,
+          "legendFormat": "__auto",
           "metrics": [
             {
               "field": "postgres_duration",
@@ -2713,6 +3022,7 @@
             }
           ],
           "query": "type:\"postgres-log\" AND host:\"sis2s091\" AND postgres_environment:\"$namespace\" AND postgres_servicename:\"reporting-service\"  AND postgres_app:\"$application\"",
+          "range": true,
           "refId": "A",
           "timeField": "@timestamp"
         }
@@ -2780,7 +3090,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 154
+        "y": 161
       },
       "id": 39,
       "links": [],
@@ -2792,19 +3102,27 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "redis_connected_clients{environment=\"$namespace\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "redis_connected_clients{kubernetes_namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "connections",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -2902,7 +3220,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 160
+        "y": 167
       },
       "id": 2,
       "links": [],
@@ -2913,10 +3231,12 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -2935,6 +3255,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -2965,6 +3289,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "metrics": [
             {
@@ -3041,7 +3369,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 167
+        "y": 174
       },
       "id": 4,
       "interval": "1s",
@@ -3054,10 +3382,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -3075,6 +3405,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3154,7 +3488,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 174
+        "y": 181
       },
       "id": 3,
       "links": [],
@@ -3162,10 +3496,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -3183,6 +3519,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3213,12 +3553,16 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "Provides the info for services fault tolerance and resilience whom this service calls",
       "gridPos": {
         "h": 3,
         "w": 24,
         "x": 0,
-        "y": 181
+        "y": 188
       },
       "id": 56,
       "links": [
@@ -3229,10 +3573,24 @@
         }
       ],
       "options": {
-        "content": "<div style=\"text-align: center;\"><i><strong style=\"color: #7F7FFF; font-size: 40px;\">Resilience</strong></i></div>",
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=~\"text-align: center;\"><i><strong style=~\"color: #7F7FFF; font-size: 40px;\">Resilience</strong></i></div>",
         "mode": "html"
       },
       "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
@@ -3279,7 +3637,7 @@
         "h": 4,
         "w": 8,
         "x": 0,
-        "y": 184
+        "y": 191
       },
       "id": 5,
       "links": [],
@@ -3313,6 +3671,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3381,7 +3743,7 @@
         "h": 4,
         "w": 8,
         "x": 8,
-        "y": 184
+        "y": 191
       },
       "id": 11,
       "links": [],
@@ -3415,6 +3777,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3483,7 +3849,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 184
+        "y": 191
       },
       "id": 6,
       "links": [],
@@ -3517,6 +3883,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3584,7 +3954,7 @@
         "h": 3,
         "w": 6,
         "x": 0,
-        "y": 188
+        "y": 195
       },
       "id": 7,
       "links": [],
@@ -3618,6 +3988,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3679,7 +4053,7 @@
         "h": 3,
         "w": 6,
         "x": 6,
-        "y": 188
+        "y": 195
       },
       "id": 9,
       "links": [],
@@ -3713,6 +4087,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3774,7 +4152,7 @@
         "h": 3,
         "w": 6,
         "x": 12,
-        "y": 188
+        "y": 195
       },
       "id": 8,
       "links": [],
@@ -3808,6 +4186,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3869,7 +4251,7 @@
         "h": 3,
         "w": 6,
         "x": 18,
-        "y": 188
+        "y": 195
       },
       "id": 10,
       "links": [],
@@ -3903,6 +4285,10 @@
               "type": "date_histogram"
             }
           ],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
           "dsType": "elasticsearch",
           "expr": "",
           "format": "time_series",
@@ -3954,7 +4340,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 191
+        "y": 198
       },
       "id": 36,
       "legend": {
@@ -3968,7 +4354,8 @@
       "options": {
         "legend": {
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "pieType": "pie",
         "reduceOptions": {
@@ -3979,21 +4366,30 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pieType": "pie",
       "strokeWidth": 1,
       "targets": [
         {
-          "expr": "cache_hit_percentage{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_hit_percentage{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "hit",
           "refId": "A"
         },
         {
-          "expr": "cache_miss_percentage{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_miss_percentage{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "miss",
@@ -4035,7 +4431,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 191
+        "y": 198
       },
       "id": 37,
       "legend": {
@@ -4049,7 +4445,8 @@
       "options": {
         "legend": {
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "pieType": "pie",
         "reduceOptions": {
@@ -4060,21 +4457,30 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pieType": "pie",
       "strokeWidth": 1,
       "targets": [
         {
-          "expr": "cache_hit_percentage{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_hit_percentage{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "hit",
           "refId": "A"
         },
         {
-          "expr": "cache_miss_percentage{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_miss_percentage{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "miss",
@@ -4160,7 +4566,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 200
+        "y": 207
       },
       "id": 33,
       "links": [],
@@ -4170,16 +4576,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "idelta(cache_hits{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_hits{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}[90s])",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -4189,7 +4601,11 @@
           "refId": "A"
         },
         {
-          "expr": "idelta(cache_misses{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_misses{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}[90s])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -4276,7 +4692,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 205
+        "y": 212
       },
       "id": 34,
       "links": [],
@@ -4286,16 +4702,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "idelta(cache_hits{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_hits{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}[90s])",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -4304,7 +4726,11 @@
           "refId": "A"
         },
         {
-          "expr": "idelta(cache_misses{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_misses{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}[90s])",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -4391,7 +4817,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 210
+        "y": 217
       },
       "id": 29,
       "links": [],
@@ -4401,16 +4827,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "idelta(cache_gets{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_gets{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}[90s])",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -4419,7 +4851,11 @@
           "refId": "A"
         },
         {
-          "expr": "idelta(cache_puts{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_puts{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}[90s])",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -4427,7 +4863,11 @@
           "refId": "B"
         },
         {
-          "expr": "idelta(cache_removals{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_removals{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}[90s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "removals",
@@ -4513,7 +4953,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 210
+        "y": 217
       },
       "id": 30,
       "links": [],
@@ -4523,16 +4963,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "idelta(cache_gets{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_gets{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}[90s])",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -4541,7 +4987,11 @@
           "refId": "A"
         },
         {
-          "expr": "idelta(cache_puts{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_puts{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}[90s])",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -4549,7 +4999,11 @@
           "refId": "B"
         },
         {
-          "expr": "idelta(cache_removals{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}[90s])",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "idelta(cache_removals{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}[90s])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "removals",
@@ -4636,7 +5090,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 218
+        "y": 225
       },
       "id": 31,
       "links": [],
@@ -4646,16 +5100,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "cache_average_get_time{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_average_get_time{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -4664,7 +5124,11 @@
           "refId": "A"
         },
         {
-          "expr": "cache_average_put_time{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_average_put_time{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -4672,7 +5136,11 @@
           "refId": "B"
         },
         {
-          "expr": "cache_average_remove_time{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportQueriesCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_average_remove_time{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportQueriesCache\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "remove time",
@@ -4759,7 +5227,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 218
+        "y": 225
       },
       "id": 32,
       "links": [],
@@ -4769,16 +5237,22 @@
             "lastNotNull"
           ],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "cache_average_get_time{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_average_get_time{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -4787,7 +5261,11 @@
           "refId": "A"
         },
         {
-          "expr": "cache_average_put_time{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_average_put_time{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
@@ -4795,7 +5273,11 @@
           "refId": "B"
         },
         {
-          "expr": "cache_average_remove_time{kubernetes_namespace=\"$namespace\", instance=\"$instance\", cacheName=\"$application:reportResultCache\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "cache_average_remove_time{kubernetes_namespace=~\"$namespace\", instance=~\"$instance\", cacheName=~\"$application:reportResultCache\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "remove time",
@@ -4806,18 +5288,36 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 3,
         "w": 24,
         "x": 0,
-        "y": 226
+        "y": 233
       },
       "id": 73,
       "options": {
-        "content": "<div style=\"text-align: center;\"><i><strong style=\"color: #CCCCCC; font-size: 40px;\">Performance Tests</strong></i></div>",
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "<div style=~\"text-align: center;\"><i><strong style=~\"color: #CCCCCC; font-size: 40px;\">Performance Tests</strong></i></div>",
         "mode": "html"
       },
       "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Panel Title",
       "type": "text"
     },
@@ -4879,12 +5379,14 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 229
+        "y": 236
       },
       "id": 75,
       "links": [],
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -4896,17 +5398,29 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refCount": 0,
           "refId": "A",
           "target": "aliasByMetric(smartSummarize(locust.reporting-service.Total.ok.percentile75, '1d', 'avg'))"
         },
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refCount": 0,
           "refId": "B",
           "target": "aliasByMetric(smartSummarize(locust.reporting-service.Total.ok.percentile90, '1d', 'avg'))",
           "textEditor": false
         },
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "hide": false,
           "refCount": 0,
           "refId": "C",
@@ -4914,6 +5428,10 @@
           "textEditor": false
         },
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refCount": 0,
           "refId": "D",
           "target": "aliasByMetric(smartSummarize(locust.reporting-service.Total.ok.percentile99, '1d', 'avg'))",
@@ -4992,7 +5510,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 236
+        "y": 243
       },
       "hideTimeOverride": false,
       "id": 71,
@@ -5001,25 +5519,39 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refCount": 0,
           "refId": "B",
           "target": "aliasByMetric(locust.reporting-service.Total.ok.percentile75)"
         },
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refCount": 0,
           "refId": "A",
           "target": "aliasByMetric(locust.reporting-service.Total.ok.percentile95)"
         },
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refCount": 0,
           "refId": "C",
           "target": "aliasByMetric(locust.reporting-service.Total.ok.percentile99)"
@@ -5090,7 +5622,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 243
+        "y": 250
       },
       "id": 77,
       "links": [],
@@ -5098,15 +5630,21 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refId": "A",
           "target": "aliasByMetric(locust.reporting-service.Total.ok.rps)"
         }
@@ -5176,7 +5714,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 249
+        "y": 256
       },
       "id": 79,
       "links": [],
@@ -5184,20 +5722,30 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refCount": 0,
           "refId": "A",
           "target": "aliasByNode(locust.reporting-service.Total.ok.count, 3)"
         },
         {
+          "datasource": {
+            "type": "graphite",
+            "uid": "000000003"
+          },
           "refCount": 0,
           "refId": "B",
           "target": "aliasByNode(locust.reporting-service.Total.ko.count, 3)"
@@ -5216,9 +5764,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "production",
-          "value": "production"
+          "selected": true,
+          "text": "development",
+          "value": "development"
         },
         "datasource": {
           "type": "prometheus",
@@ -5246,8 +5794,8 @@
       {
         "current": {
           "selected": false,
-          "text": "zimiecms",
-          "value": "zimiecms"
+          "text": "indicata",
+          "value": "indicata"
         },
         "datasource": {
           "type": "prometheus",
@@ -5261,7 +5809,7 @@
         "name": "application",
         "options": [],
         "query": {
-          "query": "label_values(hikaricp_active_connections{kubernetes_namespace=\"$namespace\",kubernetes_name=\"reportingservice-v1\"},pool)",
+          "query": "label_values(hikaricp_active_connections{kubernetes_namespace=~\"$namespace\",kubernetes_name=~\"reportingservice-v1\"},pool)",
           "refId": "DEV-PROMETHEUS-application-Variable-Query"
         },
         "refresh": 2,
@@ -5276,8 +5824,8 @@
       {
         "current": {
           "selected": false,
-          "text": "10.150.0.131:8090",
-          "value": "10.150.0.131:8090"
+          "text": "10.244.160.59:8090",
+          "value": "10.244.160.59:8090"
         },
         "datasource": {
           "type": "prometheus",
@@ -5291,7 +5839,7 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "label_values(cache_misses{kubernetes_namespace=\"$namespace\", kubernetes_name=\"reportingservice-v1\"},instance)",
+          "query": "label_values(cache_misses{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"reportingservice-v1\"},instance)",
           "refId": "DEV-PROMETHEUS-instance-Variable-Query"
         },
         "refresh": 2,
@@ -5306,21 +5854,21 @@
       {
         "current": {
           "selected": false,
-          "text": "reportingservice-v1-fd7f48f85-69gjj",
-          "value": "reportingservice-v1-fd7f48f85-69gjj"
+          "text": "reportingservice-v1-6b45c4fb6-f6vnm",
+          "value": "reportingservice-v1-6b45c4fb6-f6vnm"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "000000001"
         },
-        "definition": "label_values(container_memory_usage_bytes{namespace=\"$namespace\", pod=~\"reportingservice-v1.*\"},pod)",
+        "definition": "label_values(container_memory_usage_bytes{namespace=~\"$namespace\", pod=~\"reportingservice-v1.*\"},pod)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "instance_name",
         "options": [],
         "query": {
-          "query": "label_values(container_memory_usage_bytes{namespace=\"$namespace\", pod=~\"reportingservice-v1.*\"},pod)",
+          "query": "label_values(container_memory_usage_bytes{namespace=~\"$namespace\", pod=~\"reportingservice-v1.*\"},pod)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -5365,7 +5913,7 @@
   },
   "timezone": "",
   "title": "Reporting Metrics",
-  "uid": "000000079",
-  "version": 5,
+  "uid": "3bcea94d-6dbd-4106-8a9c-07e32b0f6856",
+  "version": 1,
   "weekStart": ""
 }

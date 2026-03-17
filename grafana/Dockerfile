@@ -1,1 +1,1 @@
-FROM registry.synisys.com/infrastructure/grafana:8.3.3
+FROM registry.synisys.com/infrastructure/grafana:12.3.3

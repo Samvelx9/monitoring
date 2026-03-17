@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,8 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 115,
-  "iteration": 1679399039825,
+  "id": 110,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -68,7 +70,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -78,7 +80,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(multidatasource_query_execution_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\",app=~\"$project\" }[5m] ) )by(app,kubernetes_name)",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(rate(multidatasource_query_execution_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=\"$namespace\",app=~\"$project\" }[$__rate_interval] ) )by(app,kubernetes_name)",
           "interval": "",
           "legendFormat": "qps {{app}} {{kubernetes_name}}",
           "refId": "A"
@@ -161,7 +167,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -171,27 +177,43 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.75, sum(rate(multidatasource_query_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.75, sum(rate(multidatasource_query_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le))",
           "hide": true,
           "interval": "",
           "legendFormat": "75",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.95, sum(rate(multidatasource_query_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le, kubernetes_name, app))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.95, sum(rate(multidatasource_query_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le, kubernetes_name, app))",
           "interval": "",
           "legendFormat": "95 {{kubernetes_name}} {{app}}",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(multidatasource_query_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.99, sum(rate(multidatasource_query_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le))",
           "hide": true,
           "interval": "",
           "legendFormat": "99",
           "refId": "C"
         },
         {
-          "expr": "histogram_quantile(1.0, sum(rate(multidatasource_query_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(1.0, sum(rate(multidatasource_query_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\"}[$__rate_interval])) by (le))",
           "legendFormat": "max",
           "refId": "D"
         }
@@ -272,7 +294,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -282,24 +304,40 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.75, sum(rate(multidatasource_prepared_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.75, sum(rate(multidatasource_prepared_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "75",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.95, sum(rate(multidatasource_prepared_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.95, sum(rate(multidatasource_prepared_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "95",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(multidatasource_prepared_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.99, sum(rate(multidatasource_prepared_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\"}[$__rate_interval])) by (le))",
           "legendFormat": "99",
           "refId": "C"
         },
         {
-          "expr": "histogram_quantile(1.0, sum(rate(multidatasource_prepared_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(1.0, sum(rate(multidatasource_prepared_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\"}[$__rate_interval])) by (le))",
           "legendFormat": "max",
           "refId": "D"
         }
@@ -380,7 +418,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -390,25 +428,41 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.75, sum(rate(multidatasource_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.75, sum(rate(multidatasource_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "75",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.95, sum(rate(multidatasource_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.95, sum(rate(multidatasource_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "95",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(multidatasource_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(0.99, sum(rate(multidatasource_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "99",
           "refId": "C"
         },
         {
-          "expr": "histogram_quantile(1.0, sum(rate(multidatasource_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[5m])) by (le))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "histogram_quantile(1.0, sum(rate(multidatasource_statement_open_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "max",
           "refId": "D"
@@ -447,14 +501,15 @@
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 34,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
+          "selected": false,
           "text": "development",
           "value": "development"
         },
@@ -484,8 +539,9 @@
       },
       {
         "current": {
-          "text": "authorizationservice-v1",
-          "value": "authorizationservice-v1"
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
@@ -513,6 +569,7 @@
       },
       {
         "current": {
+          "selected": false,
           "text": "indicata",
           "value": "indicata"
         },
@@ -573,7 +630,7 @@
   },
   "timezone": "",
   "title": "service query execution times",
-  "uid": "Mc_qrqKWk",
-  "version": 29,
+  "uid": "f121ffd8-3815-4fab-ad5b-b30f802d4f3e",
+  "version": 1,
   "weekStart": ""
 }

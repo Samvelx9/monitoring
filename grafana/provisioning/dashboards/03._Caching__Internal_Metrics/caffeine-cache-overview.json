@@ -1,0 +1,320 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 117,
+  "iteration": 1764698413091,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": false,
+          "expr": "(caffeine_cache_hit_total{kubernetes_name=\"$service\",kubernetes_namespace=\"$environment\",instance=\"$instance\"} / clamp_min(caffeine_cache_requests_total{kubernetes_name=\"$service\",kubernetes_namespace=\"$environment\",instance=\"$instance\"}, 1)) * 100",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Hit Ratio",
+          "refId": "Hit Ratio"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": false,
+          "expr": "(caffeine_cache_miss_total{kubernetes_name=\"$service\",kubernetes_namespace=\"$environment\",instance=\"$instance\"} / clamp_min(caffeine_cache_requests_total{kubernetes_name=\"$service\",kubernetes_namespace=\"$environment\",instance=\"$instance\"}, 1)) * 100",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "Miss Ratio",
+          "refId": "Miss Ratio"
+        }
+      ],
+      "title": "Table",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Value #Hit Ratio": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "Value #Miss Ratio": {
+                "aggregations": [
+                  "lastNotNull"
+                ],
+                "operation": "aggregate"
+              },
+              "cache": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "cache"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "Value #Hit Ratio (lastNotNull)": "Hit Ratio (%)",
+              "Value #Miss Ratio (lastNotNull)": "Miss Ratio (%)",
+              "cache": "Cache"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 21,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "caffeine_cache_hit_total{kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"} ",
+          "interval": "",
+          "legendFormat": "{{cache}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Panel Title",
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [
+    "caffeine"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "development",
+          "value": "development"
+        },
+        "definition": "label_values(caffeine_cache_hit_total,kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "environment",
+        "options": [],
+        "query": {
+          "query": "label_values(caffeine_cache_hit_total,kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "classifierservice-v1",
+          "value": "classifierservice-v1"
+        },
+        "definition": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\"},kubernetes_name)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": {
+          "query": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\"},kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "10.244.217.101:3030",
+          "value": "10.244.217.101:3030"
+        },
+        "definition": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\"},instance)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "query": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\"},instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Caffeine Cache Overview",
+  "uid": "vZeW9iWDk",
+  "version": 1,
+  "weekStart": ""
+}

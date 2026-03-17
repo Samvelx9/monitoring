@@ -5,6 +5,21 @@ Before starting install process please asure:
     2) You have internet access on MONITORING VM, or on other VM so you can download files and images to that VM and pass them  to MONITORING VM
     3) You have docker installed on MONITORING VM
     4) You have docker-compose installed on MONITORING VM
+    5) If there is no outgoing internet access and there is no access to "registry.synisys.com/infrastructure" public repository, download following images, reatag and push them to your repository. Replace images in the "docker-compose.yml" file for exporters and cadvisor and in "Dockerfile" files for grafana, prometheus, elasticsearch, filebeat, logstash and kibana
+
+    registry.synisys.com/infrastructure/node-exporter:v1.3.1
+    registry.synisys.com/infrastructure/elasticsearch-exporter:v1.5.0
+    registry.synisys.com/infrastructure/cadvisor:v0.43.0
+    registry.synisys.com/infrastructure/grafana:12.3.3
+    registry.synisys.com/infrastructure/prometheus:v3.9.1
+    docker.elastic.co/elasticsearch/elasticsearch:8.9.1
+    docker.elastic.co/beats/filebeat:8.9.1
+    docker.elastic.co/logstash/logstash:8.9.1
+    docker.elastic.co/kibana/kibana:8.9.1
+
+    6) Create logs directory at "/applogs" path and mount logs into it
+
+    7) Perform further steps mentioned in the instruction or just run monitoring_setup.sh script (bash monitoring_setup.sh)
 
 ########################################################## Elastic stack (ELK) setup on Docker ##########################################################
 
@@ -22,7 +37,7 @@ Before starting install process please asure:
 
 3) Create logs directory at "/applogs" path and mount logs into it
 
-12) Create Kibana data view (Do this step after completing all other steps)
+11) Create Kibana data view (Do this step after completing all other steps)
 
     1. Login into kibana (${monitoring_server_ip}:5601)
     2. Go to "Stack_Management" and go to "Data Views" in "Kibana" section
@@ -47,17 +62,9 @@ Before starting install process please asure:
     chown -R 65534:65534 /data/prometheus
     chmod -R 755 /data/prometheus
 
-6) Download following images, reatag and push them to your repository. Replace images in the "docker-compose.yml" file for exporters and cadvisor and in "Dockerfile"files for grafana and prometheus
+6) Change elastic user password in grafana datasource (./grafana/provisioning/datasources/elasticsearch.yml)
 
-    registry.synisys.com/infrastructure/node-exporter:v1.3.1
-    registry.synisys.com/infrastructure/elasticsearch-exporter:v1.5.0
-    registry.synisys.com/infrastructure/cadvisor:v0.43.0
-    registry.synisys.com/infrastructure/grafana:8.3.3
-    registry.synisys.com/infrastructure/prometheus:v2.43.0
-
-7) Change elastic user password in grafana datasource (./grafana/provisioning/datasources/elasticsearch.yml)
-
-8) Edit grafana configs and change permissions
+7) Edit grafana configs and change permissions
 
     1. Edit ./grafana/grafana.ini file
     2. configure "smtp" section with your mailserver credentials
@@ -66,7 +73,7 @@ Before starting install process please asure:
     5. chown -R 472:472 ./grafana/grafana.*
     6. chmod -R 755 ./grafana/provisioning
 
-9) Edit prometheus configs
+8) Edit prometheus configs
     
     1. Edit ./prometheus/prometheus.yml
     2. change "$KUBEMASTERIP" to your real kubernetes master IP in "federation" job targets section
@@ -97,14 +104,14 @@ Before starting install process please asure:
 #        labels:
 #          service: "nginx"
 
-10) Start docker-compose to run containers
+9) Start docker-compose to run containers
 
     1. docker-compose -f docker-compose.yml up -d 
     2. wait for all docker containers be up and running. Take into accout that kibana has 50s wait time before it starts to load, thish is done to asure elasticsearch is in ready state before kibana will try to connect to elasticsearch 
 
-11) change grafana passwords
+10) change grafana passwords
 
-    1. login to grafana using admin user: username="admin" password="Admin123456!"
+    1. login to grafana using admin user: username="admin" password="D9I9rIspos2kiDe6"
     2. change password
-    3. repeat also for editor user: username="G_eu" password="jCPF8Z4qXgAAdt7e" 
-               and for readonly user: username="G_rou" password="B3BEC5UwVyYUauyS"
+    3. repeat also for editor user: username="edit" password="D1fuCh86itisPApI" 
+               and for readonly user: username="read" password="yEFrOtrLC0Ust5vu"

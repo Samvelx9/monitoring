@@ -1,0 +1,1140 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 88,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 9,
+      "panels": [],
+      "title": "Consumer Work Executor",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "description": "Shows overall consumer executor activity and thread pool behavior. Displays active threads, current pool size, core pool size, maximum pool size, and largest pool size ever used. Use this to spot saturation (threads nearing max).",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Current Pool Size"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "id": 201,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_consumer_work_executor_active{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Active Threads",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "rabbitmq_app_consumer_work_executor_pool_size{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "interval": "",
+          "legendFormat": "Current Pool Size",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_consumer_work_executor_core_pool_size{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Core Pool Size",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_consumer_work_executor_maximum_pool_size{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Maximum Pool Size",
+          "refId": "E"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_consumer_work_executor_largest_pool_size{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Largest Pool Size (Ever)",
+          "refId": "F"
+        }
+      ],
+      "title": "Threads Pool Metrics",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "description": "Shows the Consumer Executor current thread pool size as a percentage of the maximum allowed pool size. Useful to track if the pool is near to its max capacity.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 40
+              },
+              {
+                "color": "red",
+                "value": 70
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 206,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "rabbitmq_app_consumer_work_executor_pool_size{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"} / rabbitmq_app_consumer_work_executor_maximum_pool_size{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"} * 100",
+          "interval": "",
+          "legendFormat": "Core Pool Utilization (%)",
+          "refId": "A"
+        }
+      ],
+      "title": "Current Pool Size (% of Max)",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "description": "Tracks the rate of tasks rejected by the consumer work executor over a rolling 5-minute window. Any non-zero value indicates the thread pool has hit maximum capacity and tasks are being dropped.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Rejections (5m)"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": true,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 203,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "0": "D",
+            "1": "E",
+            "10": "H",
+            "11": "E",
+            "12": "U",
+            "13": "S",
+            "2": "V",
+            "3": "-",
+            "4": "P",
+            "5": "R",
+            "6": "O",
+            "7": "M",
+            "8": "E",
+            "9": "T"
+          },
+          "expr": "increase(rabbitmq_app_consumer_work_executor_rejections{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "legendFormat": "Rejections (5m)",
+          "refId": "A"
+        }
+      ],
+      "title": "Task Rejections (5m Rate)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "description": "Shows how many tasks per 5 minutes are being scheduled and completed by the consumer executor. Based on total counters converted to rates for visibility. If scheduled consistently exceeds completed, the executor may be saturated.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 204,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_consumer_work_executor_task_count{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Scheduled",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_consumer_work_executor_completed{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Completed",
+          "refId": "B"
+        }
+      ],
+      "title": "Task Throughput (Scheduled vs Completed) per 5m",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 7,
+      "panels": [],
+      "title": "Publisher Executor (1 thread)",
+      "type": "row"
+    },
+    {
+      "datasource": "Prometheus",
+      "description": "Shows whether publisher executor thread is currently running (active) versus how many tasks are waiting in the queue (queued).\nUse this to identify whether the executor is under heavy load or backlog is building up.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 1,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "0": "D",
+            "1": "E",
+            "10": "H",
+            "11": "E",
+            "12": "U",
+            "13": "S",
+            "2": "V",
+            "3": "-",
+            "4": "P",
+            "5": "R",
+            "6": "O",
+            "7": "M",
+            "8": "E",
+            "9": "T"
+          },
+          "expr": "rabbitmq_app_publisher_executor_active{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Active Threads",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "0": "D",
+            "1": "E",
+            "10": "H",
+            "11": "E",
+            "12": "U",
+            "13": "S",
+            "2": "V",
+            "3": "-",
+            "4": "P",
+            "5": "R",
+            "6": "O",
+            "7": "M",
+            "8": "E",
+            "9": "T"
+          },
+          "expr": "rabbitmq_app_publisher_executor_queued{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Queued Tasks",
+          "refId": "B"
+        }
+      ],
+      "title": "Active vs Queued Tasks",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "description": "Shows the number of queued tasks for the Publisher Executor as a percentage of a fixed threshold (1000). Helps to visualize how close the queue is to a critical backlog.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 207,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "(rabbitmq_app_publisher_executor_queued{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"} / 1000) * 100",
+          "interval": "",
+          "legendFormat": "Queued Tasks (%)",
+          "refId": "A"
+        }
+      ],
+      "title": "Queued Tasks (% of 1000)",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "description": "Tracks the rate of tasks rejected by the publisher executor over a rolling 5-minute window.\nRejections typically mean the thread pool and queue are full, and tasks cannot be scheduled.\nAny non-zero values here should be treated as a sign of overload and prompt immediate investigation.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 26
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "0": "D",
+            "1": "E",
+            "10": "H",
+            "11": "E",
+            "12": "U",
+            "13": "S",
+            "2": "V",
+            "3": "-",
+            "4": "P",
+            "5": "R",
+            "6": "O",
+            "7": "M",
+            "8": "E",
+            "9": "T"
+          },
+          "expr": "increase(rabbitmq_app_publisher_executor_rejections{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "legendFormat": "Rejections",
+          "refId": "A"
+        }
+      ],
+      "title": "Task Rejections (5m Rate)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "description": "Displays the per 5 minutes increase of tasks that were scheduled for execution vs. tasks completed by the publisher executor.\nIf the Scheduled line consistently stays above the Completed line, it indicates that tasks are arriving faster than they’re being processed, potentially causing backlog or delay.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 26
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_publisher_executor_task_count{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Scheduled",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_publisher_executor_completed{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Completed",
+          "refId": "B"
+        }
+      ],
+      "title": "Task Throughput (Scheduled vs Completed) per 5m",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "description": "Shows the current backlog, calculated as the difference between the total number of tasks scheduled and the number of tasks completed.\nGrowing backlog signals that the executor cannot keep up with demand, and processing delays are increasing.\nUseful for alerting on sustained growth (e.g., backlog > 50 for several minutes).",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "id": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.2.0-17378217107",
+      "targets": [
+        {
+          "datasource": {
+            "0": "D",
+            "1": "E",
+            "10": "H",
+            "11": "E",
+            "12": "U",
+            "13": "S",
+            "2": "V",
+            "3": "-",
+            "4": "P",
+            "5": "R",
+            "6": "O",
+            "7": "M",
+            "8": "E",
+            "9": "T"
+          },
+          "expr": "rabbitmq_app_publisher_executor_task_count{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"} - rabbitmq_app_publisher_executor_completed{instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Backlog",
+          "refId": "A"
+        }
+      ],
+      "title": "Task Backlog",
+      "type": "timeseries"
+    }
+  ],
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "dev10",
+          "value": "dev10"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info, kubernetes_namespace)",
+        "includeAll": false,
+        "label": "namespace",
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info, kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info{kubernetes_namespace=~\"$namespace\"},kubernetes_name)",
+        "includeAll": true,
+        "label": "service_name",
+        "name": "service_name",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{kubernetes_namespace=~\"$namespace\"},kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {
+          "text": "10.244.127.247:3030",
+          "value": "10.244.127.247:3030"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service_name\"},instance)",
+        "includeAll": false,
+        "name": "pod_ip",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service_name\"},instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "RabbitMQ Client Thread Utilization",
+  "uid": "200309c1-3443-4d10-9091-b3589dd9c40e",
+  "version": 2
+}

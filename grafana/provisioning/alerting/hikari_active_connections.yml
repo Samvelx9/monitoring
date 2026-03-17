@@ -1,0 +1,89 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 10s
+      folder: alerting
+      interval: 10s
+      rules:
+        - uid: hikari-active-connections
+          title: Hikari ACTIVE Connections
+          condition: C
+          data:
+            - refId: B
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                datasource:
+                    type: prometheus
+                    uid: "000000001"
+                exemplar: true
+                expr: (hikaricp_active_connections{kubernetes_namespace=~".+", kubernetes_name=~".+",  pool=~".+"}) *100/ (hikaricp_max_connections{kubernetes_namespace=~".+", kubernetes_name=~".+",  pool=~".+"})
+                interval: ""
+                intervalMs: 30000
+                legendFormat: Active_connections {{kubernetes_namespace}}_{{kubernetes_name}}/{{instance}}_{{pool}}
+                maxDataPoints: 43200
+                refId: B
+            - refId: A
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - A
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: A
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 90
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: vldByyKnz
+          panelId: 40
+          noDataState: OK
+          execErrState: OK
+          for: 5m
+          annotations:
+            __dashboardUid__: vldByyKnz
+            __panelId__: "40"
+            summary: Active connections of {{ index $labels "kubernetes_namespace" }}_{{ index $labels "kubernetes_name" }}/{{ index $labels "instance" }}_{{ index $labels "pool" }} are {{ index $values "A" }}%
+          labels:
+            severity: critical
+          isPaused: false

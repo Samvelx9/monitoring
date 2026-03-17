@@ -61,6 +61,11 @@ services:
     networks:
       - monitoring
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
   filebeat:
     build:
@@ -96,6 +101,11 @@ services:
     depends_on:
       - elasticsearch
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
 
   logstash:
@@ -110,9 +120,11 @@ services:
       - ./logstash/pipeline:/opt/logstash/pipeline
       - ./logstash/patterns:/opt/logstash/patterns
     ports:
+      - 5043:5043
       - 5044:5044
       - 5045:5045
       - 5046:5046
+      - 5050:5050
     environment:
       LS_JAVA_OPTS: -Xms${LOGSTASH_MEMORY:-512m} -Xmx${LOGSTASH_MEMORY:-512m}
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
@@ -121,6 +133,11 @@ services:
     depends_on:
       - elasticsearch
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
   kibana:
     build:
@@ -141,6 +158,11 @@ services:
     depends_on:
       - elasticsearch
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
   prometheus:
     build:
@@ -159,11 +181,37 @@ services:
       - '--storage.tsdb.retention.time=${PROMETHEUS_RETENTION:-200h}'
       - '--web.enable-lifecycle'
       - '--web.enable-admin-api'
+      - '--web.enable-remote-write-receiver'
     ports:
       - "9090:9090"
     networks:
       - monitoring
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+  postgres:
+    image: "registry.synisys.com/infrastructure/postgres:18.2"
+    container_name: postgres
+    volumes:
+      - /data/postgres:/var/lib/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: grafana # The PostgreSQL user (used to connect to the database)
+      POSTGRES_PASSWORD: grafana123456 # The PostgreSQL password (used to connect to the database)
+      POSTGRES_DB: grafana # The PostgreSQL default database (automatically created at first launch)
+    networks:
+      - monitoring
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
   grafana:
     build:
@@ -173,13 +221,17 @@ services:
       - grafana_data:/var/lib/grafana
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
       - ./grafana/grafana.db:/var/lib/grafana/grafana.db
-      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning:/etc/grafana/provisioning
     ports:
       - "3000:3000"
     networks:
       - monitoring
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
   elasticsearch_exporter_monitoring:
     image: registry.synisys.com/infrastructure/elasticsearch-exporter:v1.5.0
@@ -198,6 +250,11 @@ services:
     networks:
       - monitoring    
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
 
   elasticsearch_exporter_application:
@@ -217,6 +274,11 @@ services:
     networks:
       - monitoring    
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
   node-exporter:
     image: registry.synisys.com/infrastructure/node-exporter:v1.3.1
@@ -235,6 +297,11 @@ services:
     networks:
       - monitoring    
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
   cadvisor:
     image: registry.synisys.com/infrastructure/cadvisor:v0.43.0
@@ -253,6 +320,11 @@ services:
     networks:
       - monitoring    
     restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
 
 networks:
   monitoring:

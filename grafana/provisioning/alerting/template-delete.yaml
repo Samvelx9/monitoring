@@ -1,0 +1,9 @@
+# config file version
+apiVersion: 1
+
+# List of alert rule UIDs that should be deleted
+deleteTemplates:
+  # <int> organization ID, default = 1
+  - orgId: 1
+    # <string, required> name of the template, must be unique
+    name: test template

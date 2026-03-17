@@ -1,0 +1,445 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 543,
+  "iteration": 1747744446510,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "panels": [],
+      "title": "Caches Overall",
+      "type": "row"
+    },
+    {
+      "description": "Application independent",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 25,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "id": 2,
+      "maxPerRow": 3,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max",
+            "sum"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "repeat": "cache",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(guava_cache_hit_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"}[$__rate_interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Hit",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(guava_cache_miss_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"}[$__rate_interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Miss",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(guava_cache_loads_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"}[$__rate_interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Loads",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "sum(guava_cache_size{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Size",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "sum(rate(guava_cache_eviction_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"}[$__rate_interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Evictions",
+          "refId": "E"
+        }
+      ],
+      "title": "$cache",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "id": 19,
+      "panels": [
+        {
+          "description": "Application independent",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 25,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 12,
+            "w": 8,
+            "x": 0,
+            "y": 2
+          },
+          "id": 34,
+          "maxPerRow": 3,
+          "options": {
+            "legend": {
+              "calcs": [
+                "lastNotNull",
+                "max",
+                "sum"
+              ],
+              "displayMode": "table",
+              "placement": "bottom"
+            },
+            "tooltip": {
+              "mode": "multi"
+            }
+          },
+          "repeat": "cache",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "exemplar": true,
+              "expr": "sum(rate(guava_cache_hit_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\", instance=~\"$instance\"}[$__rate_interval]))",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Hit",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "exemplar": true,
+              "expr": "sum(rate(guava_cache_miss_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\", instance=~\"$instance\"}[$__rate_interval]))",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Miss",
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "exemplar": true,
+              "expr": "sum(rate(guava_cache_loads_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\", instance=~\"$instance\"}[$__rate_interval]))",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Loads",
+              "refId": "D"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "exemplar": true,
+              "expr": "sum(guava_cache_size{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\", instance=~\"$instance\"})",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Size {{instance}}",
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "exemplar": true,
+              "expr": "sum(rate(guava_cache_eviction_total{cache=\"$cache\", kubernetes_name=\"$service\", instance=~\"$instance\"}[$__rate_interval]))",
+              "hide": false,
+              "interval": "",
+              "legendFormat": "Evictions",
+              "refId": "E"
+            }
+          ],
+          "title": "$cache in $instance",
+          "type": "timeseries"
+        }
+      ],
+      "repeat": "instance",
+      "title": "Caches in ($instance)",
+      "type": "row"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "rwaiecms",
+          "value": "rwaiecms"
+        },
+        "definition": "label_values(guava_cache_hit_total,kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "environment",
+        "options": [],
+        "query": {
+          "query": "label_values(guava_cache_hit_total,kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "auditservice-v1",
+          "value": "auditservice-v1"
+        },
+        "definition": "label_values(guava_cache_hit_total{kubernetes_namespace=\"$environment\"},kubernetes_name)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": {
+          "query": "label_values(guava_cache_hit_total{kubernetes_namespace=\"$environment\"},kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "definition": "label_values(guava_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\"},cache)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "cache",
+        "options": [],
+        "query": {
+          "query": "label_values(guava_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\"},cache)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "/.*(?<!resilience)$/gm",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "definition": "label_values(guava_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\", cache=~\"$cache\"},instance)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "query": "label_values(guava_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\", cache=~\"$cache\"},instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Cache Raw Metrics (Guava)",
+  "uid": "SFG6l27Sz",
+  "version": 10,
+  "weekStart": ""
+}

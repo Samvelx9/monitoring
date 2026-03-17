@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,12 +24,15 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 408,
-  "iteration": 1683270919190,
+  "id": 104,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -89,7 +95,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -170,9 +176,13 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "count(rabbitmq_queue_consumers{kubernetes_namespace=~\"$environment\",  queue!~\".*retry\",\n  queue!~\".*-exchange-tracker\",\n  queue!~\"^SIS.+\",\n  queue!~\"^sis.+\",\n  queue!~\"^Sis.+\",\n  queue!~\"^DESKTOP.+\",\n  queue!~\"messaging-upgraded-services\",\n  queue!~\"health-status-result-test\",\n  queue!~\"^reporting-service-sync.+\",\n  queue!~\".+-v1.+\",\n  queue!~\"^macadmins.+\",\n  queue!~\"^localhost.+\",\n  queue!~\"^[0-9].+\",\n  queue!~\"health-status-result\",\n  queue!~\"^kube-master-dev.+\"}==0)/count(rabbitmq_queue_consumers{kubernetes_namespace=~\"$environment\",   queue!~\".*retry\",\n  queue!~\".*-exchange-tracker\",\n  queue!~\"^SIS.+\",\n  queue!~\"^sis.+\",\n  queue!~\"^Sis.+\",\n  queue!~\"^DESKTOP.+\",\n  queue!~\"messaging-upgraded-services\",\n  queue!~\"health-status-result-test\",\n  queue!~\"^reporting-service-sync.+\",\n  queue!~\".+-v1.+\",\n  queue!~\"^macadmins.+\",\n  queue!~\"^localhost.+\",\n  queue!~\"^[0-9].+\",\n  queue!~\"health-status-result\",\n  queue!~\"^kube-master-dev.+\"})",
           "hide": false,
           "instant": false,
@@ -186,6 +196,10 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -194,10 +208,23 @@
       },
       "id": 14,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Details",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -205,7 +232,10 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
           },
           "decimals": 2,
           "displayName": "",
@@ -236,7 +266,9 @@
       "id": 10,
       "links": [],
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -245,7 +277,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -286,6 +318,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -297,6 +331,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -344,15 +379,21 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "rabbitmq_queue_consumers{kubernetes_namespace=~\"$environment\",queue=\"$queue\"}",
           "interval": "",
           "legendFormat": "{{queue}}",
@@ -363,11 +404,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -435,7 +483,9 @@
       },
       "id": 20,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -450,7 +500,7 @@
           }
         ]
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -471,12 +521,18 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -488,6 +544,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -534,10 +591,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -560,12 +619,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -577,6 +642,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -604,7 +670,7 @@
               },
               {
                 "color": "red",
-                "value": 5000
+                "value": 4000
               }
             ]
           },
@@ -623,10 +689,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -636,8 +704,9 @@
             "type": "prometheus",
             "uid": "000000001"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "rabbitmq_queue_messages_ready{kubernetes_namespace=\"$environment\",app=\"rabbitmq\"} > 4000",
+          "expr": "rabbitmq_queue_messages_ready{kubernetes_namespace=\"$environment\",app=\"rabbitmq\"} ",
           "instant": false,
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}",
@@ -649,12 +718,18 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -666,6 +741,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -712,10 +788,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -738,14 +816,14 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 34,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "development",
           "value": "development"
         },
@@ -776,8 +854,8 @@
       {
         "current": {
           "selected": false,
-          "text": "None",
-          "value": ""
+          "text": "audit-service-auth-service-authentication.failure.*",
+          "value": "audit-service-auth-service-authentication.failure.*"
         },
         "datasource": {
           "type": "prometheus",
@@ -824,7 +902,7 @@
   },
   "timezone": "",
   "title": "RabbitMq Consumers",
-  "uid": "9pjfCx_Zz",
-  "version": 9,
+  "uid": "d44b3d26-da0c-4099-9a65-9490c81328cf",
+  "version": 1,
   "weekStart": ""
 }

@@ -1,0 +1,91 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 10s
+      folder: alerting
+      interval: 10s
+      rules:
+        - uid: a77328fe-2a06-4042-9c5a-3828385f1e9f
+          title: Kube Cert Expire
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: f11aed81-eb0d-4dd0-ab79-ed2a3a9106ff
+              model:
+                datasource:
+                    type: prometheus
+                    uid: f11aed81-eb0d-4dd0-ab79-ed2a3a9106ff
+                editorMode: code
+                expr: cert_exporter_cert_expires_in_seconds{kubernetes_node=~".+",filename=~".+", filename!~"/var/lib/kubelet/pki/kubelet.crt"} / 86400
+                instant: false
+                interval: ""
+                intervalMs: 30000
+                legendFormat: '{{kubernetes_node}} {{filename}}'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 30
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: vldByyKnz
+          panelId: 76
+          noDataState: OK
+          execErrState: OK
+          for: 5m
+          annotations:
+            __dashboardUid__: vldByyKnz
+            __panelId__: "76"
+            summary: Please renew {{ index $labels "filename" }} certificate on {{ index $labels "kubernetes_node" }} node. {{ humanize (index $values "B").Value }} days left until expiration
+          labels:
+            severity: critical
+          isPaused: false

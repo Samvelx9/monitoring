@@ -1,0 +1,252 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 544,
+  "iteration": 1747484226780,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "rabbitmq_queue_messages_ready{queue=\"reporting-service-sync-$application\", kubernetes_namespace=\"$namespace\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "ready",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "rate(rabbitmq_queue_messages_ack_total{queue=\"reporting-service-sync-$application\", kubernetes_namespace=\"$namespace\"}[$__rate_interval])",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "acked",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "rabbitmq_queue_messages_unacknowledged{queue=\"reporting-service-sync-$application\", kubernetes_namespace=\"$namespace\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "unacked",
+          "refId": "C"
+        }
+      ],
+      "title": "Partial Sync Queue",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "elasticsearch",
+        "uid": "000000006"
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 4,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": true,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "alias": "",
+          "bucketAggs": [],
+          "datasource": {
+            "type": "elasticsearch",
+            "uid": "000000006"
+          },
+          "metrics": [
+            {
+              "id": "1",
+              "settings": {
+                "limit": "500"
+              },
+              "type": "logs"
+            }
+          ],
+          "query": "app.service.name:\"reportingservice\" AND app.name:\"$application\" AND app.environment:\"$namespace\" AND (app.classname:\"com.synisys.idm.reporting.synchronization.service.SyncServiceImpl\" OR app.classname:\"com.synisys.idm.reporting.synchronization.persistence.PersistenceServiceImpl\")",
+          "refId": "A",
+          "timeField": "@timestamp"
+        }
+      ],
+      "title": "Logs",
+      "type": "logs"
+    }
+  ],
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "testing",
+          "value": "testing"
+        },
+        "definition": "label_values(rabbitmq_queue_messages_ready{queue=~\"reporting-service-sync-.*\"}, kubernetes_namespace)",
+        "description": "",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(rabbitmq_queue_messages_ready{queue=~\"reporting-service-sync-.*\"}, kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "adam",
+          "value": "adam"
+        },
+        "definition": "label_values(rabbitmq_queue_messages_ready{queue=~\"reporting-service-sync-.*\", kubernetes_namespace=\"$namespace\"}, queue)",
+        "description": "",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "application",
+        "options": [],
+        "query": {
+          "query": "label_values(rabbitmq_queue_messages_ready{queue=~\"reporting-service-sync-.*\", kubernetes_namespace=\"$namespace\"}, queue)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "/reporting-service-sync-(.+)$/",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Reporting Partial Sync",
+  "uid": "fUGnu0AHk",
+  "version": 8,
+  "weekStart": ""
+}

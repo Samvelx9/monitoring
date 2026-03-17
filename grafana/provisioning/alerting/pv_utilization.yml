@@ -1,0 +1,94 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 10s
+      folder: alerting
+      interval: 10s
+      rules:
+        - uid: pv-utilization
+          title: PV utilization
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                datasource:
+                    type: prometheus
+                    uid: "000000001"
+                editorMode: code
+                exemplar: false
+                expr: 100- (kubelet_volume_stats_available_bytes{namespace=~".+", persistentvolumeclaim!~"postgres-10-pvc" ,persistentvolumeclaim=~".+"} / kubelet_volume_stats_capacity_bytes{namespace=~".+",persistentvolumeclaim=~".+"}  *100)
+                interval: ""
+                intervalMs: 30000
+                legendFormat: '{{namespace}} {{persistentvolumeclaim}}'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                settings:
+                    mode: replaceNN
+                    replaceWithValue: 0
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 90
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: vldByyKnz
+          panelId: 68
+          noDataState: OK
+          execErrState: OK
+          for: 3m
+          annotations:
+            __dashboardUid__: vldByyKnz
+            __panelId__: "68"
+            summary: '{{ index $labels "namespace" }}{{ index $labels "persistentvolumeclaim" }} is {{ humanize (index $values "B").Value }}%'
+          labels:
+            severity: critical
+          isPaused: false

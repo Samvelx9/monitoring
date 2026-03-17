@@ -1,0 +1,91 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 10s
+      folder: alerting
+      interval: 10s
+      rules:
+        - uid: fa2e190d-a2b9-43ba-80e7-9fa7b1b79b59
+          title: GC collection time
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: f11aed81-eb0d-4dd0-ab79-ed2a3a9106ff
+              model:
+                datasource:
+                    type: prometheus
+                    uid: f11aed81-eb0d-4dd0-ab79-ed2a3a9106ff
+                editorMode: code
+                expr: rate(jvm_gc_collection_seconds_sum[$__rate_interval])
+                instant: false
+                interval: ""
+                intervalMs: 30000
+                legendFormat: '{{kubernetes_namespace}} {{kubernetes_name}} {{gc}}'
+                maxDataPoints: 43200
+                range: true
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: vldByyKnz
+          panelId: 77
+          noDataState: OK
+          execErrState: OK
+          for: 1m
+          annotations:
+            __dashboardUid__: vldByyKnz
+            __panelId__: "77"
+            summary: GC time {{ index $labels "kubernetes_namespace" }} {{ index $labels "kubernetes_name" }} {{ index $labels "gc" }} is {{ humanize (index $values "B").Value }}
+          labels:
+            severity: warning
+          isPaused: false

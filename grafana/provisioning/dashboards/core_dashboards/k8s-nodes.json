@@ -21,7 +21,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 376,
+  "id": 101,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -29,35 +29,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 3,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "mode": "thresholds"
           },
           "mappings": [],
           "max": 100,
@@ -87,19 +59,18 @@
       "id": 2,
       "interval": "2m",
       "options": {
-        "legend": {
+        "orientation": "auto",
+        "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "sortBy": "Last",
-          "sortDesc": true
+          "fields": "",
+          "values": false
         },
-        "tooltip": {
-          "mode": "multi"
-        }
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "datasource": {
@@ -115,7 +86,71 @@
         }
       ],
       "title": "CPU USAGE %",
-      "type": "timeseries"
+      "transparent": true,
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 4,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "((node_memory_MemTotal_bytes{kubernetes_node=~\".+\"} - node_memory_MemFree_bytes{kubernetes_node=~\".+\"} - (node_memory_Cached_bytes{kubernetes_node=~\".+\"} + node_memory_Buffers_bytes{kubernetes_node=~\".+\"} + node_memory_SReclaimable_bytes{kubernetes_node=~\".+\"})) / node_memory_MemTotal_bytes{kubernetes_node=~\".+\"} )*100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{kubernetes_node}}",
+          "refId": "B"
+        }
+      ],
+      "title": "MEM USAGE %",
+      "transparent": true,
+      "type": "gauge"
     },
     {
       "fieldConfig": {
@@ -136,16 +171,13 @@
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
             "lineWidth": 1,
-            "pointSize": 3,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
             },
             "showPoints": "auto",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -177,23 +209,110 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 22
       },
-      "id": 4,
+      "id": 5,
+      "interval": "2m",
       "options": {
         "legend": {
-          "calcs": [
-            "last"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "sortBy": "Last",
-          "sortDesc": true
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "single"
         }
       },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "(\r\n(count(\r\n    count(node_cpu_seconds_total{kubernetes_node=~\".+\"}) by (kubernetes_node, cpu) \r\n) by (kubernetes_node)\r\n-\r\navg(\r\n    sum(\r\n        irate(node_cpu_seconds_total{mode='idle',kubernetes_node=~\".+\"}[$__rate_interval])\r\n    ) by (mode, kubernetes_node)\r\n) by (kubernetes_node)) *100\r\n)\r\n/\r\n(count(\r\n    count(node_cpu_seconds_total{kubernetes_node=~\".+\"}) by (kubernetes_node, cpu) \r\n) by (kubernetes_node))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{kubernetes_node}}",
+          "refId": "B"
+        }
+      ],
+      "title": "CPU USAGE %",
+      "transparent": true,
+      "type": "timeseries"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "datasource": {
@@ -209,6 +328,7 @@
         }
       ],
       "title": "MEM USAGE %",
+      "transparent": true,
       "type": "timeseries"
     }
   ],
@@ -226,7 +346,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "K8s-nodes",
-  "uid": "9gZWwViVz",
-  "version": 11,
+  "uid": "800de5ee-a282-4ffe-be19-1dea22449cff",
+  "version": 1,
   "weekStart": ""
 }

@@ -1,0 +1,68 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 10s
+      folder: alerting
+      interval: 10s
+      rules:
+        - uid: postgresqlup
+          title: PostgreSQL UP
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                adhocFilters: []
+                datasource:
+                    type: prometheus
+                    uid: "000000001"
+                editorMode: code
+                exemplar: true
+                expr: pg_up{kubernetes_name!~".+exporter.+"} or up{environment=~"cluster.*",instance=~"postgres.*"}
+                instant: true
+                interval: ""
+                intervalMs: 30000
+                legendFormat: '{{environment}} {{service}}'
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: vldByyKnz
+          panelId: 84
+          noDataState: OK
+          execErrState: OK
+          for: 3m
+          annotations:
+            __dashboardUid__: vldByyKnz
+            __panelId__: "84"
+            summary: Availability of Postgresql {{ index $labels "environment" }} {{ index $labels "service" }} {{ index $values "B" }}
+          labels:
+            severity: critical
+          isPaused: false

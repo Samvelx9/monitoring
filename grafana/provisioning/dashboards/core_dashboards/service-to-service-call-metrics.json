@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,8 +24,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 404,
-  "iteration": 1684931118356,
+  "id": 111,
+  "iteration": 1745312066022,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -91,10 +94,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -105,7 +110,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "sum(rate(service_to_service_execution_seconds_count{kubernetes_name=~\"$service\", app=\"$project\", kubernetes_namespace=\"$namespace\", target_service=~\"$target\"}[5m])) by (target_service)",
+          "expr": "sum(rate(service_to_service_execution_seconds_count{kubernetes_name=~\"$service\", app=\"$project\", kubernetes_namespace=~\"$namespace\", target_service=~\"$target\"}[$__rate_interval])) by (target_service)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -183,42 +188,6 @@
                 }
               }
             ]
-          },
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "75 ",
-                  "95 authorizationservice",
-                  "95 authservice",
-                  "95 authservicejwt",
-                  "95 classifierservice",
-                  "95 entitysearchservice",
-                  "95 kbservice",
-                  "95 lockservice",
-                  "95 mlservice",
-                  "95 permissionservice",
-                  "95 umservice",
-                  "95 validationservice",
-                  "95 wfservice"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
           }
         ]
       },
@@ -234,10 +203,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -248,12 +219,12 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "histogram_quantile(0.75, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\", target_service=~\"$target\"}[5m])) by (le))",
+          "expr": "histogram_quantile(0.75, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\", target_service=~\"$target\"}[$__rate_interval])) by (le,target_service))",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "75 ",
+          "legendFormat": "75 {{target_service}}",
           "refId": "B"
         },
         {
@@ -262,7 +233,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "histogram_quantile(0.95, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\", target_service=~\"$target\"}[5m])) by (le,target_service))",
+          "expr": "histogram_quantile(0.95, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\", target_service=~\"$target\"}[$__rate_interval])) by (le,target_service))",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -276,12 +247,12 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "histogram_quantile(0.99, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\", target_service=~\"$target\"}[5m])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\", target_service=~\"$target\"}[$__rate_interval])) by (le,target_service))",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "99",
+          "legendFormat": "99 {{target_service}}",
           "refId": "A"
         },
         {
@@ -290,12 +261,12 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "histogram_quantile(1.0, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\", kubernetes_name=\"$service\", app=\"$project\", target_service=~\"$target\"}[5m])) by (le))",
+          "expr": "histogram_quantile(1.0, sum(rate(service_to_service_execution_seconds_bucket{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service\", app=~\"$project\", target_service=~\"$target\"}[$__rate_interval])) by (le,target_service))",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "max",
+          "legendFormat": "max {{target_service}}",
           "refId": "D"
         }
       ],
@@ -398,10 +369,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -412,7 +385,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "sum(rate(service_to_service_execution_result_total{kubernetes_name=\"$service\", kubernetes_namespace=\"$namespace\", target_service=~\"$target\", app=\"$project\", status=\"OK\"}[5m])) by(target_service)",
+          "expr": "sum(rate(service_to_service_execution_result_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", target_service=~\"$target\", app=~\"$project\", status=~\"OK\"}[$__rate_interval])) by(target_service)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -425,7 +398,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "sum(rate(service_to_service_execution_result_total{kubernetes_name=\"$service\", kubernetes_namespace=\"$namespace\", target_service=~\"$target\", app=\"$project\", status=\"KO\"}[5m])) by(target_service)",
+          "expr": "sum(rate(service_to_service_execution_result_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", target_service=~\"$target\", app=~\"$project\", status=~\"KO\"}[$__rate_interval])) by(target_service)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -437,10 +410,6 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -536,17 +505,25 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "service_to_service_execution_result_total{kubernetes_name=\"$service\", kubernetes_namespace=\"$namespace\", target_service=~\"$target\", app=\"$project\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "service_to_service_execution_result_total{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\", target_service=~\"$target\", app=~\"$project\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ status }} to {{ target_service }}",
           "refId": "A"
@@ -556,7 +533,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
   "tags": [],
@@ -572,7 +549,7 @@
           "type": "prometheus",
           "uid": "000000001"
         },
-        "definition": "",
+        "definition": "label_values(service_to_service_execution_seconds_bucket,kubernetes_namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "namespace",
@@ -581,7 +558,7 @@
         "options": [],
         "query": {
           "query": "label_values(service_to_service_execution_seconds_bucket,kubernetes_namespace)",
-          "refId": "DEV-PROMETHEUS-namespace-Variable-Query"
+          "refId": "StandardVariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -602,16 +579,16 @@
           "type": "prometheus",
           "uid": "000000001"
         },
-        "definition": "",
+        "definition": "label_values(service_to_service_execution_seconds_count{ kubernetes_namespace=~\"$namespace\" }, kubernetes_name)",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "service",
         "multi": false,
         "name": "service",
         "options": [],
         "query": {
-          "query": "label_values(service_to_service_execution_seconds_count, kubernetes_name)",
-          "refId": "DEV-PROMETHEUS-service-Variable-Query"
+          "query": "label_values(service_to_service_execution_seconds_count{ kubernetes_namespace=~\"$namespace\" }, kubernetes_name)",
+          "refId": "StandardVariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -632,15 +609,15 @@
           "type": "prometheus",
           "uid": "000000001"
         },
-        "definition": "",
+        "definition": "label_values(service_to_service_execution_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\"}, target_service)",
         "hide": 0,
         "includeAll": true,
         "multi": false,
         "name": "target",
         "options": [],
         "query": {
-          "query": "label_values(service_to_service_execution_seconds_count{kubernetes_name=\"$service\", kubernetes_namespace=\"$namespace\"}, target_service)",
-          "refId": "DEV-PROMETHEUS-target-Variable-Query"
+          "query": "label_values(service_to_service_execution_seconds_count{kubernetes_name=~\"$service\", kubernetes_namespace=~\"$namespace\"}, target_service)",
+          "refId": "StandardVariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -653,7 +630,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "indicata",
           "value": "indicata"
         },
@@ -661,7 +638,7 @@
           "type": "prometheus",
           "uid": "000000001"
         },
-        "definition": "label_values(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\"}, app)",
+        "definition": "label_values(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\",kubernetes_name=~\"$service\"}, app)",
         "hide": 0,
         "includeAll": false,
         "label": "project",
@@ -669,7 +646,7 @@
         "name": "project",
         "options": [],
         "query": {
-          "query": "label_values(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\"}, app)",
+          "query": "label_values(service_to_service_execution_seconds_bucket{kubernetes_namespace=\"$namespace\",kubernetes_name=~\"$service\"}, app)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -714,7 +691,7 @@
   },
   "timezone": "",
   "title": "service to service call metrics",
-  "uid": "Mc_qrqKW",
-  "version": 2,
+  "uid": "2d45fbe5-2e34-42fe-9752-94e61472b963",
+  "version": 1,
   "weekStart": ""
 }

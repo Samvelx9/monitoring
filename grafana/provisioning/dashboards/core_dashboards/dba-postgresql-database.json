@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -23,13 +26,17 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 9628,
   "graphTooltip": 1,
-  "id": 247,
-  "iteration": 1679398408193,
+  "id": 94,
+  "iteration": 1705992815890,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -38,10 +45,23 @@
       },
       "id": 106,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "General Counters, CPU, Memory and File Descriptor Stats",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
         "defaults": {
@@ -125,6 +145,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [
@@ -203,6 +227,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [
@@ -281,6 +309,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "mappings": [
@@ -432,7 +464,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_numbackends{datname=~\"$datname\",instance=\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_numbackends{datname=~\"$datname\",instance=~\"$instance.*\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -440,6 +476,10 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "expr": "connec",
           "format": "time_series",
           "intervalFactor": 1,
@@ -450,6 +490,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -518,7 +562,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "sum(avg_over_time(pg_stat_activity_count{instance=~\"$instance:$postgres_exporter_port\"}[$__interval])) /\nsum(pg_settings_max_connections{instance=~\"$instance:$postgres_exporter_port\"})",
+          "expr": "sum(avg_over_time(pg_stat_activity_count{instance=~\"$instance.*\"}[$__interval])) /\nsum(pg_settings_max_connections{instance=~\"$instance.*\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -530,6 +574,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -597,7 +645,7 @@
           },
           "dsType": "prometheus",
           "exemplar": true,
-          "expr": "sum(irate(pg_stat_database_xact_commit{datname=~\"$datname\",instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])) + sum(irate(pg_stat_database_xact_rollback{datname=~\"$datname\",instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval]))",
+          "expr": "sum(irate(pg_stat_database_xact_commit{datname=~\"$datname\",instance=~\"$instance.*\"}[$__rate_interval])) + sum(irate(pg_stat_database_xact_rollback{datname=~\"$datname\",instance=~\"$instance.*\"}[$__rate_interval]))",
           "format": "time_series",
           "groupBy": [
             {
@@ -718,7 +766,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "SUM(pg_stat_database_tup_fetched{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "SUM(pg_stat_database_tup_fetched{datname=~\"$datname\", instance=~\"$instance.*\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -794,7 +846,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "SUM(pg_stat_database_tup_inserted{instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "SUM(pg_stat_database_tup_inserted{instance=~\"$instance.*\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -870,7 +926,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "SUM(pg_stat_database_tup_updated{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "SUM(pg_stat_database_tup_updated{datname=~\"$datname\", instance=~\"$instance.*\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "refId": "A",
@@ -947,11 +1007,17 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "process_start_time_seconds{instance=\"$instance:$postgres_exporter_port\"} * 1000",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "process_start_time_seconds{instance=~\"$instance.*\",job=~\".*Servers\"} * 1000",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -959,6 +1025,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1023,7 +1093,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_max_connections{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_max_connections{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1103,10 +1173,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -1119,7 +1191,7 @@
           "exemplar": true,
           "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=\"system\",instance=~\"$instance:$node_exporter_port\"}[$__rate_interval])) * 100",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "Busy System",
           "refId": "B"
         },
@@ -1131,7 +1203,7 @@
           "exemplar": true,
           "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=\"user\",instance=~\"$instance:$node_exporter_port\"}[$__rate_interval])) * 100",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "Busy User",
           "refId": "C"
         },
@@ -1143,7 +1215,7 @@
           "exemplar": true,
           "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=\"iowait\",instance=~\"$instance:$node_exporter_port\"}[$__rate_interval])) * 100",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "Busy Iowait",
           "refId": "D"
         },
@@ -1155,7 +1227,7 @@
           "exemplar": true,
           "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=\".*irq\",instance=~\"$instance:$node_exporter_port\"}[$__rate_interval])) * 100",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "Busy IRQs",
           "refId": "E"
         },
@@ -1167,7 +1239,7 @@
           "exemplar": true,
           "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq',instance=~\"$instance:$node_exporter_port\"}[$__rate_interval])) * 100",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "Busy Other",
           "refId": "F"
         },
@@ -1179,7 +1251,7 @@
           "exemplar": true,
           "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=\"idle\",instance=~\"$instance:$node_exporter_port\"}[$__rate_interval])) * 100",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "Idle",
           "refId": "G"
         }
@@ -1312,10 +1384,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -1325,11 +1399,12 @@
             "type": "prometheus",
             "uid": "000000001"
           },
+          "exemplar": true,
           "expr": "node_memory_MemTotal_bytes{instance=~\"$instance:$node_exporter_port\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "RAM Total",
           "refId": "A"
         },
@@ -1342,7 +1417,7 @@
           "expr": "node_memory_MemTotal_bytes{instance=~\"$instance:$node_exporter_port\"} - node_memory_MemFree_bytes{instance=~\"$instance:$node_exporter_port\"} - (node_memory_Cached_bytes{instance=~\"$instance:$node_exporter_port\"} + node_memory_Buffers_bytes{instance=~\"$instance:$node_exporter_port\"})",
           "format": "time_series",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "RAM Used",
           "refId": "B"
         },
@@ -1351,9 +1426,10 @@
             "type": "prometheus",
             "uid": "000000001"
           },
+          "exemplar": true,
           "expr": "node_memory_Cached_bytes{instance=~\"$instance:$node_exporter_port\"} + node_memory_Buffers_bytes{instance=~\"$instance:$node_exporter_port\"}",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "RAM Cache + Buffer",
           "refId": "C"
         },
@@ -1362,9 +1438,10 @@
             "type": "prometheus",
             "uid": "000000001"
           },
+          "exemplar": true,
           "expr": "node_memory_MemFree_bytes{instance=~\"$instance:$node_exporter_port\"}",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "RAM Free",
           "refId": "D"
         },
@@ -1373,9 +1450,10 @@
             "type": "prometheus",
             "uid": "000000001"
           },
+          "exemplar": true,
           "expr": "(node_memory_SwapTotal_bytes{instance=~\"$instance:$node_exporter_port\"} - node_memory_SwapFree_bytes{instance=~\"$instance:$node_exporter_port\"})",
           "interval": "",
-          "intervalFactor": 2,
+          "intervalFactor": 1,
           "legendFormat": "SWAP Used",
           "refId": "E"
         }
@@ -1384,6 +1462,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "Basic network info per interface",
       "fieldConfig": {
         "defaults": {
@@ -1901,10 +1983,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -1942,6 +2026,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2007,21 +2095,29 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "100 - ((node_filesystem_avail_bytes{instance=~\"$instance:$node_exporter_port\",job=\"DB-Servers\"} * 100) / node_filesystem_size_bytes{instance=~\"$instance:$node_exporter_port\",job=\"DB-Servers\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "100 - ((node_filesystem_avail_bytes{instance=~\"$instance:$node_exporter_port\"} * 100) / node_filesystem_size_bytes{instance=~\"$instance:$node_exporter_port\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "{{mountpoint}}",
+          "range": true,
           "refId": "A",
           "step": 2
         }
@@ -2030,6 +2126,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2402,10 +2502,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -2441,6 +2543,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -2603,10 +2709,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -2646,6 +2754,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -3018,10 +3130,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -3059,6 +3173,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -3432,10 +3550,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -3459,6 +3579,10 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3467,10 +3591,23 @@
       },
       "id": 104,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Settings",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3535,7 +3672,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_shared_buffers_bytes{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_shared_buffers_bytes{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3547,6 +3684,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3611,7 +3752,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_effective_cache_size_bytes{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_effective_cache_size_bytes{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3623,6 +3764,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3687,7 +3832,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_maintenance_work_mem_bytes{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_maintenance_work_mem_bytes{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3699,6 +3844,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3763,7 +3912,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_work_mem_bytes{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_work_mem_bytes{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3775,6 +3924,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3840,7 +3993,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_max_wal_size_bytes{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_max_wal_size_bytes{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3852,6 +4005,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3916,7 +4073,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_random_page_cost{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_random_page_cost{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -3928,6 +4085,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3992,7 +4153,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_max_worker_processes{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_max_worker_processes{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4004,6 +4165,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4068,7 +4233,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_max_parallel_workers{instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_max_parallel_workers{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4080,6 +4245,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "pg_settings_max_files_per_process ",
       "fieldConfig": {
         "defaults": {
@@ -4146,7 +4315,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_max_files_per_process {instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_max_files_per_process {instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4158,6 +4327,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "pg_settings_ssl ",
       "fieldConfig": {
         "defaults": {
@@ -4224,7 +4397,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_ssl {instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_ssl {instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4236,6 +4409,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "# HELP pg_settings_track_activity_query_size Sets the size reserved for pg_stat_activity.query, in bytes.",
       "fieldConfig": {
         "defaults": {
@@ -4302,7 +4479,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_track_activity_query_size {instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_track_activity_query_size {instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4314,6 +4491,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_settings_track_commit_timestamp Collects transaction commit time.",
       "fieldConfig": {
         "defaults": {
@@ -4380,7 +4561,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_track_commit_timestamp {instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_track_commit_timestamp {instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4392,6 +4573,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_settings_track_counts Collects statistics on database activity.",
       "fieldConfig": {
         "defaults": {
@@ -4458,7 +4643,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_track_counts {instance=\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_track_counts {instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4470,6 +4655,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_settings_commit_delay Sets the delay in microseconds between transaction commit and flushing WAL to disk.",
       "fieldConfig": {
         "defaults": {
@@ -4536,7 +4725,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_commit_delay{instance=~\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_commit_delay{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4548,6 +4737,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "pg_settings_checkpoint_warning_seconds",
       "fieldConfig": {
         "defaults": {
@@ -4614,7 +4807,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_checkpoint_warning_seconds{instance=~\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_checkpoint_warning_seconds{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4626,6 +4819,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "pg_settings_deadlock_timeout_seconds ",
       "fieldConfig": {
         "defaults": {
@@ -4692,7 +4889,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_deadlock_timeout_seconds {instance=~\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_deadlock_timeout_seconds {instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4704,6 +4901,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "# HELP pg_settings_effective_io_concurrency Number of simultaneous requests that can be handled efficiently by the disk subsystem.",
       "fieldConfig": {
         "defaults": {
@@ -4770,7 +4971,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_effective_io_concurrency {instance=~\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_effective_io_concurrency {instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4782,6 +4983,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "# HELP pg_settings_idle_in_transaction_session_timeout_seconds Sets the maximum allowed duration of any idling transaction. [Units converted to seconds.]",
       "fieldConfig": {
         "defaults": {
@@ -4848,7 +5053,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_idle_in_transaction_session_timeout_seconds {instance=~\"$instance:$postgres_exporter_port\"}",
+          "expr": "pg_settings_idle_in_transaction_session_timeout_seconds {instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4860,6 +5065,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "# HELP pg_settings_maintenance_work_mem_bytes Sets the maximum memory to be used for maintenance operations. [Units converted to bytes.]",
       "fieldConfig": {
         "defaults": {
@@ -4926,7 +5135,7 @@
             "uid": "000000001"
           },
           "exemplar": false,
-          "expr": "pg_settings_maintenance_work_mem_bytes {instance=~\"$instance:$postgres_exporter_port\"}/1024/1024/1024",
+          "expr": "pg_settings_maintenance_work_mem_bytes {instance=~\"$instance.*\"}/1024/1024/1024",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -4939,6 +5148,10 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -4947,10 +5160,23 @@
       },
       "id": 102,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Transactions/Sessions",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5021,10 +5247,12 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -5035,7 +5263,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_database_xact_commit{instance=\"$instance:$postgres_exporter_port\", datname=~\"$datname\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_database_xact_commit{instance=~\"$instance.*\", datname=~\"$datname\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -5048,7 +5276,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_database_xact_rollback{instance=\"$instance:$postgres_exporter_port\", datname=~\"$datname\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_database_xact_rollback{instance=~\"$instance.*\", datname=~\"$datname\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -5134,16 +5362,22 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "topk(10,pg_stat_database_numbackends{datname=~\"$datname\",instance=\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "topk(10,pg_stat_database_numbackends{datname=~\"$datname\",instance=~\"$instance.*\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -5229,16 +5463,22 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "pg_stat_activity_max_tx_duration{instance=\"$instance:$postgres_exporter_port\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "pg_stat_activity_max_tx_duration{instance=~\"$instance.*\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{datname}} max_tx_duration [{{state}}]",
@@ -5322,16 +5562,22 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "pg_stat_activity_count{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\", state=\"active\"} !=0",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "pg_stat_activity_count{datname=~\"$datname\", instance=~\"$instance.*\", state=\"active\"} !=0",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -5412,16 +5658,22 @@
         "legend": {
           "calcs": [],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "topk(20,pg_stat_activity_max_tx_duration{datname=~\"$datname\",instance=\"$instance:$postgres_exporter_port\", state='active'})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "topk(20,pg_stat_activity_max_tx_duration{datname=~\"$datname\",instance=~\"$instance.*\", state='active'})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -5506,16 +5758,22 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "topk(10,pg_stat_activity_count{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\", state=~\"idle|idle in transaction|idle in transaction (aborted)\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "topk(10,pg_stat_activity_count{datname=~\"$datname\", instance=~\"$instance.*\", state=~\"idle|idle in transaction|idle in transaction (aborted)\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -5528,6 +5786,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5597,10 +5859,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -5611,7 +5875,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "rate(pg_stat_database_xact_rollback{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval]) ",
+          "expr": "rate(pg_stat_database_xact_rollback{instance=~\"$instance.*\"}[$__rate_interval]) ",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -5624,6 +5888,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5693,10 +5961,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -5707,7 +5977,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "rate(pg_stat_database_xact_commit{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval]) > 1",
+          "expr": "rate(pg_stat_database_xact_commit{instance=~\"$instance.*\"}[$__rate_interval]) > 1",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -5721,6 +5991,10 @@
     },
     {
       "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -5801,7 +6075,8 @@
                 "sum"
               ],
               "displayMode": "table",
-              "placement": "right"
+              "placement": "right",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "multi"
@@ -5810,7 +6085,11 @@
           "pluginVersion": "8.3.1",
           "targets": [
             {
-              "expr": "pg_stat_database_tup_fetched{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\"} != 0",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "expr": "pg_stat_database_tup_fetched{datname=~\"$datname\", instance=~\"$instance.*\"} != 0",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{datname}}",
@@ -5893,7 +6172,8 @@
                 "sum"
               ],
               "displayMode": "table",
-              "placement": "right"
+              "placement": "right",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "multi"
@@ -5902,7 +6182,11 @@
           "pluginVersion": "8.3.1",
           "targets": [
             {
-              "expr": "pg_stat_database_tup_inserted{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\"} != 0",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "expr": "pg_stat_database_tup_inserted{datname=~\"$datname\", instance=~\"$instance.*\"} != 0",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{datname}}",
@@ -5985,7 +6269,8 @@
                 "sum"
               ],
               "displayMode": "table",
-              "placement": "right"
+              "placement": "right",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "multi"
@@ -5994,7 +6279,11 @@
           "pluginVersion": "8.3.1",
           "targets": [
             {
-              "expr": "pg_stat_database_tup_updated{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\"} != 0",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "expr": "pg_stat_database_tup_updated{datname=~\"$datname\", instance=~\"$instance.*\"} != 0",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{datname}}",
@@ -6077,7 +6366,8 @@
                 "sum"
               ],
               "displayMode": "table",
-              "placement": "right"
+              "placement": "right",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "multi"
@@ -6086,7 +6376,11 @@
           "pluginVersion": "8.3.1",
           "targets": [
             {
-              "expr": "pg_stat_database_tup_returned{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\"} != 0",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "expr": "pg_stat_database_tup_returned{datname=~\"$datname\", instance=~\"$instance.*\"} != 0",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{datname}}",
@@ -6169,7 +6463,8 @@
                 "sum"
               ],
               "displayMode": "table",
-              "placement": "right"
+              "placement": "right",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "multi"
@@ -6178,7 +6473,11 @@
           "pluginVersion": "8.3.1",
           "targets": [
             {
-              "expr": "pg_stat_database_tup_deleted{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\"} != 0",
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "expr": "pg_stat_database_tup_deleted{datname=~\"$datname\", instance=~\"$instance.*\"} != 0",
               "format": "time_series",
               "intervalFactor": 2,
               "legendFormat": "{{datname}}",
@@ -6190,6 +6489,10 @@
           "type": "timeseries"
         },
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -6258,7 +6561,8 @@
                 "min"
               ],
               "displayMode": "table",
-              "placement": "right"
+              "placement": "right",
+              "showLegend": true
             },
             "tooltip": {
               "mode": "multi"
@@ -6272,7 +6576,7 @@
                 "uid": "000000001"
               },
               "exemplar": true,
-              "expr": "irate(pg_stat_database_tup_fetched{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+              "expr": "irate(pg_stat_database_tup_fetched{instance=~\"$instance.*\"}[$__rate_interval])",
               "format": "time_series",
               "interval": "",
               "intervalFactor": 1,
@@ -6285,7 +6589,7 @@
                 "uid": "000000001"
               },
               "exemplar": true,
-              "expr": "irate(pg_stat_database_tup_returned{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+              "expr": "irate(pg_stat_database_tup_returned{instance=~\"$instance.*\"}[$__rate_interval])",
               "format": "time_series",
               "interval": "",
               "intervalFactor": 1,
@@ -6297,11 +6601,24 @@
           "type": "timeseries"
         }
       ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Database Stats DML",
       "type": "row"
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -6310,6 +6627,15 @@
       },
       "id": 34,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Cache/Buffers/Temps",
       "type": "row"
     },
@@ -6386,16 +6712,22 @@
             "lastNotNull"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "pg_stat_database_blks_hit{instance=\"$instance:$postgres_exporter_port\", datname=~\"$datname\"} / (pg_stat_database_blks_read{instance=\"$instance:$postgres_exporter_port\", datname=~\"$datname\"} + pg_stat_database_blks_hit{instance=\"$instance:$postgres_exporter_port\", datname=~\"$datname\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "pg_stat_database_blks_hit{instance=~\"$instance.*\", datname=~\"$datname\"} / (pg_stat_database_blks_read{instance=~\"$instance.*\", datname=~\"$datname\"} + pg_stat_database_blks_hit{instance=~\"$instance.*\", datname=~\"$datname\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ datname }}",
@@ -6406,6 +6738,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -6475,10 +6811,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -6489,7 +6827,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_bgwriter_buffers_backend{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_bgwriter_buffers_backend{instance=~\"$instance.*\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -6502,7 +6840,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_bgwriter_buffers_alloc{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_bgwriter_buffers_alloc{instance=~\"$instance.*\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -6515,7 +6853,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_bgwriter_buffers_backend_fsync{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_bgwriter_buffers_backend_fsync{instance=~\"$instance.*\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -6528,7 +6866,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_bgwriter_buffers_checkpoint{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_bgwriter_buffers_checkpoint{instance=~\"$instance.*\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -6541,7 +6879,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_bgwriter_buffers_clean{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_bgwriter_buffers_clean{instance=~\"$instance.*\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -6553,6 +6891,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "Total amount of data written to temporary files by queries in this database. All temporary files are counted, regardless of why the temporary file was created, and regardless of the log_temp_files setting.",
       "fieldConfig": {
         "defaults": {
@@ -6623,10 +6965,12 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -6637,7 +6981,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_database_temp_bytes{instance=\"$instance:$postgres_exporter_port\", datname=~\"$datname\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_database_temp_bytes{instance=~\"$instance.*\", datname=~\"$datname\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -6650,6 +6994,10 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -6658,6 +7006,15 @@
       },
       "id": 32,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Locks/Deadlocks/Latencies",
       "type": "row"
     },
@@ -6736,16 +7093,22 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "pg_locks_count{datname=~\"$datname\", instance=~\"$instance:$postgres_exporter_port\"} != 0",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "pg_locks_count{datname=~\"$datname\", instance=~\"$instance.*\"} != 0",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -6758,6 +7121,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -6825,10 +7192,12 @@
             "mean"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -6839,7 +7208,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_database_conflicts{instance=\"$instance:$postgres_exporter_port\", datname=~\"$datname\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_database_conflicts{instance=~\"$instance.*\", datname=~\"$datname\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -6852,7 +7221,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_database_deadlocks{instance=\"$instance:$postgres_exporter_port\", datname=~\"$datname\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_database_deadlocks{instance=~\"$instance.*\", datname=~\"$datname\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -6864,6 +7233,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -6935,10 +7308,12 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -6963,6 +7338,10 @@
     },
     {
       "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -6971,10 +7350,23 @@
       },
       "id": 30,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Aditional Info",
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "go_memstats_heap_objects ",
       "fieldConfig": {
         "defaults": {
@@ -7019,7 +7411,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "go_memstats_heap_objects{instance=~\"$instance:$postgres_exporter_port\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "go_memstats_heap_objects{instance=~\"$instance.*\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7029,6 +7425,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "# HELP process_max_fds Maximum number of open file descriptors.",
       "fieldConfig": {
         "defaults": {
@@ -7073,7 +7473,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(process_max_fds {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(process_max_fds {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7083,6 +7487,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.",
       "fieldConfig": {
         "defaults": {
@@ -7127,7 +7535,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(process_cpu_seconds_total {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(process_cpu_seconds_total {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7137,6 +7549,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP process_open_fds Number of open file descriptors.",
       "fieldConfig": {
         "defaults": {
@@ -7181,7 +7597,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(process_open_fds {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(process_open_fds {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7191,6 +7611,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "# HELP process_resident_memory_bytes Resident memory size in Mega bytes.",
       "fieldConfig": {
         "defaults": {
@@ -7235,7 +7659,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(process_resident_memory_bytes {instance=~\"$instance:$postgres_exporter_port\"})/1024/1024",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(process_resident_memory_bytes {instance=~\"$instance.*\"})/1024/1024",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7245,6 +7673,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP process_start_time_seconds Start time of the process since unix epoch in seconds.",
       "fieldConfig": {
         "defaults": {
@@ -7289,7 +7721,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(process_start_time_seconds {instance=~\"$instance:$postgres_exporter_port\"})/60/60/24",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(process_start_time_seconds {instance=~\"$instance.*\"})/60/60/24",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7299,6 +7735,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP process_virtual_memory_bytes Virtual memory size in Mega bytes.",
       "fieldConfig": {
         "defaults": {
@@ -7343,7 +7783,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(process_virtual_memory_bytes {instance=~\"$instance:$postgres_exporter_port\"})/1024/1024",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(process_virtual_memory_bytes {instance=~\"$instance.*\"})/1024/1024",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7353,6 +7797,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_stat_database_numbackends Number of backends currently connected to this database. This is the only column in this view that returns a value reflecting current state; all other columns return the accumulated values since the last reset.",
       "fieldConfig": {
         "defaults": {
@@ -7397,7 +7845,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_numbackends {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_numbackends {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7481,16 +7933,22 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "process_open_fds{instance=\"$instance:$postgres_exporter_port\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "process_open_fds{instance=~\"$instance.*\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -7502,6 +7960,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_stat_activity_count number of connections in this state",
       "fieldConfig": {
         "defaults": {
@@ -7546,7 +8008,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_activity_count{instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_activity_count{instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7556,6 +8022,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "# HELP pg_stat_database_blk_read_time Time spent reading data file blocks by backends in this database, in milliseconds",
       "fieldConfig": {
         "defaults": {
@@ -7600,7 +8070,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_blk_read_time {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_blk_read_time {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7610,6 +8084,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_stat_database_conflicts Number of queries canceled due to conflicts with recovery in this database. (Conflicts occur only on standby servers; see pg_stat_database_conflicts for details.)",
       "fieldConfig": {
         "defaults": {
@@ -7654,7 +8132,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_conflicts {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_conflicts {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7664,6 +8146,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_stat_database_conflicts_confl_deadlock Number of queries in this database that have been canceled due to deadlocks",
       "fieldConfig": {
         "defaults": {
@@ -7708,7 +8194,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_conflicts_confl_deadlock {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_conflicts_confl_deadlock {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7718,6 +8208,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_stat_database_conflicts_confl_tablespace Number of queries in this database that have been canceled due to dropped tablespaces",
       "fieldConfig": {
         "defaults": {
@@ -7762,7 +8256,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_conflicts_confl_tablespace {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_conflicts_confl_tablespace {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7772,6 +8270,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_stat_database_temp_files Number of temporary files created by queries in this database. All temporary files are counted, regardless of why the temporary file was created (e.g., sorting or hashing), and regardless of the log_temp_files setting.",
       "fieldConfig": {
         "defaults": {
@@ -7816,7 +8318,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_temp_files {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_temp_files {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7826,6 +8332,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP pg_stat_database_numbackends Number of backends currently connected to this database. This is the only column in this view that returns a value reflecting current state; all other columns return the accumulated values since the last reset.",
       "fieldConfig": {
         "defaults": {
@@ -7870,7 +8380,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_numbackends {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_numbackends {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7880,6 +8394,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.",
       "fieldConfig": {
         "defaults": {
@@ -7924,7 +8442,11 @@
       "pluginVersion": "8.3.3",
       "targets": [
         {
-          "expr": "process_virtual_memory_max_bytes {instance=~\"$instance:$postgres_exporter_port\"}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "process_virtual_memory_max_bytes {instance=~\"$instance.*\"}",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -7934,6 +8456,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "pg_stat_database_tup_deleted",
       "fieldConfig": {
         "defaults": {
@@ -7998,40 +8524,62 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_tup_deleted{instance=\"$instance:$postgres_exporter_port\",datname=~\"$datname\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_tup_deleted{instance=~\"$instance.*\",datname=~\"$datname\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         },
         {
-          "expr": "sum(pg_stat_database_tup_inserted{instance=\"$instance:$postgres_exporter_port\",datname=~\"$datname\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_tup_inserted{instance=~\"$instance.*\",datname=~\"$datname\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "B"
         },
         {
-          "expr": "sum(pg_stat_database_tup_updated{instance=\"$instance:$postgres_exporter_port\",datname=~\"$datname\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_tup_updated{instance=~\"$instance.*\",datname=~\"$datname\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "C"
         },
         {
-          "expr": "sum(pg_stat_database_tup_fetched{instance=\"$instance:$postgres_exporter_port\",datname=~\"$datname\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_tup_fetched{instance=~\"$instance.*\",datname=~\"$datname\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "D"
         },
         {
-          "expr": "sum(pg_stat_database_tup_returned{instance=\"$instance:$postgres_exporter_port\",datname=~\"$datname\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_tup_returned{instance=~\"$instance.*\",datname=~\"$datname\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "E"
@@ -8041,6 +8589,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "description": "# HELP pg_stat_database_numbackends Number of backends currently connected to this database. This is the only column in this view that returns a value reflecting current state; all other columns return the accumulated values since the last reset.",
       "fieldConfig": {
         "defaults": {
@@ -8105,16 +8657,22 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
       "targets": [
         {
-          "expr": "sum(pg_stat_database_numbackends {instance=~\"$instance:$postgres_exporter_port\"})",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "sum(pg_stat_database_numbackends {instance=~\"$instance.*\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -8124,6 +8682,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -8193,10 +8755,12 @@
             "min"
           ],
           "displayMode": "table",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi"
+          "mode": "multi",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.1",
@@ -8207,7 +8771,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_bgwriter_checkpoint_write_time{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_bgwriter_checkpoint_write_time{instance=~\"$instance.*\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -8220,7 +8784,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "irate(pg_stat_bgwriter_checkpoint_sync_time{instance=\"$instance:$postgres_exporter_port\"}[$__rate_interval])",
+          "expr": "irate(pg_stat_bgwriter_checkpoint_sync_time{instance=~\"$instance.*\"}[$__rate_interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -8245,25 +8809,6 @@
       {
         "current": {
           "selected": false,
-          "text": "DEV-PROMETHEUS",
-          "value": "DEV-PROMETHEUS"
-        },
-        "hide": 0,
-        "includeAll": false,
-        "label": "datasource",
-        "multi": false,
-        "name": "DS_PROMETHEUS",
-        "options": [],
-        "query": "prometheus",
-        "queryValue": "",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
-        "current": {
-          "selected": false,
           "text": "postgresql_dev.synisys.com",
           "value": "postgresql_dev.synisys.com"
         },
@@ -8283,7 +8828,7 @@
           "refId": "DEV-PROMETHEUS-instance-Variable-Query"
         },
         "refresh": 1,
-        "regex": "/(.+):/",
+        "regex": "/(?<host>([a-zA-Z0-9\\.\\_\\-])+)\\:?(?<port>([0-9])*)/g",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
@@ -8293,7 +8838,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -8330,7 +8875,7 @@
         "auto_count": "200",
         "auto_min": "1s",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
@@ -8380,6 +8925,7 @@
           }
         ],
         "query": "1s,5s,1m,5m,1h,6h,1d",
+        "queryValue": "",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
@@ -8402,33 +8948,6 @@
           }
         ],
         "query": "9100",
-        "skipUrlSync": false,
-        "type": "custom"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "9187",
-          "value": "9187"
-        },
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "postgres_exporter_port",
-        "options": [
-          {
-            "selected": true,
-            "text": "9187",
-            "value": "9187"
-          },
-          {
-            "selected": false,
-            "text": "32187",
-            "value": "32187"
-          }
-        ],
-        "query": "9187,32187",
-        "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
       }
@@ -8464,7 +8983,7 @@
   },
   "timezone": "",
   "title": "DBA - PostgreSQL Database",
-  "uid": "0000000391",
-  "version": 145,
+  "uid": "236968c6-104a-4f7c-aed8-7638c7fe5ee6",
+  "version": 1,
   "weekStart": ""
 }

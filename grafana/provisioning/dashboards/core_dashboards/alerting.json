@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 415,
+  "id": 90,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -61,7 +61,7 @@
           "alerting"
         ]
       },
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "datasource": {
@@ -153,8 +153,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -262,7 +260,7 @@
             },
             "query": {
               "params": [
-                "K",
+                "A",
                 "1m",
                 "now"
               ]
@@ -289,18 +287,12 @@
           }
         ]
       },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "axisSoftMax": 1,
@@ -378,14 +370,20 @@
             "type": "prometheus",
             "uid": "000000001"
           },
-          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(up{kubernetes_name=~\".+\", kubernetes_name!~\"elasticsearch|aexauthservice-v1|ecasecourt-v1|ejusticecontrols-v1|aexsyncservice-v1|es-.+|tika-service|kbserviceadapter-v1|fullsyncservice-v1|idmofflineservice-v1|changedeploymentservice-v1|indicatorimportservice-v1|jobexecservice-v1|redis|randomcoffee-ui-v1|recommendationservice-v1|randomcoffee-v1|entityrelationsearchservice-v1|prime-v1|surveyreportingservice-v1|ejusticehistoricaldataservice-v1|armepdservice-v1|surveydeservice-v1|gisservice-v1|metricsexporter\", kubernetes_name!~\"ipttexportimportservice-v1|encryptionservice-v1|ejusticeschedulerservice-v1|project-tracker-service|cmsservice-v1|ukrcmsservice-v1|classificationservice-v1|authservicejwt-v1|auxiliumdatasharingapi-v1|keller-v1\", kubernetes_namespace=~\".+|\", kubernetes_namespace!~\"perftesting|haltest|mda-perftest\"} ) by (kubernetes_name,kubernetes_namespace)",
+          "expr": "sum by (namespace,pod)(kube_pod_status_ready{condition=\"true\",namespace!~\"chatwoot|cert-manager|argocd|velero|cnpg-system|consul.*|metallb-system|vault|kube-system|monitoring|knative-serving|ingress-nginx|istio-system|minio|default|filebeat|hal|openunison|opentelemetry|randomcoffee|projecttracker|kubernetes-dashboard|kube-fledged|portal-qa\", pod!~\"reportexportservice-v1.+\"} == 0 and on(pod) kube_pod_status_phase{phase!=\"Succeeded\"} == 1)",
           "hide": false,
           "interval": "",
-          "legendFormat": "{{kubernetes_namespace}} {{kubernetes_name}}",
-          "range": true,
-          "refId": "K"
+          "legendFormat": "{{namespace}} {{pod}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 1,
+          "visible": true
         }
       ],
       "title": "Microservice availability",
@@ -407,7 +405,7 @@
             },
             "query": {
               "params": [
-                "B",
+                "A",
                 "1m",
                 "now"
               ]
@@ -435,18 +433,12 @@
           }
         ]
       },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -528,7 +520,7 @@
           "hide": false,
           "interval": "",
           "legendFormat": "{{kubernetes_namespace}}",
-          "refId": "B"
+          "refId": "A"
         }
       ],
       "thresholds": [
@@ -596,8 +588,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -746,8 +736,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -892,8 +880,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1038,8 +1024,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1169,7 +1153,7 @@
         "handler": 1,
         "message": "Kubernetes Node_exporter is DOWN",
         "name": "Kube Node down",
-        "noDataState": "ok",
+        "noDataState": "alerting",
         "notifications": [
           {
             "uid": "QnTsnNSVk"
@@ -1189,8 +1173,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1319,7 +1301,7 @@
         "frequency": "1m",
         "handler": 1,
         "message": "Server Diskspace is CRITICALLY LOW",
-        "name": "VM disk size limit reached CRITICAL",
+        "name": "VM disk size limit reached",
         "noDataState": "ok",
         "notifications": [
           {
@@ -1340,8 +1322,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1377,7 +1357,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green"
+                "color": "dark-green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -1441,164 +1422,7 @@
           "visible": true
         }
       ],
-      "title": "DISK SIZE FREE CRITICAL",
-      "type": "timeseries"
-    },
-    {
-      "alert": {
-        "alertRuleTags": {
-          "severity": "warning"
-        },
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                80,
-                90
-              ],
-              "type": "within_range"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "name": "DISK SIZE FREE WARNING alert",
-        "noDataState": "ok",
-        "notifications": []
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "line+area"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-green"
-              },
-              {
-                "color": "#EAB839",
-                "value": 80
-              },
-              {
-                "color": "dark-red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 50
-      },
-      "id": 71,
-      "options": {
-        "legend": {
-          "calcs": [
-            "last"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Last",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "000000001"
-          },
-          "exemplar": true,
-          "expr": "100 - ((node_filesystem_free_bytes{instance=~\".+:9100\", instance!~\"sis2s055:9100|elk-temp:9100\",device!~'rootfs',mountpoint!~\"/sys/firmware/efi/efivars|/proc/fs/nfsd|/boot|/mnt/backup_nfs|/nfs-docker\"}) / (node_filesystem_size_bytes{instance=~\".+:9100\",device!~'rootfs'})) *100",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{instance}}:{{mountpoint}} ",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "op": "gt",
-          "value": 80,
-          "visible": true
-        },
-        {
-          "colorMode": "critical",
-          "op": "lt",
-          "value": 90,
-          "visible": true
-        }
-      ],
-      "title": "DISK SIZE FREE WARNING",
+      "title": "DISK SIZE FREE",
       "type": "timeseries"
     },
     {
@@ -1635,8 +1459,8 @@
         "for": "5m",
         "frequency": "1m",
         "handler": 1,
-        "message": "PV Utilization Is CRITICALLY LOW",
-        "name": "PV utilization alert CRITICAL",
+        "message": "PV Utilization Is CRITICALLY HIGH",
+        "name": "PV utilization alert",
         "noDataState": "ok",
         "notifications": [
           {
@@ -1647,18 +1471,12 @@
           }
         ]
       },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1691,7 +1509,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green"
+                "color": "dark-green",
+                "value": null
               },
               {
                 "color": "dark-yellow",
@@ -1705,13 +1524,38 @@
           },
           "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "minio minio-pvc"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
-        "y": 58
+        "x": 12,
+        "y": 50
       },
       "id": 68,
       "options": {
@@ -1739,8 +1583,9 @@
           "editorMode": "code",
           "exemplar": false,
           "expr": "100- (kubelet_volume_stats_available_bytes{namespace=~\".+\", persistentvolumeclaim!~\"postgres-10-pvc\" ,persistentvolumeclaim=~\".+\"} / kubelet_volume_stats_capacity_bytes{namespace=~\".+\",persistentvolumeclaim=~\".+\"}  *100)",
+          "hide": false,
           "interval": "",
-          "legendFormat": "{{namespace}} {{persistentvolumeclaim}}",
+          "legendFormat": "{{cluster}} {{namespace}} {{persistentvolumeclaim}}",
           "range": true,
           "refId": "A"
         }
@@ -1753,160 +1598,7 @@
           "visible": true
         }
       ],
-      "title": "PV utilization CRITICAL",
-      "type": "timeseries"
-    },
-    {
-      "alert": {
-        "alertRuleTags": {
-          "severity": "warning"
-        },
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                80,
-                90
-              ],
-              "type": "within_range"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "5m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "PV Utilization Is  HIGH",
-        "name": "PV utilization  alert WARNING",
-        "noDataState": "ok",
-        "notifications": []
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "line+area"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-green"
-              },
-              {
-                "color": "#EAB839",
-                "value": 80
-              },
-              {
-                "color": "dark-red",
-                "value": 90
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 58
-      },
-      "id": 72,
-      "options": {
-        "legend": {
-          "calcs": [
-            "last"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Last",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "all",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "000000001"
-          },
-          "exemplar": false,
-          "expr": "100- (kubelet_volume_stats_available_bytes{namespace=~\".+\",persistentvolumeclaim=~\".+\"} / kubelet_volume_stats_capacity_bytes{namespace=~\".+\",persistentvolumeclaim=~\".+\"}  *100)",
-          "interval": "",
-          "legendFormat": "{{namespace}} {{persistentvolumeclaim}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "op": "gt",
-          "value": 80,
-          "visible": true
-        },
-        {
-          "colorMode": "critical",
-          "op": "lt",
-          "value": 90,
-          "visible": true
-        }
-      ],
-      "title": "PV utilization WARNING",
+      "title": "PV utilization",
       "type": "timeseries"
     },
     {
@@ -1918,7 +1610,7 @@
           {
             "evaluator": {
               "params": [
-                95
+                98
               ],
               "type": "gt"
             },
@@ -1934,13 +1626,13 @@
             },
             "reducer": {
               "params": [],
-              "type": "avg"
+              "type": "last"
             },
             "type": "query"
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "1m",
+        "for": "5m",
         "frequency": "10s",
         "handler": 1,
         "message": "CPU usage is CRITICALLY HIGH",
@@ -1955,18 +1647,12 @@
           }
         ]
       },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2001,7 +1687,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green"
+                "color": "dark-green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -2021,7 +1708,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 66
+        "y": 58
       },
       "id": 52,
       "interval": "1m",
@@ -2050,7 +1737,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[$__interval])) * 100)  ",
+          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[$__rate_interval])) * 100)  ",
           "hide": false,
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -2061,170 +1748,11 @@
         {
           "colorMode": "critical",
           "op": "gt",
-          "value": 95,
+          "value": 98,
           "visible": true
         }
       ],
-      "title": "CPU usage CRITICAL",
-      "type": "timeseries"
-    },
-    {
-      "alert": {
-        "alertRuleTags": {
-          "severity": "warning"
-        },
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                85,
-                95
-              ],
-              "type": "within_range"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "10s",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "1m",
-        "frequency": "10s",
-        "handler": 1,
-        "message": "CPU usage is above 85%",
-        "name": "CPU usage alert WARNING",
-        "noDataState": "ok",
-        "notifications": []
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "line+area"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-green"
-              },
-              {
-                "color": "dark-yellow",
-                "value": 85
-              },
-              {
-                "color": "dark-red",
-                "value": 95
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 66
-      },
-      "id": 73,
-      "interval": "1m",
-      "options": {
-        "legend": {
-          "calcs": [
-            "last",
-            "mean"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Last",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.3.1",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "000000001"
-          },
-          "exemplar": true,
-          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[$__interval])) * 100)  ",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{instance}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "op": "gt",
-          "value": 85,
-          "visible": true
-        },
-        {
-          "colorMode": "critical",
-          "op": "lt",
-          "value": 95,
-          "visible": true
-        }
-      ],
-      "title": "CPU usage WARNING",
+      "title": "CPU usage ",
       "type": "timeseries"
     },
     {
@@ -2262,7 +1790,7 @@
         "frequency": "1m",
         "handler": 1,
         "message": "Server RAM usage is CRITICALLY HIGH",
-        "name": "VM high RAM usage CRITICAL",
+        "name": "VM high RAM usage",
         "noDataState": "ok",
         "notifications": [
           {
@@ -2283,8 +1811,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2318,7 +1844,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green"
+                "color": "dark-green",
+                "value": null
               },
               {
                 "color": "dark-yellow",
@@ -2337,8 +1864,8 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
-        "y": 74
+        "x": 12,
+        "y": 58
       },
       "id": 48,
       "options": {
@@ -2392,22 +1919,160 @@
           "visible": true
         }
       ],
-      "title": "RAM usage CRITICAL",
+      "title": "RAM usage",
       "type": "timeseries"
     },
     {
       "alert": {
-        "alertRuleTags": {
-          "severity": "warning"
-        },
+        "alertRuleTags": {},
         "conditions": [
           {
             "evaluator": {
               "params": [
-                85,
-                95
+                800
               ],
-              "type": "within_range"
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "10s",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "10s",
+        "handler": 1,
+        "name": "SysLoad (5m) alert",
+        "noDataState": "ok",
+        "notifications": [
+          {
+            "uid": "BexTV4S4z"
+          },
+          {
+            "uid": "QnTsnNSVk"
+          }
+        ]
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 100,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 66
+      },
+      "id": 76,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Last",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": false,
+          "expr": "avg by (instance)(node_load5{instance=~\".+\"}) /  count by (instance)(count(node_cpu_seconds_total{instance=~\".+\"}) by (instance,cpu)) * 100",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{instance}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 800,
+          "visible": true
+        }
+      ],
+      "title": "SysLoad (5m)",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1
+              ],
+              "type": "lt"
             },
             "operator": {
               "type": "and"
@@ -2421,18 +2086,25 @@
             },
             "reducer": {
               "params": [],
-              "type": "avg"
+              "type": "last"
             },
             "type": "query"
           }
         ],
         "executionErrorState": "alerting",
-        "for": "3m",
-        "frequency": "1m",
+        "for": "1m",
+        "frequency": "10s",
         "handler": 1,
-        "name": "VM high RAM usage WARNING",
-        "noDataState": "ok",
-        "notifications": []
+        "name": "Prometheus",
+        "noDataState": "no_data",
+        "notifications": [
+          {
+            "uid": "QnTsnNSVk"
+          },
+          {
+            "uid": "BexTV4S4z"
+          }
+        ]
       },
       "datasource": {
         "type": "prometheus",
@@ -2444,8 +2116,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2464,7 +2134,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true,
+            "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -2473,25 +2143,20 @@
               "mode": "line+area"
             }
           },
-          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "dark-green"
-              },
-              {
-                "color": "dark-yellow",
-                "value": 85
-              },
-              {
                 "color": "dark-red",
-                "value": 95
+                "value": null
+              },
+              {
+                "color": "dark-green",
+                "value": 1
               }
             ]
-          },
-          "unit": "percent"
+          }
         },
         "overrides": []
       },
@@ -2499,26 +2164,21 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 74
+        "y": 66
       },
-      "id": 74,
+      "id": 66,
       "options": {
         "legend": {
-          "calcs": [
-            "last"
-          ],
-          "displayMode": "table",
+          "calcs": [],
+          "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Last",
-          "sortDesc": true
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "multi",
+          "mode": "all",
           "sort": "none"
         }
       },
-      "pluginVersion": "8.3.1",
       "targets": [
         {
           "datasource": {
@@ -2526,40 +2186,21 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "((node_memory_MemTotal_bytes{job!=\"Jenkins\", instance!~\"sis2s041:9100\"} - node_memory_MemFree_bytes{job!=\"Jenkins\"} - (node_memory_Cached_bytes{job!=\"Jenkins\"} + node_memory_Buffers_bytes{job!=\"Jenkins\"} + node_memory_SReclaimable_bytes{job!=\"Jenkins\"})) / node_memory_MemTotal_bytes{job!=\"Jenkins\"} )*100",
-          "hide": false,
+          "expr": "up{job=\"prometheus\"}",
           "interval": "",
-          "legendFormat": "{{kubernetes_node}} {{instance}}",
+          "legendFormat": "up {{job}}",
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "000000001"
-          },
-          "exemplar": false,
-          "expr": "((node_memory_MemTotal_bytes{job!=\"Jenkins\", instance!~\"sis2s041:9100\"} - node_memory_MemFree_bytes{job!=\"Jenkins\"} - node_memory_Cached_bytes{job!=\"Jenkins\"}) / (node_memory_MemTotal_bytes{job!=\"Jenkins\"} )) * 100",
-          "hide": true,
-          "interval": "",
-          "legendFormat": "{{kubernetes_node}} {{instance}}",
-          "refId": "B"
         }
       ],
       "thresholds": [
         {
           "colorMode": "critical",
-          "op": "gt",
-          "value": 85,
-          "visible": true
-        },
-        {
-          "colorMode": "critical",
           "op": "lt",
-          "value": 95,
+          "value": 1,
           "visible": true
         }
       ],
-      "title": "RAM usage WARNING",
+      "title": "Prometheus",
       "type": "timeseries"
     },
     {
@@ -2615,8 +2256,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2650,7 +2289,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2666,7 +2306,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 82
+        "y": 74
       },
       "id": 28,
       "options": {
@@ -2743,147 +2383,6 @@
             "query": {
               "params": [
                 "A",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "last"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "1m",
-        "frequency": "10s",
-        "handler": 1,
-        "name": "Prometheus",
-        "noDataState": "no_data",
-        "notifications": [
-          {
-            "uid": "QnTsnNSVk"
-          },
-          {
-            "uid": "BexTV4S4z"
-          }
-        ]
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "line+area"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "dark-red"
-              },
-              {
-                "color": "dark-green",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 82
-      },
-      "id": 66,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "all",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "000000001"
-          },
-          "exemplar": true,
-          "expr": "up{job=\"prometheus\"}",
-          "interval": "",
-          "legendFormat": "up {{job}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "op": "lt",
-          "value": 1,
-          "visible": true
-        }
-      ],
-      "title": "Prometheus",
-      "type": "timeseries"
-    },
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                1
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
                 "30m",
                 "now"
               ]
@@ -2920,8 +2419,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2955,7 +2452,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2971,7 +2469,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 90
+        "y": 74
       },
       "id": 49,
       "options": {
@@ -3032,6 +2530,282 @@
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1
+              ],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "30s",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "3m",
+        "frequency": "30s",
+        "handler": 1,
+        "name": "PostgreSQL UP alert",
+        "noDataState": "ok",
+        "notifications": [
+          {
+            "uid": "QnTsnNSVk"
+          },
+          {
+            "uid": "BexTV4S4z"
+          }
+        ]
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 82
+      },
+      "id": 84,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "pg_up or cnpg_collector_up{job=\"kubernetes-service-endpoints\"}",
+          "interval": "",
+          "legendFormat": "{{environment}} {{service}} {{kubernetes_namespace}} {{kubernetes_name}} ",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 1,
+          "visible": true
+        }
+      ],
+      "title": "PostgreSQL UP",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                30
+              ],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "5m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "message": "",
+        "name": "Kube Cert Expire Alert",
+        "noDataState": "ok",
+        "notifications": [
+          {
+            "uid": "QnTsnNSVk"
+          },
+          {
+            "uid": "BexTV4S4z"
+          }
+        ]
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-green",
+                "value": 30
+              }
+            ]
+          },
+          "unit": "d"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 82
+      },
+      "id": 80,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Last",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "cert_exporter_cert_expires_in_seconds{kubernetes_node=~\".+\",filename=~\".+\", filename!~\"/var/lib/kubelet/pki/kubelet.crt\"} / 86400",
+          "interval": "",
+          "legendFormat": "{{kubernetes_node}} {{filename}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 30,
+          "visible": true
+        }
+      ],
+      "title": "Kube Cert Expire Alert",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
@@ -3041,7 +2815,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 98
+        "y": 90
       },
       "id": 22,
       "panels": [],
@@ -3121,7 +2895,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 99
+        "y": 91
       },
       "hiddenSeries": false,
       "id": 60,
@@ -3141,7 +2915,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "10.0.2",
+      "pluginVersion": "8.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3247,18 +3021,12 @@
           }
         ]
       },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -3292,7 +3060,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -3308,7 +3077,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 99
+        "y": 91
       },
       "id": 32,
       "options": {
@@ -3331,7 +3100,7 @@
             "uid": "000000001"
           },
           "exemplar": true,
-          "expr": "rabbitmq_queue_messages_ready{job=\"kubernetes-service-endpoints\",\n  queue!~\"messaging-upgraded-services\",\n  queue!~\"^reporting-service-sync.+\",\n  queue!~\"health-status-result-test\"\n  } > 500",
+          "expr": "rabbitmq_queue_messages_ready{job=\"kubernetes-service-endpoints\",\n  queue!~\".*sms.*retry.*|.*mail.*retry.*\",\n  queue!~\"messaging-upgraded-services\",\n  queue!~\"^reporting-service-sync.+\",\n  queue!~\"health-status-result-test\"\n  } > 500",
           "instant": false,
           "interval": "",
           "legendFormat": "{{queue}} <{{kubernetes_namespace}}>",
@@ -3350,6 +3119,180 @@
       "type": "timeseries"
     },
     {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                80
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "10s",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "3m",
+        "frequency": "10s",
+        "handler": 1,
+        "name": "Rabbitmq Process Memory Usage alert",
+        "noDataState": "ok",
+        "notifications": [
+          {
+            "uid": "QnTsnNSVk"
+          },
+          {
+            "uid": "BexTV4S4z"
+          }
+        ]
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 99
+      },
+      "id": 86,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Last",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "((rabbitmq_process_resident_memory_bytes * on(instance) group_left(rabbitmq_cluster, rabbitmq_node) rabbitmq_identity_info{rabbitmq_cluster=~\".+\"})\r\n/\r\n(rabbitmq_resident_memory_limit_bytes * on(instance) group_left(rabbitmq_cluster, rabbitmq_node) rabbitmq_identity_info{rabbitmq_cluster=~\".+\"})) *100",
+          "interval": "",
+          "legendFormat": "{{kubernetes_namespace}} {{kubernetes_name}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "gt",
+          "value": 80,
+          "visible": true
+        }
+      ],
+      "title": "Rabbitmq Process Memory Usage",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                70
+              ],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "1m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Microservice Success Rate violated",
+        "noDataState": "ok",
+        "notifications": []
+      },
       "datasource": {
         "type": "prometheus",
         "uid": "000000001"
@@ -3360,8 +3303,118 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line+area"
+            }
+          },
+          "decimals": 1,
+          "links": [],
+          "mappings": [],
+          "max": 100,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "dark-green",
+                "value": 70
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 99
+      },
+      "id": 44,
+      "interval": "2m",
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "sortBy": "Min",
+          "sortDesc": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.3.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "editorMode": "code",
+          "expr": "(sum_over_time((\r\n  (\r\n    (sum(rate(service_response_status_total{kubernetes_name=~\".+\", kubernetes_namespace=~\".+\", status!~\"5..\"}[2m])) by (kubernetes_name,kubernetes_namespace))\r\n    /\r\n    (sum(rate(service_response_status_total{kubernetes_name=~\".+\", kubernetes_namespace=~\".+\"}[2m])) by (kubernetes_name,kubernetes_namespace))\r\n  ) > bool 0.995\r\n  +\r\n  (sum(rate(service_response_status_total{kubernetes_name=~\".+\", kubernetes_namespace=~\".+\"}[2m])) by (kubernetes_name,kubernetes_namespace) == bool 0)\r\n)[5m:])\r\n/\r\ncount_over_time(sum(rate(service_response_status_total{kubernetes_name=~\".+\", kubernetes_namespace=~\".+\"}[2m])) by (kubernetes_name,kubernetes_namespace)[5m:])\r\n)*100",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "{{label_nam{{kubernetes_namespace}} {{kubernetes_name}}e}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 70,
+          "visible": true
+        }
+      ],
+      "title": "Success Rate SLO",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -3396,7 +3449,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -3513,8 +3567,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -3549,7 +3601,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "transparent"
+                "color": "transparent",
+                "value": null
               },
               {
                 "color": "red",
@@ -3659,8 +3712,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -3696,7 +3747,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": null
               },
               {
                 "color": "dark-green",
@@ -3787,7 +3839,7 @@
           {
             "evaluator": {
               "params": [
-                70
+                1
               ],
               "type": "lt"
             },
@@ -3809,16 +3861,19 @@
           }
         ],
         "executionErrorState": "keep_state",
-        "for": "5m",
+        "for": "72h",
         "frequency": "1m",
         "handler": 1,
-        "name": "Microservice Success Rate violated",
+        "name": "SVC Endpoints",
         "noDataState": "ok",
-        "notifications": []
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000001"
+        "notifications": [
+          {
+            "uid": "QnTsnNSVk"
+          },
+          {
+            "uid": "BexTV4S4z"
+          }
+        ]
       },
       "fieldConfig": {
         "defaults": {
@@ -3826,8 +3881,6 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -3845,33 +3898,30 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
+            "showPoints": "auto",
             "spanNulls": false,
             "stacking": {
               "group": "A",
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "line+area"
+              "mode": "off"
             }
           },
-          "decimals": 1,
-          "links": [],
           "mappings": [],
-          "max": 100,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "green",
+                "value": null
               },
               {
-                "color": "dark-green",
-                "value": 70
+                "color": "red",
+                "value": 80
               }
             ]
-          },
-          "unit": "percent"
+          }
         },
         "overrides": []
       },
@@ -3881,20 +3931,161 @@
         "x": 12,
         "y": 115
       },
-      "id": 44,
-      "interval": "2m",
+      "id": 82,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Last",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "kube_endpoint_address_available{namespace!~\"lts-caladan|lts-geghamasar|lts-arrakis|predev2|predev1|haltest|perftesting|kube-system|kube-public|kube-node-lease|default|velero|dev2|dev5|dev7|dev11|dev12|dev14|staging2|ejpdev|keller|devkeller|mcp-infrastructure|bigchaindb|chatwoot|argocd|metallb-system|hal|randomcoffee|projecttracker\", endpoint!~\"elasticsearch.*|rabbitmq.*|redis.*|ingress.*|postgres.*|fullsyncservice-v1|.*cluster.local.*|example.com-nfs|encryptionservice-v1|changedeploymentservice-v1\"} ==0",
+          "interval": "",
+          "legendFormat": "{{namespace}} {{endpoint}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 1,
+          "visible": true
+        }
+      ],
+      "title": "SVC Endpoints",
+      "type": "timeseries"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                1
+              ],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "D",
+                "1m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "keep_state",
+        "for": "1m",
+        "frequency": "10s",
+        "handler": 1,
+        "name": "GC collection time alert",
+        "noDataState": "ok",
+        "notifications": [
+          {
+            "uid": "BexTV4S4z"
+          },
+          {
+            "uid": "QnTsnNSVk"
+          }
+        ]
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 20,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 123
+      },
+      "id": 78,
       "links": [],
       "options": {
         "legend": {
           "calcs": [
+            "mean",
             "max",
-            "min"
+            "sum"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true,
-          "sortBy": "Min",
-          "sortDesc": false
+          "sortBy": "Max",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "multi",
@@ -3908,29 +4099,31 @@
             "type": "prometheus",
             "uid": "000000001"
           },
-          "editorMode": "code",
-          "expr": "(sum_over_time((\r\n  (\r\n    (sum(rate(service_response_status_total{kubernetes_name=~\".+\", kubernetes_namespace=~\".+\", status!~\"5..\"}[2m])) by (kubernetes_name,kubernetes_namespace))\r\n    /\r\n    (sum(rate(service_response_status_total{kubernetes_name=~\".+\", kubernetes_namespace=~\".+\"}[2m])) by (kubernetes_name,kubernetes_namespace))\r\n  ) > bool 0.995\r\n  +\r\n  (sum(rate(service_response_status_total{kubernetes_name=~\".+\", kubernetes_namespace=~\".+\"}[2m])) by (kubernetes_name,kubernetes_namespace) == bool 0)\r\n)[5m:])\r\n/\r\ncount_over_time(sum(rate(service_response_status_total{kubernetes_name=~\".+\", kubernetes_namespace=~\".+\"}[2m])) by (kubernetes_name,kubernetes_namespace)[5m:])\r\n)*100",
+          "exemplar": true,
+          "expr": "rate(jvm_gc_collection_seconds_sum[$__rate_interval])",
+          "format": "time_series",
           "hide": false,
-          "instant": false,
-          "legendFormat": "{{label_nam{{kubernetes_namespace}} {{kubernetes_name}}e}}",
-          "range": true,
-          "refId": "A"
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{kubernetes_namespace}} {{kubernetes_name}} {{gc}}",
+          "refId": "D",
+          "step": 10
         }
       ],
       "thresholds": [
         {
           "colorMode": "critical",
-          "op": "lt",
-          "value": 70,
+          "op": "gt",
+          "value": 1,
           "visible": true
         }
       ],
-      "title": "Success Rate SLO",
+      "title": "GC collection time",
       "type": "timeseries"
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [
     "alerting"
@@ -3957,7 +4150,7 @@
   },
   "timezone": "",
   "title": "Alerting",
-  "uid": "vldByyKnz",
-  "version": 65,
+  "uid": "01274a07-ea7a-4dee-a4f8-19bdc98e871f",
+  "version": 1,
   "weekStart": ""
 }

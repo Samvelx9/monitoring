@@ -1,0 +1,657 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 604,
+  "iteration": 1753356653706,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "description": "Shows active and idle channels, maximum pool size, and maximum allowed idle channels for the selected pool ($pool). Useful for tracking usage against capacity and idle thresholds.\nNOTE! For the Consumer channel pool, the number of active channels corresponds directly to the number of consumers, since this pool follows a one-channel-per-consumer model.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "Active Channels"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 301,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_channel_pool_active{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Active Channels",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_channel_pool_idle{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Idle Channels",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_channel_pool_max{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Max Pool Size",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_channel_pool_max_idle{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Max Idle Allowed",
+          "refId": "D"
+        }
+      ],
+      "title": "Channel Pool Utilization",
+      "type": "timeseries"
+    },
+    {
+      "description": "Shows active channels in the selected pool ($pool) as a percentage of the maximum pool size. Useful for tracking real utilization of the pool capacity. Indicates whether there is a need to scale channel pool or react.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 305,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "rabbitmq_app_channel_pool_active{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"} / rabbitmq_app_channel_pool_max{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"} * 100",
+          "interval": "",
+          "legendFormat": "Active Channels (%)",
+          "refId": "A"
+        }
+      ],
+      "title": "Active Channels (% of Max)",
+      "type": "stat"
+    },
+    {
+      "description": "Tracks the mean and maximum borrow wait times, the configured maximum allowed wait time, and the number of currently blocked threads for the selected pool ($pool). Helps detect contention and potential channel pool bottlenecks.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 306,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_channel_pool_mean_borrow_wait_time{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Mean Borrow Wait Time (ms)",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_channel_pool_max_borrow_wait_time{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Max Borrow Wait Time (ms)",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_channel_pool_max_possible_wait_time{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Configured Max Wait Time (ms)",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "expr": "rabbitmq_app_channel_pool_blocked{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "legendFormat": "Blocked Threads",
+          "refId": "D"
+        }
+      ],
+      "title": "Borrow Contention (Wait Times & Blocked Threads)",
+      "type": "timeseries"
+    },
+    {
+      "description": "Shows the number of threads currently blocked waiting for a channel in the selected pool ($pool). Turns red if any threads are blocked.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 307,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "rabbitmq_app_channel_pool_blocked{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}",
+          "interval": "",
+          "legendFormat": "Blocked Threads",
+          "refId": "A"
+        }
+      ],
+      "title": "Current Blocked Threads",
+      "type": "stat"
+    },
+    {
+      "description": "Shows the rate of borrows, creations, returns, destructions, and validation failures over the last 5 minutes for the selected pool ($pool). Helps identify spikes and churn patterns in the pool.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 308,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_channel_pool_borrowed{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Borrows",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_channel_pool_created{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Created",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_channel_pool_returned{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Returned",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_channel_pool_destroyed{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Destroyed",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "increase(rabbitmq_app_channel_pool_destroyed_by_borrow_validation{pool=~\"$pool\",instance=~\"$pod_ip\",kubernetes_name=~\"$service_name.*\",kubernetes_namespace=~\"$namespace\"}[5m])",
+          "interval": "",
+          "legendFormat": "Destroyed",
+          "refId": "E"
+        }
+      ],
+      "title": "Channel Pool Lifecycle & Churn (5m Rate)",
+      "type": "timeseries"
+    }
+  ],
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allFormat": "glob",
+        "current": {
+          "selected": false,
+          "text": "dev10",
+          "value": "dev10"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info, kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "namespace",
+        "multi": false,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info, kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allFormat": "glob",
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info{kubernetes_namespace=~\"$namespace\"},kubernetes_name)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "service_name",
+        "multi": false,
+        "name": "service_name",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{kubernetes_namespace=~\"$namespace\"},kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allFormat": "glob",
+        "current": {
+          "selected": true,
+          "text": "10.244.162.240:3030",
+          "value": "10.244.162.240:3030"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(jvm_info{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service_name\"},instance)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "pod_ip",
+        "options": [],
+        "query": {
+          "query": "label_values(jvm_info{kubernetes_namespace=~\"$namespace\", kubernetes_name=~\"$service_name\"},instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "consumer",
+          "value": "consumer"
+        },
+        "definition": "label_values(rabbitmq_app_channel_pool_active, pool)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "pool",
+        "multi": false,
+        "name": "pool",
+        "options": [],
+        "query": {
+          "query": "label_values(rabbitmq_app_channel_pool_active, pool)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "RabbitMQ Client Channel Pool",
+  "uid": "SlZU7qUHk",
+  "version": 7,
+  "weekStart": ""
+}

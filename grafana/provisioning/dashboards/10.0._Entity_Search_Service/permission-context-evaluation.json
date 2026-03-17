@@ -1,0 +1,300 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 542,
+  "iteration": 1747484322388,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 454,
+      "panels": [],
+      "title": "Overall",
+      "type": "row"
+    },
+    {
+      "cards": {},
+      "color": {
+        "cardColor": "#b4ff00",
+        "colorScale": "sqrt",
+        "colorScheme": "interpolateRdYlGn",
+        "exponent": 0.5,
+        "mode": "spectrum"
+      },
+      "dataFormat": "tsbuckets",
+      "description": "",
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "heatmap": {},
+      "hideZeroBuckets": true,
+      "highlightCards": true,
+      "id": 441,
+      "interval": "2m",
+      "legend": {
+        "show": true
+      },
+      "maxPerRow": 3,
+      "pluginVersion": "8.3.3",
+      "repeat": "context_category",
+      "repeatDirection": "h",
+      "reverseYBuckets": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "exemplar": true,
+          "expr": "sum(idelta(conditional_permission_execution_count_bucket{kubernetes_namespace=\"$environment\", kubernetes_name=\"entitysearchservice-v1\", application=\"$application\", category=\"$context_category\", parent_category=~\"$category\"}[2m])) by (le)",
+          "format": "heatmap",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{le}}",
+          "refId": "B"
+        }
+      ],
+      "title": "$category -> $context_category",
+      "tooltip": {
+        "show": true,
+        "showHistogram": false
+      },
+      "type": "heatmap",
+      "xAxis": {
+        "show": true
+      },
+      "yAxis": {
+        "format": "short",
+        "logBase": 1,
+        "show": true
+      },
+      "yBucketBound": "upper"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 27,
+      "panels": [
+        {
+          "cards": {},
+          "color": {
+            "cardColor": "#b4ff00",
+            "colorScale": "sqrt",
+            "colorScheme": "interpolateRdYlGn",
+            "exponent": 0.5,
+            "mode": "spectrum"
+          },
+          "dataFormat": "tsbuckets",
+          "description": "",
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 2
+          },
+          "heatmap": {},
+          "hideZeroBuckets": true,
+          "highlightCards": true,
+          "id": 11,
+          "interval": "2m",
+          "legend": {
+            "show": true
+          },
+          "maxPerRow": 3,
+          "pluginVersion": "8.3.3",
+          "repeat": "category",
+          "repeatDirection": "h",
+          "reverseYBuckets": false,
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "exemplar": true,
+              "expr": "sum(idelta(conditional_permission_execution_count_bucket{kubernetes_namespace=\"$environment\", kubernetes_name=\"entitysearchservice-v1\", application=\"$application\", category=\"$context_category\", parent_category=\"$category\"}[2m])) by (le)",
+              "format": "heatmap",
+              "hide": false,
+              "instant": false,
+              "interval": "",
+              "legendFormat": "{{le}}",
+              "refId": "B"
+            }
+          ],
+          "title": "$category -> $context_category",
+          "tooltip": {
+            "show": true,
+            "showHistogram": false
+          },
+          "type": "heatmap",
+          "xAxis": {
+            "show": true
+          },
+          "yAxis": {
+            "format": "short",
+            "logBase": 1,
+            "show": true
+          },
+          "yBucketBound": "upper"
+        }
+      ],
+      "repeat": "context_category",
+      "title": "$context_category  Context Execution in $category ",
+      "type": "row"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "dev6",
+          "value": "dev6"
+        },
+        "definition": "label_values(conditional_permission_execution_count_bucket,kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "environment",
+        "multi": false,
+        "name": "environment",
+        "options": [],
+        "query": {
+          "query": "label_values(conditional_permission_execution_count_bucket,kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "prime",
+          "value": "prime"
+        },
+        "definition": "label_values(conditional_permission_execution_count_bucket{kubernetes_namespace=\"$environment\"},application)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Application",
+        "multi": false,
+        "name": "application",
+        "options": [],
+        "query": {
+          "query": "label_values(conditional_permission_execution_count_bucket{kubernetes_namespace=\"$environment\"},application)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "definition": "label_values(conditional_permission_execution_count_bucket{kubernetes_namespace=\"$environment\", application=\"$application\"},parent_category)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "category",
+        "multi": true,
+        "name": "category",
+        "options": [],
+        "query": {
+          "query": "label_values(conditional_permission_execution_count_bucket{kubernetes_namespace=\"$environment\", application=\"$application\"},parent_category)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "definition": "label_values(conditional_permission_execution_count_bucket{kubernetes_namespace=\"$environment\", application=\"$application\"},category)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "context category",
+        "multi": true,
+        "name": "context_category",
+        "options": [],
+        "query": {
+          "query": "label_values(conditional_permission_execution_count_bucket{kubernetes_namespace=\"$environment\", application=\"$application\"},category)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Permission Context Evaluation",
+  "uid": "HAiEvAGIq",
+  "version": 14,
+  "weekStart": ""
+}

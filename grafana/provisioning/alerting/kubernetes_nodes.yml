@@ -1,0 +1,98 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: 10s
+      folder: alerting
+      interval: 10s
+      rules:
+        - uid: kubernetes-nodes
+          title: Kubernetes Nodes
+          condition: C
+          data:
+            - refId: A
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: "000000001"
+              model:
+                datasource:
+                    type: prometheus
+                    uid: "000000001"
+                editorMode: code
+                exemplar: true
+                expr: up{kubernetes_node=~".+", instance=~".+:9100"}
+                instant: true
+                interval: ""
+                intervalMs: 30000
+                legendFormat: '{{kubernetes_node}}'
+                maxDataPoints: 43200
+                range: false
+                refId: A
+            - refId: B
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              relativeTimeRange:
+                from: 300
+                to: 0
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 1
+                        type: lt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: vldByyKnz
+          panelId: 20
+          noDataState: OK
+          execErrState: OK
+          for: 3m
+          annotations:
+            __dashboardUid__: vldByyKnz
+            __panelId__: "20"
+            summary: '{{ index $labels "kubernetes_node" }} Node exporter availability is {{ index $values "B" }}'
+          labels:
+            severity: critical
+          isPaused: false

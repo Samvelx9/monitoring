@@ -1,0 +1,410 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 123,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 43,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "description": "Identifies how effective a cache is. Values < 0.9 often indicate room for tuning.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed"
+                }
+              },
+              "mappings": [],
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red"
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.9
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 8,
+            "x": 0,
+            "y": 1
+          },
+          "id": 2,
+          "maxPerRow": 3,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "repeat": "cache",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "expr": "caffeine_cache_hit_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"} / (caffeine_cache_hit_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"} + caffeine_cache_miss_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\"})",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "{{instance}}",
+              "range": true,
+              "refId": "F"
+            }
+          ],
+          "title": "Cache Hit Ratio ($cache)",
+          "type": "timeseries"
+        }
+      ],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Cache Hit Ratio",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000001"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 119,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "description": "Visual trend of usage and misfires; helps detect ineffective caches.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMin": 0,
+                "fillOpacity": 80,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "lineWidth": 1
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 12,
+            "x": 0,
+            "y": 2
+          },
+          "id": 81,
+          "maxPerRow": 4,
+          "options": {
+            "barRadius": 0,
+            "barWidth": 0.97,
+            "fullHighlight": false,
+            "groupWidth": 0.7,
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "orientation": "auto",
+            "showValue": "auto",
+            "stacking": "none",
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            },
+            "xTickLabelRotation": 0,
+            "xTickLabelSpacing": 0
+          },
+          "repeat": "instance",
+          "repeatDirection": "h",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "delta(caffeine_cache_hit_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\", instance=~\"$instance\"}[$__range])",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "{{instance}} hit",
+              "range": false,
+              "refId": "F"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "000000001"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "delta(caffeine_cache_miss_total{cache=\"$cache\", kubernetes_name=\"$service\", kubernetes_namespace=\"$environment\", instance=~\"$instance\"}[$__range])",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "{{instance}} miss",
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "Cache Hit vs Miss Count ($cache)",
+          "transformations": [],
+          "type": "barchart"
+        }
+      ],
+      "repeat": "cache",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000001"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Cache Hit vs Miss Count ($cache)",
+      "type": "row"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 38,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "perftesting",
+          "value": "perftesting"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(caffeine_cache_hit_total,kubernetes_namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "environment",
+        "options": [],
+        "query": {
+          "query": "label_values(caffeine_cache_hit_total,kubernetes_namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "authorizationservice-v1",
+          "value": "authorizationservice-v1"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\"},kubernetes_name)",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": {
+          "query": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\"},kubernetes_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\"},cache)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "cache",
+        "options": [],
+        "query": {
+          "query": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\"},cache)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "/.*(?<!resilience)$/gm",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "000000001"
+        },
+        "definition": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\", cache=~\"$cache\"},instance)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "query": "label_values(caffeine_cache_hit_total{kubernetes_namespace=\"$environment\", kubernetes_name=\"$service\", cache=~\"$cache\"},instance)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Cache Metrics Details (Caffeine)",
+  "uid": "e5049170-1392-4c75-a4d2-68227e7bd554",
+  "version": 1,
+  "weekStart": ""
+}

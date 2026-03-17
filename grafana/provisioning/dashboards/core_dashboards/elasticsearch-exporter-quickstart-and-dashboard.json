@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 14191,
   "graphTooltip": 1,
-  "id": 477,
+  "id": 96,
   "links": [
     {
       "asDropdown": true,
@@ -6230,7 +6230,7 @@
   },
   "timezone": "browser",
   "title": "Elasticsearch Exporter Quickstart and Dashboard",
-  "uid": "4yyL6dBMk",
-  "version": 3,
+  "uid": "8f7cfe23-9809-4bca-b52a-0d9747aa3f39",
+  "version": 1,
   "weekStart": ""
 }
