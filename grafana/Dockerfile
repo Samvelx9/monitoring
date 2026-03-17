@@ -1,1 +1,1 @@
-FROM registry.synisys.com/infrastructure/grafana:12.3.3
+FROM grafana/grafana:12.3.3

@@ -217,8 +217,6 @@ services:
     build:
       context: grafana/
     container_name: grafana
-    env_file:
-      - .env
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
@@ -236,7 +234,7 @@ services:
         max-file: "3"
 
   elasticsearch_exporter_monitoring:
-    image: registry.synisys.com/infrastructure/elasticsearch-exporter:v1.5.0
+    image: prometheuscommunity/elasticsearch-exporter:v1.5.0
     container_name: elasticsearch_exporter_monitoring
     command:
      - '--es.uri=http://elasticsearch:9200'
@@ -260,7 +258,7 @@ services:
 
 
   elasticsearch_exporter_application:
-    image: registry.synisys.com/infrastructure/elasticsearch-exporter:v1.5.0
+    image: prometheuscommunity/elasticsearch-exporter:v1.5.0
     container_name: elasticsearch_exporter_application
     command:
      - '--es.uri=http://${KUBEMASTER_IP}:${ELASTICSEARCH_NODEPORT}'
@@ -283,7 +281,7 @@ services:
         max-file: "3"
 
   node-exporter:
-    image: registry.synisys.com/infrastructure/node-exporter:v1.3.1
+    image: prom/node-exporter:v1.3.1
     container_name: node-exporter
     volumes:
       - /proc:/host/proc:ro
@@ -306,7 +304,7 @@ services:
         max-file: "3"
 
   cadvisor:
-    image: registry.synisys.com/infrastructure/cadvisor:v0.43.0
+    image: woodliu268/cadvisor:v0.43.0
     container_name: cadvisor
     privileged: true
     devices:

@@ -7,11 +7,11 @@ Before starting install process please asure:
     4) You have docker-compose installed on MONITORING VM
     5) If there is no outgoing internet access and there is no access to "registry.synisys.com/infrastructure" public repository, download following images, reatag and push them to your repository. Replace images in the "docker-compose.yml" file for exporters and cadvisor and in "Dockerfile" files for grafana, prometheus, elasticsearch, filebeat, logstash and kibana
 
-    registry.synisys.com/infrastructure/node-exporter:v1.3.1
-    registry.synisys.com/infrastructure/elasticsearch-exporter:v1.5.0
-    registry.synisys.com/infrastructure/cadvisor:v0.43.0
-    registry.synisys.com/infrastructure/grafana:12.3.3
-    registry.synisys.com/infrastructure/prometheus:v3.9.1
+    prom/node-exporter:v1.3.1
+    prometheuscommunity/elasticsearch-exporter:v1.5.0
+    woodliu268/cadvisor:v0.43.0
+    grafana/grafana:12.3.3
+    prom/prometheus:v3.9.1
     docker.elastic.co/elasticsearch/elasticsearch:8.9.1
     docker.elastic.co/beats/filebeat:8.9.1
     docker.elastic.co/logstash/logstash:8.9.1
@@ -92,16 +92,16 @@ Before starting install process please asure:
 #      - targets: ['node-exporter:9100']
 #        labels:
 #          service: "monitoring"
-#      - targets: ['172.17.18.140:9100']
+#      - targets: ['{ip}:9100']
 #        labels:
 #          service: "nfs"
-#      - targets: ['172.17.18.141:9100']
+#      - targets: ['{ip}:9100']
 #        labels:
 #          service: "postgres-master"
-#      - targets: ['172.17.18.142:9100']
+#      - targets: ['{ip}:9100']
 #        labels:
 #          service: "postgres-slave"
-#      - targets: ['172.17.18.143:9100']
+#      - targets: ['{ip}:9100']
 #        labels:
 #          service: "nginx"
 
