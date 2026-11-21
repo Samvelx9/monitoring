@@ -8,7 +8,7 @@ contactPoints:
           settings:
             message: '{{ template "message" .}}'
             title: '{{ template "title" .}}'
-            url: <%= @teams_connector %>
+            url: '${TEAMS_WEBHOOK}'
           disableResolveMessage: false
     - orgId: 1
       name: projectemail
@@ -16,7 +16,7 @@ contactPoints:
         - uid: projectemail
           type: email
           settings:
-            addresses: <%= @env_name %>-alerting.synisys.com
+            addresses: '${ALERT_EMAIL}'
             message: '{{ template "message" .}}'
             singleEmail: false
             subject: '{{ template "title" .}}'
@@ -29,6 +29,6 @@ contactPoints:
           settings:
             message: '{{ template "message" .}}'
             title: '{{ template "title" .}}'
-            url: <%= @teams_connector %>
+            url: '${TEAMS_WEBHOOK}'
           disableResolveMessage: false
 

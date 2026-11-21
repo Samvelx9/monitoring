@@ -13,11 +13,11 @@ groups:
               relativeTimeRange:
                 from: 300
                 to: 0
-              datasourceUid: f11aed81-eb0d-4dd0-ab79-ed2a3a9106ff
+              datasourceUid: "000000001"
               model:
                 datasource:
                     type: prometheus
-                    uid: f11aed81-eb0d-4dd0-ab79-ed2a3a9106ff
+                    uid: "000000001"
                 editorMode: code
                 expr: rate(jvm_gc_collection_seconds_sum[$__rate_interval])
                 instant: false

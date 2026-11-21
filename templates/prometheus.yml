@@ -15,6 +15,7 @@ scrape_configs:
       - targets: ['node-exporter:9100']
         labels:
           service: "monitoring"
+${SERVER_TARGETS}
 
   - job_name: 'cadvisor'
     scrape_interval: 15s
@@ -41,7 +42,7 @@ scrape_configs:
         - '{__name__=~"job:.*"}'
     static_configs:
       - targets:
-        - '$KUBEMASTERIP:30900'
+        - '${KUBEMASTER_IP}:30900'
 
   - job_name: 'elasticsearch_exporter'
     static_configs:

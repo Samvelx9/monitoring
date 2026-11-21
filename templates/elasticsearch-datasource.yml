@@ -9,7 +9,7 @@ datasources:
     basicAuth: true
     basicAuthUser: elastic
     secureJsonData:
-      basicAuthPassword: RY5UQGU6ceRBVw
+      basicAuthPassword: '${ELASTIC_PASSWORD}'
     jsonData:
       timeField: '@timestamp'
       esVersion: '8.9.1'
