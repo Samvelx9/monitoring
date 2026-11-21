@@ -36,10 +36,7 @@ services:
       - elasticsearch
 
   elasticsearch:
-    build:
-      context: elasticsearch/
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION}
     container_name: elasticsearch
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
@@ -68,11 +65,7 @@ services:
         max-file: "3"
 
   filebeat:
-    build:
-      context: filebeat/
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
-
+    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION}
     user: root
     command:
       # Log to stderr.
@@ -109,10 +102,7 @@ services:
 
 
   logstash:
-    build:
-      context: logstash/
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    image: docker.elastic.co/logstash/logstash:${ELASTIC_VERSION}
     container_name: logstash
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
@@ -167,8 +157,7 @@ services:
         max-file: "3"
 
   prometheus:
-    build:
-      context: prometheus/
+    image: prom/prometheus:v3.9.1
     mem_limit: ${PROMETHEUS_MEMORY:-3gb}
     mem_reservation: ${PROMETHEUS_MEMORY:-3gb}
     container_name: prometheus
@@ -216,8 +205,7 @@ services:
         max-file: "3"
 
   grafana:
-    build:
-      context: grafana/
+    image: grafana/grafana:12.3.3
     container_name: grafana
     depends_on:
       - postgres

@@ -70,6 +70,7 @@ for s in ${SERVERS:-}; do
 done
 export SERVER_TARGETS="${SERVER_TARGETS%$'\n'}"
 
+mkdir -p prometheus
 envsubst '${KUBEMASTER_IP} ${SERVER_TARGETS}' < templates/prometheus.yml               > prometheus/prometheus.yml
 envsubst '${TEAMS_WEBHOOK} ${ALERT_EMAIL}'    < templates/contactpoints.yml            > grafana/provisioning/alerting/contactpoints.yml
 envsubst '${ELASTIC_PASSWORD}'                < templates/elasticsearch-datasource.yml > grafana/provisioning/datasources/elasticsearch.yml
@@ -78,7 +79,7 @@ chown -R 472:472 ./grafana && chmod -R 755 ./grafana/provisioning
 ok "Config files generated"
 
 # ---------------------------------------------------------------- start
-info "Building and starting containers (first time takes 5-15 minutes)"
+info "Starting containers (first time takes 5-15 minutes)"
 docker compose up -d --build
 docker compose restart grafana prometheus >/dev/null   # load freshly generated configs
 
