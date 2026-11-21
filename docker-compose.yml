@@ -222,7 +222,6 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-      - ./grafana/grafana.db:/var/lib/grafana/grafana.db
       - ./grafana/provisioning:/etc/grafana/provisioning
     ports:
       - "3000:3000"

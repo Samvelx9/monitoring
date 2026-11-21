@@ -4,6 +4,8 @@ Installs Grafana, Prometheus, Elasticsearch, Logstash, Filebeat and Kibana with 
 
 Requirements: 4 CPU, 16 GB RAM, 100 GB free disk, root access, internet.
 
+How the setup works (architecture, configuration, logs, alerts, operations): [docs/MONITORING.md](docs/MONITORING.md).
+
 Run the commands in order. Copy each block, paste it, and press Enter.
 
 ---
