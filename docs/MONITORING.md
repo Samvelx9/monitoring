@@ -6,7 +6,6 @@ Nov 21, 2026
 
 One Ubuntu/Debian VM runs the whole monitoring stack in Docker: metrics (Prometheus + Grafana) and logs (Filebeat, Logstash, Elasticsearch, Kibana). Everything is configured from one file, `.env`, and started by one script, `monitoring_setup.sh`.
 
-- **Repository:** [github.com/Samvelx9/monitoring](https://github.com/Samvelx9/monitoring) (branch `master`)
 - **Metrics from:** the monitoring VM itself, other VMs (node-exporter), the Kubernetes cluster (federation from an in-cluster Prometheus), Elasticsearch clusters
 - **Logs from:** application log files on NFS (`/applogs`) and nginx (syslog)
 - **Alerts:** Grafana unified alerting to Microsoft Teams and email
